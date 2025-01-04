@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ABC387A {
+public class ABC387B {
 
     private final StandardInputSnatcher in = new StandardInputSnatcher();
     private final StandardOutputSnatcher out = new StandardOutputSnatcher();
@@ -35,10 +35,25 @@ public class ABC387A {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int a = sc.nextInt();
-        final int b = sc.nextInt();
+        final int n = sc.nextInt();
+        List<List<Integer>> ggg = new ArrayList<>();
+        for (int i = 1; i <= 9; i++) {
+            List<Integer> g = new ArrayList<>();
+            for (int j = 1; j <= 9; j++) {
+                g.add(i * j);
+            }
+            ggg.add(g);
+        }
+        int ans = 0;
+        for (var gg : ggg) {
+            for (var g : gg) {
+                if (g != n) {
+                    ans += g;
+                }
+            }
+        }
 
-        System.out.println((long) Math.pow(a + b, 2));
+        System.out.println(ans);
     }
 //}
 
@@ -46,7 +61,23 @@ public class ABC387A {
     public void Case1() {
 
         String input = """
-                20 25
+                1
+                """;
+
+        String expected = """
+                2024
+                
+                """;
+        Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
+        ABC387B.main(null);
+        Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
+    }
+
+    @Test
+    public void Case2() {
+
+        String input = """
+                11
                 
                 """;
 
@@ -55,24 +86,7 @@ public class ABC387A {
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        ABC387A.main(null);
-        Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
-    }
-
-    @Test
-    public void Case2() {
-
-        String input = """
-                30 25
-                
-                """;
-
-        String expected = """
-                3025
-                
-                """;
-        Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        ABC387A.main(null);
+        ABC387B.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
@@ -80,20 +94,20 @@ public class ABC387A {
     public void Case3() {
 
         String input = """
-                45 11
+                24
                 
                 """;
 
         String expected = """
-                3136
+                1929
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        ABC387A.main(null);
+        ABC387B.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    @Test
+    //@Test
     public void Case4() {
 
         String input = """
@@ -106,7 +120,7 @@ public class ABC387A {
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        ABC387A.main(null);
+        ABC387B.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 }

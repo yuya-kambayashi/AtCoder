@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ABC387A {
+public class ABC387C {
 
     private final StandardInputSnatcher in = new StandardInputSnatcher();
     private final StandardOutputSnatcher out = new StandardOutputSnatcher();
@@ -35,10 +35,9 @@ public class ABC387A {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int a = sc.nextInt();
-        final int b = sc.nextInt();
+        final int n = sc.nextInt();
 
-        System.out.println((long) Math.pow(a + b, 2));
+        System.out.println(n);
     }
 //}
 
@@ -46,16 +45,14 @@ public class ABC387A {
     public void Case1() {
 
         String input = """
-                20 25
-                
+                1
                 """;
 
         String expected = """
-                2025
-                
+                1
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        ABC387A.main(null);
+        ABC387C.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
@@ -63,16 +60,14 @@ public class ABC387A {
     public void Case2() {
 
         String input = """
-                30 25
-                
+                1
                 """;
 
         String expected = """
-                3025
-                
+                1
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        ABC387A.main(null);
+        ABC387C.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
@@ -80,16 +75,14 @@ public class ABC387A {
     public void Case3() {
 
         String input = """
-                45 11
-                
+                1
                 """;
 
         String expected = """
-                3136
-                
+                1
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        ABC387A.main(null);
+        ABC387C.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
@@ -97,16 +90,14 @@ public class ABC387A {
     public void Case4() {
 
         String input = """
-                2025 1111
-                
+                1
                 """;
 
         String expected = """
-                9834496
-                
+                1
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        ABC387A.main(null);
+        ABC387C.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 }
