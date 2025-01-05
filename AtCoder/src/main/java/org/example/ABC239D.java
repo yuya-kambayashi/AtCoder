@@ -42,15 +42,20 @@ public class ABC239D {
         final int c = sc.nextInt();
         final int d = sc.nextInt();
 
-        List<Integer> ll = new ArrayList<>();
+        // すべてのiに対してcanPrimeだと青木のkachi勝ち
+        // 一つでもcanPrimeできないと高橋の勝ち
+
         for (int i = a; i <= b; i++) {
+
             boolean canPrime = false;
+
             for (int j = c; j <= d; j++) {
                 if (isPrime(i + j)) {
                     canPrime = true;
                     break;
                 }
             }
+
             if (!canPrime) {
                 System.out.println("Takahashi");
                 return;
@@ -60,8 +65,21 @@ public class ABC239D {
     }
 
     static boolean isPrime(int n) {
-        for (int i = 2; i * i <= n; i++) {
-            if (n % i == 0) {
+        // 1以下の数は素数ではない
+        if (n <= 1) {
+            return false;
+        }
+        // 2と3は素数
+        if (n <= 3) {
+            return true;
+        }
+        // 2または3で割り切れる数は素数ではない
+        if (n % 2 == 0 || n % 3 == 0) {
+            return false;
+        }
+        // 5以上の数を試し割り
+        for (int i = 5; i * i <= n; i += 6) {
+            if (n % i == 0 || n % (i + 2) == 0) {
                 return false;
             }
         }
@@ -69,7 +87,7 @@ public class ABC239D {
     }
 //}
 
-    // @Test
+    @Test
     public void Case1() {
 
         String input = """
@@ -101,7 +119,7 @@ public class ABC239D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """

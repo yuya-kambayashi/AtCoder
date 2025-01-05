@@ -37,12 +37,13 @@ public class ABC244D {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final String s1 = sc.next();
-        final String s2 = sc.next();
-        final String s3 = sc.next();
-        final String t1 = sc.next();
-        final String t2 = sc.next();
-        final String t3 = sc.next();
+        String s1 = sc.next();
+        String s2 = sc.next();
+        String s3 = sc.next();
+        String t1 = sc.next();
+        String t2 = sc.next();
+        String t3 = sc.next();
+
 
         int diff = 0;
         if (!s1.equals(t1)) {
@@ -55,11 +56,12 @@ public class ABC244D {
             diff++;
         }
 
-        if (diff == 0 || diff == 3) {
+        if (diff == 0) {
             System.out.println("Yes");
-
-        } else {
+        } else if (diff == 2) {
             System.out.println("No");
+        } else {
+            System.out.println("Yes");
         }
     }
 //}
@@ -81,7 +83,7 @@ public class ABC244D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -98,15 +100,16 @@ public class ABC244D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """
-                   IN3
+                   G B R
+                   B R G
                 """;
 
         String expected = """
-                OUT3
+                Yes
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
 
