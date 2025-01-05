@@ -14,8 +14,8 @@ import org.junit.jupiter.api.TestInstance;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ABC207D {
 
-    private StandardInputSnatcher in = new StandardInputSnatcher();
-    private StandardOutputSnatcher out = new StandardOutputSnatcher();
+    final private StandardInputSnatcher in = new StandardInputSnatcher();
+    final private StandardOutputSnatcher out = new StandardOutputSnatcher();
 
     @BeforeAll
     public void beforeAll() {
