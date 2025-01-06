@@ -37,26 +37,40 @@ public class ABC294D {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
-        final int q = sc.nextInt();
-        Deque<Integer> que = new ArrayDeque<>();
-        for (int i = 1; i <= n; i++) {
-            que.add(i);
+        int n = sc.nextInt();
+        int q = sc.nextInt();
+
+        Queue<Integer> que = new LinkedList<>();
+        Set<Integer> called = new HashSet<>();
+        int[] times = new int[n];
+        for (int i = 0; i < n; i++) {
+            que.offer(i + 1);
         }
-        Set<Integer> called = new TreeSet<>();
+
         for (int i = 0; i < q; i++) {
-            int t = sc.nextInt();
-            if (t == 1) {
-                int p = que.poll();
-                called.add(p);
-            } else if (t == 2) {
+            int e = sc.nextInt();
+            if (e == 1) {
+                if (!que.isEmpty()) {
+                    int guest = que.poll();
+                    called.add(guest);
+                }
+
+            } else if (e == 2) {
                 int x = sc.nextInt();
-                called.remove(x);
-            } else {
-                int p = called.iterator().next();
-                System.out.println(p);
+                times[x - 1]++;
+
+            } else if (e == 3) {
+
+                for (var guest : called) {
+                    if (times[guest - 1] == 0) {
+                        System.out.println(guest);
+                        break;
+                    }
+                }
+
             }
         }
+
     }
 //}
 
