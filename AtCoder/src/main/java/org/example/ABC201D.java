@@ -34,63 +34,66 @@ public class ABC201D {
 //public class Main {
 
     // https://atcoder.jp/contests/abc201/submissions/44842311
+    // #DP
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int h = sc.nextInt();
-        final int w = sc.nextInt();
+        int h = sc.nextInt();
+        int w = sc.nextInt();
 
-        int[][] field = new int[h][w];
+        int[][] ggg = new int[h][w];
         for (int i = 0; i < h; i++) {
-            String s = sc.next();
+            var s = sc.next();
             int j = 0;
             for (char c : s.toCharArray()) {
                 if (c == '+') {
-                    field[i][j] = 1;
+                    ggg[i][j] = 1;
                 } else {
-                    field[i][j] = -1;
+                    ggg[i][j] = -1;
                 }
                 j++;
             }
         }
-
         for (int i = 0; i < h; i++) {
             for (int j = 0; j < w; j++) {
                 if ((i + j) % 2 == 0) {
-                    field[i][j] *= -1;
+                    ggg[i][j] *= -1;
                 }
             }
         }
+
         int[][] scores = new int[h][w];
         scores[h - 1][w - 1] = 0;
         for (int y = h - 2; y >= 0; y--) {
             int x = w - 1;
-            scores[y][x] = scores[y + 1][x] + field[y + 1][x];
+            scores[y][x] = scores[y + 1][x] + ggg[y + 1][x];
         }
         for (int x = w - 2; x >= 0; x--) {
             int y = h - 1;
-            scores[y][x] = scores[y][x + 1] + field[y][x + 1];
+            scores[y][x] = scores[y][x + 1] + ggg[y][x + 1];
         }
         for (int y = h - 2; y >= 0; y--) {
             for (int x = w - 2; x >= 0; x--) {
-                int down = scores[y + 1][x] + field[y + 1][x];
-                int right = scores[y][x + 1] + field[y][x + 1];
+                int down = scores[y + 1][x] + ggg[y + 1][x];
+                int right = scores[y][x + 1] + ggg[y][x + 1];
                 if (isMaxmize(y, x)) {
                     scores[y][x] = Math.max(down, right);
                 } else {
                     scores[y][x] = Math.min(down, right);
                 }
-
             }
         }
 
-        if (scores[0][0] == 0) {
-            System.out.println("Draw");
-        } else if (scores[0][0] > 0) {
-            System.out.println("Takahashi");
-        } else {
-            System.out.println("Aoki");
+        String ret = "Draw";
+        if (scores[0][0] > 0) {
+            ret = "Takahashi";
+        } else if (scores[0][0] < 0) {
+            ret = "Aoki";
         }
+        System.out.println(ret);
+
+
     }
 
     static boolean isMaxmize(int y, int x) {
