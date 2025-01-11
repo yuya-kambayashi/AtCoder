@@ -44,7 +44,7 @@ public class ABC202D {
         long[][] dp = new long[61][61];
         dp[0][0] = 1;
         for (int i = 0; i < 60; i++) {
-            for (int j = 0; j < 60; j++) {
+            for (int j = 0; j < i + 1; j++) {
                 dp[i + 1][j] += dp[i][j];
                 dp[i + 1][j + 1] += dp[i][j];
             }
@@ -64,9 +64,7 @@ public class ABC202D {
                 k -= x;
             }
         }
-
         System.out.println(ans);
-
     }
 //}
 
