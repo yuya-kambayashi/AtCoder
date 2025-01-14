@@ -35,49 +35,53 @@ public class ABC209D {
 //public class Main {
 
     // https://atcoder.jp/contests/abc209/submissions/53813127
-    static int n = 0;
-    static int q = 0;
-    static List<List<Integer>> con = new ArrayList<>();
+    static int n;
+    static int q;
+    static List<List<Integer>> ggg;
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         n = sc.nextInt();
         q = sc.nextInt();
-        con = new ArrayList<>();
+        ggg = new ArrayList<>();
+        
         for (int i = 0; i < n + 1; i++) {
-            con.add(new ArrayList<Integer>());
+            List<Integer> tt = new ArrayList<>();
+            ggg.add(tt);
         }
         for (int i = 0; i < n - 1; i++) {
             int a = sc.nextInt();
             int b = sc.nextInt();
-            con.get(a).add(b);
-            con.get(b).add(a);
+            ggg.get(a).add(b);
+            ggg.get(b).add(a);
         }
+
         Deque<Integer> deque = new ArrayDeque<>();
         deque.add(1);
         int[] dist = new int[n + 1];
         Arrays.fill(dist, -1);
-        dist[1] = 0;
         while (!deque.isEmpty()) {
             int now = deque.poll();
-            for (int i : con.get(now)) {
-                if (dist[i] == -1) {
-                    dist[i] = dist[now] + 1;
-                    deque.add(i);
+            List<Integer> ggNow = ggg.get(now);
+            for (int g : ggNow) {
+                if (dist[g] == -1) {
+                    dist[g] = dist[now] + 1;
+                    deque.add(g);
                 }
             }
         }
         for (int i = 0; i < q; i++) {
             int a = sc.nextInt();
             int b = sc.nextInt();
+
             if (dist[a] % 2 == dist[b] % 2) {
                 System.out.println("Town");
             } else {
                 System.out.println("Road");
             }
         }
-        sc.close();
+
     }
 //}
 
@@ -124,7 +128,7 @@ public class ABC209D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """

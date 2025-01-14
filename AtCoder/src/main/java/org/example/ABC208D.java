@@ -39,10 +39,10 @@ public class ABC208D {
 
         final int n = sc.nextInt();
         final int m = sc.nextInt();
-        long[][] d = new long[n][n];
+        long[][] ddd = new long[n][n];
         final int INF = (int) 1e9;
         for (int i = 0; i < n; i++) {
-            Arrays.fill(d[i], INF);
+            Arrays.fill(ddd[i], INF);
         }
         for (int i = 0; i < m; i++) {
             int a = sc.nextInt();
@@ -50,24 +50,23 @@ public class ABC208D {
             int c = sc.nextInt();
             a--;
             b--;
-            d[a][b] = c;
+            ddd[a][b] = c;
         }
         for (int i = 0; i < n; i++) {
-            d[i][i] = 0;
+            ddd[i][i] = 0;
         }
         long ans = 0;
         for (int k = 0; k < n; k++) {
             long[][] next = new long[n][n];
-
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < n; j++) {
-                    next[i][j] = Math.min(d[i][j], d[i][k] + d[k][j]);
+                    next[i][j] = Math.min(ddd[i][j], ddd[i][k] + ddd[k][j]);
                     if (next[i][j] < INF) {
                         ans += next[i][j];
                     }
                 }
             }
-            d = next;
+            ddd = next;
         }
         System.out.println(ans);
     }
@@ -91,7 +90,7 @@ public class ABC208D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -107,7 +106,7 @@ public class ABC208D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """

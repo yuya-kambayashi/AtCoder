@@ -38,62 +38,63 @@ public class ABC207D {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
-        List<Point> S = new ArrayList<>();
-        List<Point> T = new ArrayList<>();
+        List<Point> ss = new ArrayList<>();
+        List<Point> tt = new ArrayList<>();
+
         for (int i = 0; i < n; i++) {
-            S.add(new Point(sc.nextInt(), sc.nextInt()));
+            ss.add(new Point(sc.nextInt(), sc.nextInt()));
         }
         for (int i = 0; i < n; i++) {
-            T.add(new Point(sc.nextInt(), sc.nextInt()));
+            tt.add(new Point(sc.nextInt(), sc.nextInt()));
         }
+
         double centerSx = 0;
         double centerSy = 0;
         double centerTx = 0;
         double centerTy = 0;
         for (int i = 0; i < n; i++) {
-            centerSx += S.get(i).x;
-            centerSy += S.get(i).y;
-            centerTx += T.get(i).x;
-            centerTy += T.get(i).y;
+            centerSx += ss.get(i).x;
+            centerSy += ss.get(i).y;
+            centerTx += tt.get(i).x;
+            centerTy += tt.get(i).y;
         }
         centerSx /= n;
         centerSy /= n;
         centerTx /= n;
         centerTy /= n;
-        for (int i = 0; i < n; i++) {
-            S.get(i).x -= centerSx;
-            S.get(i).y -= centerSy;
-            T.get(i).x -= centerTx;
-            T.get(i).y -= centerTy;
-        }
 
+        for (int i = 0; i < n; i++) {
+            ss.get(i).x -= centerSx;
+            ss.get(i).y -= centerSy;
+            tt.get(i).x -= centerTx;
+            tt.get(i).y -= centerTy;
+        }
         double theta_s0 = 0;
         for (int i = 0; i < n; i++) {
-            Point s0 = S.get(i);
+            Point s0 = ss.get(i);
             if (s0.x != 0 || s0.y != 0) {
                 theta_s0 = Math.atan2(s0.y, s0.x);
                 break;
             }
         }
         for (int i = 0; i < n; i++) {
-            Point t = T.get(i);
+            Point t = tt.get(i);
             double theta_t = Math.atan2(t.y, t.x);
             double theta = theta_t - theta_s0;
             boolean flag = true;
             for (int j = 0; j < n; j++) {
-                Point s = S.get(j);
+                Point s = ss.get(j);
                 double s_x_ = Math.cos(theta) * s.x - Math.sin(theta) * s.y;
                 double s_y_ = Math.sin(theta) * s.x + Math.cos(theta) * s.y;
                 boolean flag2 = false;
                 for (int k = 0; k < n; k++) {
-                    Point tk = T.get(k);
+                    Point tk = tt.get(k);
                     if (Math.abs(s_x_ - tk.x) <= 0.000006 && Math.abs(s_y_ - tk.y) <= 0.000006) {
                         flag2 = true;
                         break;
                     }
                 }
                 flag &= flag2;
-
             }
             if (flag) {
                 System.out.println("Yes");
@@ -104,7 +105,6 @@ public class ABC207D {
     }
 
     static class Point {
-
         double x, y;
 
         Point(int x, int y) {
