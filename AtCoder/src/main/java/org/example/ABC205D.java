@@ -43,16 +43,17 @@ public class ABC205D {
         for (int i = 0; i < n; i++) {
             as[i] = sc.nextLong();
         }
+
         long[] sums = new long[n];
         sums[0] = as[0] - 1;
         for (int i = 0; i < n - 1; i++) {
             long a = as[i];
-            long next_a = as[i + 1];
-            sums[i + 1] = next_a - a - 1 + sums[i];
+            long nextA = as[i + 1];
+            sums[i + 1] = nextA - a - 1 + sums[i];
         }
-
         for (int i = 0; i < q; i++) {
             long k = sc.nextLong();
+
             if (k > sums[n - 1]) {
                 System.out.println(as[n - 1] + k - sums[n - 1]);
                 continue;
@@ -61,18 +62,18 @@ public class ABC205D {
                 continue;
             }
 
-            int left = 0, right = n - 1, middle = 0;
+            int left = 0;
+            int right = n - 1;
             while (right - left > 1) {
-                middle = (left + right) / 2;
-                if (k <= sums[middle]) {
-                    right = middle;
+                int mid = (left + right) / 2;
+                if (k <= sums[mid]) {
+                    right = mid;
                 } else {
-                    left = middle;
+                    left = mid;
                 }
             }
             long ans = as[left] + (k - sums[left]);
             System.out.println(ans);
-            continue;
         }
     }
 //}

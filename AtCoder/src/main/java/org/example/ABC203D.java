@@ -40,56 +40,45 @@ public class ABC203D {
         final int n = sc.nextInt();
         final int k = sc.nextInt();
         int[][] aaa = new int[n][n];
-        List<Pair> pp = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 aaa[i][j] = sc.nextInt();
-                pp.add(new Pair(i, j, aaa[i][j]));
             }
         }
 
-        int target = (k * k / 2) + 1;
+        int ok = 1_000_000_000;
+        int ng = -1;
 
-        Collections.sort(pp, Comparator.comparingInt(Pair::getVal));
-
-        for (var p : pp) {
-
-            boolean ok = true;
-            int cntUpper = 0;
-            for (int r = p.row; r < p.row + k; r++) {
-                for (int c = p.col; c < p.col + k; c++) {
-                    if (r < 0 || r >= n || c < 0 || c >= n) {
-                        ok = false;
-                        break;
-                    }
-                    if (aaa[r][c] > p.val) {
-                        cntUpper++;
+        while (Math.abs(ok - ng) > 1) {
+            int mid = (ok + ng) / 2;
+            int[][] sss = new int[n + 1][n + 1];
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    sss[i + 1][j + 1] = sss[i][j + 1] + sss[i + 1][j] - sss[i][j];
+                    if (aaa[i][j] > mid) {
+                        sss[i + 1][j + 1]++;
                     }
                 }
-
             }
-            if (cntUpper == target - 1) {
-                System.out.println(p.val);
+            boolean found = false;
+            for (int i = k; i <= n; i++) {
+                for (int j = k; j <= n; j++) {
+                    int count = sss[i][j] - sss[i - k][j] - sss[i][j - k] + sss[i - k][j - k];
+                    if (count < k * k / 2 + 1) {
+                        found = true;
+                    }
+                }
+                if (found) {
+                    break;
+                }
+            }
+            if (found) {
+                ok = mid;
+            } else {
+                ng = mid;
             }
         }
-
-        System.out.println();
-    }
-
-    static class Pair {
-
-        int row, col, val;
-
-        public Pair(int row, int col, int val) {
-            this.row = row;
-            this.col = col;
-            this.val = val;
-        }
-
-        public int getVal() {
-            return val;
-        }
-
+        System.out.println(ok);
     }
 //}
 

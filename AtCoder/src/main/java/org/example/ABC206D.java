@@ -47,6 +47,7 @@ public class ABC206D {
         for (int i = 0; i < n; i++) {
             uf.unite(aa[i], aa[n - 1 - i]);
         }
+
         int ans = 0;
         for (int i = 0; i < 200010; i++) {
             if (uf.root(i) == i) {
@@ -57,9 +58,8 @@ public class ABC206D {
     }
 
     static class UnionFind {
-
-        private int[] par;
-        private int[] siz;
+        private final int[] par;
+        private final int[] siz;
 
         public UnionFind(int n) {
             par = new int[n];
@@ -86,6 +86,7 @@ public class ABC206D {
         public boolean unite(int x, int y) {
             x = root(x);
             y = root(y);
+
             if (x == y) {
                 return false;
             }
@@ -96,6 +97,7 @@ public class ABC206D {
             }
             par[x] = y;
             siz[y] += siz[x];
+
             return true;
         }
     }
