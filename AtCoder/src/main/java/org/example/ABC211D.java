@@ -38,43 +38,46 @@ public class ABC211D {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
+        int mod = (int) 1e9 + 7;
+
         final int n = sc.nextInt();
         final int m = sc.nextInt();
-        List<List<Integer>> gg = new ArrayList<>();
+        List<List<Integer>> ggg = new ArrayList<>();
         for (int i = 0; i < n; i++) {
-            gg.add(new ArrayList<Integer>());
+            ggg.add(new ArrayList<Integer>());
         }
         for (int i = 0; i < m; i++) {
             int a = sc.nextInt();
             int b = sc.nextInt();
             a--;
             b--;
-            gg.get(a).add(b);
-            gg.get(b).add(a);
+            ggg.get(a).add(b);
+            ggg.get(b).add(a);
         }
+
+        Queue<Integer> que = new LinkedList<>();
+        que.add(0);
 
         int[] dist = new int[n];
         Arrays.fill(dist, -1);
         long[] cnt = new long[n];
-
-        final long mod = 1000000007;
-
-        Queue<Integer> que = new ArrayDeque<Integer>();
-        que.add(0);
         dist[0] = 0;
         cnt[0] = 1;
 
-        while (!que.isEmpty()) {
-            int from = que.poll();
-            for (int to : gg.get(from)) {
 
-                if (dist[to] == -1) {
-                    dist[to] = dist[from] + 1;
-                    cnt[to] = cnt[from];
-                    que.add(to);
-                } else if (dist[to] == dist[from] + 1) {
-                    cnt[to] += cnt[from];
-                    cnt[to] %= mod;
+        while (!que.isEmpty()) {
+            int now = que.poll();
+
+            var gg = ggg.get(now);
+
+            for (var next : gg) {
+                if (dist[next] == -1) {
+                    dist[next] = dist[now] + 1;
+                    cnt[next] = cnt[now];
+                    que.add(next);
+                } else if (dist[next] == dist[now] + 1) {
+                    cnt[next] += cnt[now];
+                    cnt[next] %= mod;
                 }
             }
         }

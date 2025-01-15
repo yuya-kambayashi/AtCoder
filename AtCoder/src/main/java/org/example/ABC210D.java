@@ -55,7 +55,6 @@ public class ABC210D {
     }
 
     static long solve(int h, int w, long c, long[][] aa) {
-
         long ans = Long.MAX_VALUE;
         long[][] dp = new long[h][w];
 
@@ -86,9 +85,9 @@ public class ABC210D {
                 }
             }
         }
-
         return ans;
     }
+
 //}
 
     @Test
@@ -110,7 +109,7 @@ public class ABC210D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """

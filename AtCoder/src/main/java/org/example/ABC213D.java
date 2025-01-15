@@ -34,22 +34,23 @@ public class ABC213D {
 //import java.util.stream.*;
 //public class Main {
 
-    static List<List<Integer>> ggg;
-    static boolean[] visited;
+    // https://atcoder.jp/contests/abc213/submissions/58149700
+
     static int n;
+    static List<ArrayList<Integer>> ggg;
+    static boolean[] visited;
     static StringBuilder sb;
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        n = sc.nextInt();
-
-        ggg = new ArrayList<>();
+        int n = sc.nextInt();
         visited = new boolean[n];
-        sb = new StringBuilder();
+        ggg = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             ggg.add(new ArrayList<>());
         }
+
         for (int i = 0; i < n - 1; i++) {
             int a = sc.nextInt();
             int b = sc.nextInt();
@@ -61,19 +62,20 @@ public class ABC213D {
         for (int i = 0; i < n; i++) {
             Collections.sort(ggg.get(i));
         }
+        sb = new StringBuilder();
+        visited[0] = true;
         dfs(0);
-
-        System.out.println(sb.toString());
+        System.out.println(sb);
     }
 
     static void dfs(int cur) {
+
         sb.append(cur + 1);
         sb.append(" ");
 
-        visited[cur] = true;
-
         for (var next : ggg.get(cur)) {
             if (!visited[next]) {
+                visited[next] = true;
                 dfs(next);
                 sb.append(cur + 1);
                 sb.append(" ");

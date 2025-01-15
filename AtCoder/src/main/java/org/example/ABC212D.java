@@ -47,15 +47,13 @@ public class ABC212D {
             if (pp[i] == 1) {
                 long x = sc.nextLong();
                 pq.add(x - offset);
-            }
-            if (pp[i] == 2) {
-                long x = sc.nextLong();
-                offset += x;
-            }
-            if (pp[i] == 3) {
+            } else if (pp[i] == 2) {
+                offset += sc.nextLong();
+            } else if (pp[i] == 3) {
                 System.out.println(pq.poll() + offset);
             }
         }
+
     }
 //}
 
