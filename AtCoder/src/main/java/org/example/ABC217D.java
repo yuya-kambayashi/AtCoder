@@ -34,12 +34,27 @@ public class ABC217D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc217/submissions/60708217
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
-
-        System.out.println();
+        final int l = sc.nextInt();
+        final int q = sc.nextInt();
+        TreeSet<Integer> set = new TreeSet<>();
+        set.add(0);
+        set.add(l);
+        for (int i = 0; i < q; i++) {
+            int c = sc.nextInt();
+            int x = sc.nextInt();
+            if (c == 1) {
+                set.add(x);
+            } else {
+                int bottom = set.floor(x);
+                int top = set.ceiling(x);
+                System.out.println(top - bottom);
+            }
+        }
     }
 //}
 
@@ -63,7 +78,7 @@ public class ABC217D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -82,7 +97,7 @@ public class ABC217D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """

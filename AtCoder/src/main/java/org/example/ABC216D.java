@@ -29,7 +29,7 @@ public class ABC216D {
         System.setIn(null);
         System.setOut(null);
     }
-//import java.math.*;
+    //import java.math.*;
 //import java.util.*;
 //import java.util.stream.*;
 //public class Main {
@@ -40,32 +40,34 @@ public class ABC216D {
 
         final int n = sc.nextInt();
         final int m = sc.nextInt();
-        ArrayList<Integer>[] vs = new ArrayList[n];
+        ArrayList<Integer>[] aaa = new ArrayList[n];
         for (int i = 0; i < n; i++) {
-            vs[i] = new ArrayList<>();
+            aaa[i] = new ArrayList<>();
         }
         int[] deg = new int[n];
         for (int i = 0; i < m; i++) {
             int k = sc.nextInt();
-            int p = sc.nextInt() - 1;
+            int p = sc.nextInt();
+            p--;
             for (int j = 1; j < k; j++) {
-                int q = sc.nextInt() - 1;
-                vs[p].add(q);
+                int q = sc.nextInt();
+                q--;
+                aaa[p].add(q);
                 deg[q]++;
                 p = q;
             }
         }
         Queue<Integer> que = new LinkedList<>();
-        int k = 0;
         for (int i = 0; i < n; i++) {
             if (deg[i] == 0) {
                 que.add(i);
             }
         }
+        int k = 0;
         while (!que.isEmpty()) {
             int x = que.poll();
             k++;
-            for (int y : vs[x]) {
+            for (int y : aaa[x]) {
                 deg[y]--;
                 if (deg[y] == 0) {
                     que.add(y);
@@ -73,6 +75,7 @@ public class ABC216D {
             }
         }
         System.out.println(k == n ? "Yes" : "No");
+
     }
 //}
 

@@ -38,68 +38,69 @@ public class ABC218D {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
-
-        List<Coord> cc = new ArrayList<>();
-        Set<Coord> cc2 = new HashSet<>();
+        Set<Coord> set = new HashSet<>();
         for (int i = 0; i < n; i++) {
-            cc.add(new Coord(sc.nextInt(), sc.nextInt()));
-            cc2.add(cc.get(i));
+            set.add(new Coord(sc.nextInt(), sc.nextInt()));
         }
 
-        int cnt = 0;
-
-        HashSet<HashSet<Coord>> used = new HashSet<>();
-
-        for (int i = 0; i < n; i++) {
-            var c1 = cc.get(i);
-
-            for (int j = i + 1; j < n; j++) {
-                var c2 = cc.get(j);
+        Set<List<String>> ans = new HashSet<>();
+        for (var c1 : set) {
+            for (var c2 : set) {
+                if (c1.equals(c2)) {
+                    continue;
+                }
 
                 if (c1.x == c2.x || c1.y == c2.y) {
                     continue;
                 }
+                if (c1.x > c2.x || c1.y > c2.y) {
+                    continue;
+                }
 
-                var c3 = new Coord(c1.x, c2.y);
-                var c4 = new Coord(c2.x, c1.y);
+                Coord c3 = new Coord(Math.min(c1.x, c2.x), Math.max(c1.y, c2.y));
+                Coord c4 = new Coord(Math.max(c1.x, c2.x), Math.min(c1.y, c2.y));
 
-                if (cc2.contains(c3) && cc2.contains(c4)) {
-
-                    HashSet<Coord> uu = new HashSet<>();
-                    uu.add(c1);
-                    uu.add(c2);
-                    uu.add(c3);
-                    uu.add(c4);
-
-                    if (!used.contains(uu)) {
-                        cnt++;
-                        used.add(uu);
-                    }
+                if (set.contains(c3) && set.contains(c4)) {
+                    List<String> s = new ArrayList<>();
+                    s.add(c1.toString());
+                    s.add(c2.toString());
+                    s.add(c3.toString());
+                    s.add(c4.toString());
+                    Collections.sort(s);
+                    ans.add(s);
                 }
             }
         }
-        System.out.println(cnt);
-
+        System.out.println(ans.size());
     }
 
     static class Coord {
-
         int x, y;
+
+        @Override
+        public String toString() {
+            return x + "," + y;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            Coord coord = (Coord) o;
+            return x == coord.x && y == coord.y;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(x, y);
+        }
 
         public Coord(int x, int y) {
             this.x = x;
             this.y = y;
         }
 
-        public int hashCode() {
-            return 31 * x + y;
-        }
-
-        public boolean equals(Object obj) {
-            Coord other = (Coord) obj;
-
-            return this.x == other.x && this.y == other.y;
-        }
     }
 //}
 
