@@ -40,24 +40,24 @@ public class ABC215D {
 
         final int n = sc.nextInt();
         final int m = sc.nextInt();
-        int[] aa = new int[n];
-        for (int i = 0; i < n; i++) {
-            aa[i] = sc.nextInt();
-        }
-
+        Set<Integer> aa = new HashSet<>();
         boolean[] cop = new boolean[m + 1];
         Arrays.fill(cop, true);
 
-        for (int a : aa) {
-            List<Integer> div = pfact(a);
-            for (int vv : div) {
-                if (vv > m || !cop[vv]) {
+        for (int i = 0; i < n; i++) {
+            aa.add(sc.nextInt());
+        }
+
+        for (var a : aa) {
+            List<Integer> ff = primeFactors(a);
+            for (int f : ff) {
+                if (f > m || !cop[f]) {
                     continue;
                 }
-                int tmp = vv;
-                while (tmp <= m) {
-                    cop[tmp] = false;
-                    tmp += vv;
+                int temp = f;
+                while (temp <= m) {
+                    cop[temp] = false;
+                    temp += f;
                 }
             }
         }
@@ -68,18 +68,17 @@ public class ABC215D {
             }
         }
         System.out.println(ans.size());
-        for (int a : ans) {
+        for (var a : ans) {
             System.out.println(a);
-
         }
     }
 
-    public static List<Integer> pfact(int n) {
+    static List<Integer> primeFactors(int n) {
         List<Integer> ret = new ArrayList<>();
         for (int i = 2; i * i <= n; i++) {
             while (n % i == 0) {
-                n /= i;
                 ret.add(i);
+                n /= i;
             }
         }
         if (n != 1) {

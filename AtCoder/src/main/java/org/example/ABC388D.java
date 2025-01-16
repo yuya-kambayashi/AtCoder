@@ -32,46 +32,34 @@ public class ABC388D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc388/submissions/61689840
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        // 入力を受け取る
         int n = sc.nextInt();
         int[] aa = new int[n];
         for (int i = 0; i < n; i++) {
             aa[i] = sc.nextInt();
         }
 
-        // dpの初期化
-        int[][] dp = new int[n + 1][n]; // n+1 行, n 列の2次元配列
+        int[] sum = new int[n + 1];
+        int cur = 0;
         for (int i = 0; i < n; i++) {
-            dp[0][i] = aa[i]; // dp[0] に aa をコピー
-            dp[1][i] = aa[i]; // dp[1] に aa をコピー
-        }
+            cur += sum[i];
+            int x = aa[i] + cur;
 
-        // dpテーブルを更新
-        for (int i = 2; i <= n; i++) {
-            // iまでの人が成人
-            for (int j = 0; j < i - 1; j++) {
-                if (dp[i - 1][j] > 0) {
-                    dp[i][j] = dp[i - 1][j] - 1;
-                    if (i - 1 < n) {  // 配列範囲チェック
-                        dp[i][i - 1]++;
-                    }
-                }
+            if (x == 0) {
+                System.out.print(x + " ");
+            } else {
+                int add = Math.min(x, n - (i + 1));
+                sum[i + 1]++;
+                sum[i + add + 1]--;
+                System.out.print((x - add) + " ");
             }
-
-            // dp[i][j] の更新
-            for (int j = i - 1; j < n; j++) {
-                dp[i][j] += dp[i - 1][j];
-            }
-        }
-
-        // 結果を出力
-        for (int i = 0; i < n; i++) {
-            System.out.print(dp[n][i] + " ");
         }
     }
+
 //}
 
     @Test

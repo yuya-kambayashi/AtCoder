@@ -42,20 +42,21 @@ public class ABC214D {
         long ans = 0;
 
         UnionFind uf = new UnionFind(n);
-        Line[] l = new Line[n - 1];
+        List<Line> ll = new ArrayList<>();
         for (int i = 0; i < n - 1; i++) {
             int a = sc.nextInt();
             int b = sc.nextInt();
             int c = sc.nextInt();
-            l[i] = new Line(a, b, c);
+            ll.add(new Line(a, b, c));
         }
-        Arrays.sort(l);
+        Collections.sort(ll);
 
         for (int i = 0; i < n - 1; i++) {
-            long add = uf.unite(l[i].a, l[i].b);
-            ans += add * (long) l[i].val;
+            long add = uf.unite(ll.get(i).a, ll.get(i).b);
+            ans += add * (long) ll.get(i).val;
         }
-        System.out.print(ans);
+
+        System.out.println(ans);
     }
 
     static class UnionFind {
