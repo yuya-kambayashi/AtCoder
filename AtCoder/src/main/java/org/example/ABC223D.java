@@ -34,12 +34,58 @@ public class ABC223D {
 //import java.util.stream.*;
 //public class Main {
 
+
+    // https://atcoder.jp/contests/abc223/submissions/48362440
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        final int m = sc.nextInt();
+        ABC228D.Node[] nn = new ABC228D.Node[n + 1];
+        for (int i = 1; i <= n; i++) {
+            nn[i] = new ABC228D.Node();
+        }
+        for (int i = 0; i < m; i++) {
+            int a = sc.nextInt();
+            int b = sc.nextInt();
+            nn[a].list.add(b);
+            nn[b].inThis++;
+        }
+        PriorityQueue<Integer> que = new PriorityQueue<>();
+        for (int i = 1; i <= n; i++) {
+            if (nn[i].inThis == 0) {
+                que.add(i);
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        int count = 0;
+        while (!que.isEmpty()) {
+            int a = que.poll();
+            count++;
+            sb.append(a + " ");
+            for (int s : nn[a].list) {
+                nn[s].inThis--;
+                if (nn[s].inThis == 0) {
+                    que.add(s);
+                }
+            }
+        }
+        if (count != n) {
+            System.out.print(-1);
+        } else {
+            System.out.print(sb);
+        }
+    }
 
-        System.out.println();
+    public static class Node {
+        int inThis;
+        ArrayList<Integer> list;
+
+        public Node() {
+            inThis = 0;
+            list = new ArrayList<>();
+        }
     }
 //}
 
@@ -62,7 +108,7 @@ public class ABC223D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
