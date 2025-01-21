@@ -34,12 +34,44 @@ public class ABC222D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc222/submissions/61346931
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
+        int mod = 998244353;
 
-        System.out.println();
+        final int n = sc.nextInt();
+        int[] aa = new int[n + 1];
+        int[] bb = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
+            aa[i] = sc.nextInt();
+        }
+        for (int i = 1; i <= n; i++) {
+            bb[i] = sc.nextInt();
+        }
+
+        int maxi = bb[n];
+        int[][] sum = new int[n + 1][maxi + 1];
+        int[][] dp = new int[n + 1][maxi + 1];
+        dp[0][0] = 1;
+
+        for (int j = 0; j <= maxi; j++) {
+            sum[0][j] = 1;
+        }
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 0; j <= maxi; j++) {
+                if (aa[i] <= j && j <= bb[i]) {
+                    dp[i][j] = sum[i - 1][j] % mod;
+                }
+
+                sum[i][j] = ((j > 0) ? sum[i][j - 1] : 0) + dp[i][j];
+                sum[i][j] %= mod;
+            }
+        }
+
+        System.out.println(sum[n][maxi]);
     }
 //}
 
@@ -61,7 +93,7 @@ public class ABC222D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -79,7 +111,7 @@ public class ABC222D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """
