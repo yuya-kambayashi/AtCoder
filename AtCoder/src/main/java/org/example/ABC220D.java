@@ -11,7 +11,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ABC220D {
 
@@ -34,12 +33,35 @@ public class ABC220D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc220/submissions/61878700
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        int[] aa = new int[n];
+        for (int i = 0; i < n; i++) {
+            aa[i] = sc.nextInt();
+        }
 
-        System.out.println();
+        long mod = 998244353;
+        long[][] dp = new long[n + 1][10];
+        dp[1][aa[0]] = 1;
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < 10; j++) {
+                if (dp[i][j] > 0) {
+                    int a = (j + aa[i]) % 10;
+                    int b = (j * aa[i]) % 10;
+                    dp[i + 1][a] += dp[i][j];
+                    dp[i + 1][b] += dp[i][j];
+                    dp[i + 1][a] %= mod;
+                    dp[i + 1][b] %= mod;
+                }
+            }
+        }
+        for (int j = 0; j < 10; j++) {
+            System.out.println(dp[n][j]);
+        }
     }
 //}
 
@@ -69,7 +91,7 @@ public class ABC220D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
