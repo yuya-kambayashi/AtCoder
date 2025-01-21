@@ -34,12 +34,42 @@ public class ABC221D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc221/submissions/55617612
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        List<Pair> pp = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            int a = sc.nextInt();
+            int b = sc.nextInt();
+            pp.add(new Pair(a, 1));
+            pp.add(new Pair(a + b, -1));
+        }
+        Collections.sort(pp, (p1, p2) -> Integer.compare(p1.x, p2.x));
+
+        int cnt = 0;
+        int[] ans = new int[n + 1];
+        for (int i = 0; i < pp.size() - 1; i++) {
+            cnt += pp.get(i).y;
+            ans[cnt] += pp.get(i + 1).x - pp.get(i).x;
+        }
+        for (int i = 1; i <= n; i++) {
+            System.out.print(ans[i] + " ");
+        }
+
 
         System.out.println();
+    }
+
+    static class Pair {
+        int x, y;
+
+        public Pair(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
     }
 //}
 
@@ -62,7 +92,7 @@ public class ABC221D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
