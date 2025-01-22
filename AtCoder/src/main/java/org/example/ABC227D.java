@@ -34,12 +34,34 @@ public class ABC227D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc227/submissions/59022268
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        final int k = sc.nextInt();
+        long[] aa = new long[n];
+        for (int i = 0; i < n; i++) {
+            aa[i] = sc.nextLong();
+        }
 
-        System.out.println();
+        long left = 0, right = Long.MAX_VALUE / 2;
+        while (right - left > 1) {
+            long mid = (left + right) / 2;
+            long sum = 0;
+            for (long a : aa) {
+                sum += Math.min(a, mid);
+            }
+            if (sum / k >= mid) {
+                left = mid;
+            } else {
+                right = mid;
+            }
+        }
+
+
+        System.out.println(left);
     }
 //}
 
@@ -60,7 +82,7 @@ public class ABC227D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -77,7 +99,7 @@ public class ABC227D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """

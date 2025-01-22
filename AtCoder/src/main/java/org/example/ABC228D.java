@@ -1,6 +1,7 @@
 package org.example;
 
 
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -34,12 +35,36 @@ public class ABC228D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc228/submissions/55628206
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
+        int q = sc.nextInt();
+        int n = 1 << 20;
+        long[] aa = new long[n + 1];
+        Arrays.fill(aa, -1);
+        TreeSet<Integer> set = new TreeSet<>();
+        for (int i = 0; i <= n; i++) {
+            set.add(i);
+        }
+        for (int i = 0; i < q; i++) {
+            int t = sc.nextInt();
+            long x = sc.nextLong();
+            int v = (int) (x % n);
 
-        System.out.println();
+            if (t == 1) {
+                int h = set.ceiling(v);
+                if (h == n) {
+                    h = set.ceiling(0);
+                }
+                set.remove(h);
+                aa[h] = x;
+            }
+            if (t == 2) {
+                System.out.println(aa[v]);
+            }
+        }
     }
 //}
 
@@ -64,15 +89,15 @@ public class ABC228D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    // @Test
     public void Case2() {
 
         String input = """
-                
+                IN2
                 """;
 
         String expected = """
-                
+                OUT2
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
 
