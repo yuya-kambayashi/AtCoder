@@ -34,12 +34,61 @@ public class ABC224D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc224/editorial/2813
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
+        final int m = sc.nextInt();
+        List<List<Integer>> graph = new ArrayList<>();
+        for (int i = 0; i <= 9; i++) {
+            graph.add(new ArrayList<>());
+        }
+        for (int i = 0; i < m; i++) {
+            int u = sc.nextInt();
+            int v = sc.nextInt();
+            graph.get(u).add(v);
+            graph.get(v).add(u);
+        }
 
-        System.out.println();
+        char[] ss = new char[9];
+        Arrays.fill(ss, '9');
+        for (int i = 1; i <= 8; i++) {
+            int p = sc.nextInt();
+            p--;
+            ss[p] = (char) (i + '0');
+        }
+        String start = new String(ss);
+
+        Queue<String> que = new LinkedList<>();
+        Map<String, Integer> visited = new HashMap<>();
+        que.add(start);
+        visited.put(start, 0);
+
+        while (!que.isEmpty()) {
+            String cur = que.poll();
+            int nineIndex = cur.indexOf('9');
+
+            for (int neighbor : graph.get(nineIndex + 1)) {
+                char[] nextState = cur.toCharArray();
+
+                char temp = nextState[neighbor - 1];
+                nextState[neighbor - 1] = nextState[nineIndex];
+                nextState[nineIndex] = temp;
+
+                String next = new String(nextState);
+                if (!visited.containsKey(next)) {
+                    visited.put(next, visited.get(cur) + 1);
+                    que.add(next);
+                }
+            }
+        }
+        String goal = "123456789";
+        if (visited.containsKey(goal)) {
+            System.out.println(visited.get(goal));
+        } else {
+            System.out.println(-1);
+        }
     }
 //}
 
@@ -65,7 +114,7 @@ public class ABC224D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -87,7 +136,7 @@ public class ABC224D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """
@@ -116,7 +165,7 @@ public class ABC224D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case4() {
 
         String input = """

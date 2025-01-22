@@ -42,9 +42,9 @@ public class ABC223D {
 
         final int n = sc.nextInt();
         final int m = sc.nextInt();
-        ABC228D.Node[] nn = new ABC228D.Node[n + 1];
+        Node[] nn = new Node[n + 1];
         for (int i = 1; i <= n; i++) {
-            nn[i] = new ABC228D.Node();
+            nn[i] = new Node();
         }
         for (int i = 0; i < m; i++) {
             int a = sc.nextInt();
