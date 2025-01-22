@@ -34,12 +34,54 @@ public class ABC225D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc225/submissions/53652192
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        final int q = sc.nextInt();
 
-        System.out.println();
+        int[] pre = new int[n + 1];
+        int[] suf = new int[n + 1];
+
+        for (int i = 0; i < q; i++) {
+            int t = sc.nextInt();
+            if (t == 1) {
+                int x = sc.nextInt();
+                int y = sc.nextInt();
+                pre[y] = x;
+                suf[x] = y;
+
+            } else if (t == 2) {
+
+                int x = sc.nextInt();
+                int y = sc.nextInt();
+                pre[y] = 0;
+                suf[x] = 0;
+
+            } else {
+                int x = sc.nextInt();
+
+                int k = x;
+                while (k != 0) {
+                    if (pre[k] == 0) {
+                        break;
+                    }
+                    k = pre[k];
+                }
+                int top = k;
+                int cnt = 0;
+                StringBuilder sb = new StringBuilder();
+                while (top != 0) {
+                    sb.append(top + " ");
+                    top = suf[top];
+                    cnt++;
+                }
+                System.out.print(cnt + " ");
+                System.out.println(sb);
+            }
+        }
     }
 //}
 
