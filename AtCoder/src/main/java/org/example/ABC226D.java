@@ -34,12 +34,68 @@ public class ABC226D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc226/submissions/47199579
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        int[] xx = new int[n];
+        int[] yy = new int[n];
+        for (int i = 0; i < n; i++) {
+            xx[i] = sc.nextInt();
+            yy[i] = sc.nextInt();
+        }
 
-        System.out.println();
+        Set<Pair> set = new HashSet<>();
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (i == j) {
+                    continue;
+                }
+
+                int s = Math.abs(xx[j] - xx[i]);
+                int t = Math.abs(yy[j] - yy[i]);
+
+                int v = gcd(s, t);
+                set.add(new Pair((xx[i] - xx[j]) / v, (yy[i] - yy[j]) / v));
+            }
+        }
+
+        System.out.println(set.size());
+    }
+
+    static int gcd(int x, int y) {
+        if (y == 0) {
+            return x;
+        }
+        int r = x % y;
+        if (r < 0) {
+            r += y;
+        }
+        return gcd(y, r);
+    }
+
+    static class Pair {
+        int first, second;
+
+        public Pair(int first, int second) {
+            this.first = first;
+            this.second = second;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(first, second);
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (!(obj instanceof Pair other)) {
+                return false;
+            }
+            return this.first == other.first && this.second == other.second;
+        }
     }
 //}
 
@@ -62,7 +118,7 @@ public class ABC226D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -81,7 +137,7 @@ public class ABC226D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """
