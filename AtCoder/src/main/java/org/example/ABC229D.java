@@ -34,12 +34,40 @@ public class ABC229D {
 //import java.util.stream.*;
 //public class Main {
 
+    //https://atcoder.jp/contests/abc229/submissions/59801143
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
+        final String s = sc.next();
+        final int k = sc.nextInt();
+        String sb = " " + s;
 
-        System.out.println();
+        int n = sb.length();
+        int[] dotCount = new int[n];
+        int count = 0;
+        for (int i = 0; i < n; i++) {
+            if (sb.charAt(i) == '.') {
+                count++;
+            }
+            dotCount[i] = count;
+        }
+
+        int right = 1;
+        int ans = 0;
+        for (int left = 1; left < n; left++) {
+            while (right < n) {
+                int dist = dotCount[right] - dotCount[left - 1];
+                if (dist <= k) {
+                    right++;
+                } else {
+                    break;
+                }
+            }
+            ans = Math.max(ans, right - left);
+        }
+
+        System.out.println(ans);
     }
 //}
 
