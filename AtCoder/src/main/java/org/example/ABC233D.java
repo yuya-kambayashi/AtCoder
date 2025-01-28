@@ -34,12 +34,27 @@ public class ABC233D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc233/submissions/53703055
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        final long k = sc.nextLong();
+        HashMap<Long, Long> map = new HashMap<>();
+        long preSum = 0;
+        long cnt = 0;
+        map.put(0L, 1L);
+        for (int i = 0; i < n; i++) {
+            long t = sc.nextLong();
+            preSum += t;
+            if (map.containsKey(preSum - k)) {
+                cnt += map.get(preSum - k);
+            }
+            map.put(preSum, map.getOrDefault(preSum, 0L) + 1);
+        }
 
-        System.out.println();
+        System.out.println(cnt);
     }
 //}
 
@@ -60,7 +75,7 @@ public class ABC233D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """

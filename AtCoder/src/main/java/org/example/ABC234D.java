@@ -38,8 +38,24 @@ public class ABC234D {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        final int k = sc.nextInt();
+        int[] pp = new int[n];
+        for (int i = 0; i < n; i++) {
+            pp[i] = sc.nextInt();
+        }
 
-        System.out.println();
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for (int i = 0; i < n; i++) {
+            pq.add(pp[i]);
+
+            if (pq.size() > k) {
+                pq.poll();
+            }
+
+            if (i >= k - 1) {
+                System.out.println(pq.peek());
+            }
+        }
     }
 //}
 
@@ -61,7 +77,7 @@ public class ABC234D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
