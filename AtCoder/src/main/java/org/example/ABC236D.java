@@ -34,12 +34,60 @@ public class ABC236D {
 //import java.util.stream.*;
 //public class Main {
 
+    // c++サンプルコードの変換
+
+    static int n;
+    static int[][] aaa;
+    static List<int[]> vec;
+    static boolean[] used;
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
+        n = sc.nextInt();
+        aaa = new int[20][20];
+        vec = new ArrayList<>();
+        used = new boolean[20];
 
-        System.out.println();
+        for (int i = 1; i <= 2 * n - 1; i++) {
+            for (int j = i + 1; j <= 2 * n; j++) {
+                aaa[i][j] = sc.nextInt();
+            }
+        }
+
+        System.out.println(calc());
+    }
+
+    static int calc() {
+        if (vec.size() == n) {
+            int ret = 0;
+            for (int[] pp : vec) {
+                ret ^= aaa[pp[0]][pp[1]];
+            }
+            return ret;
+        }
+
+        int l = -1;
+        for (int i = 1; i <= 2 * n; i++) {
+            if (!used[i]) {
+                l = i;
+                break;
+            }
+        }
+        used[l] = true;
+
+        int ret = 0;
+        for (int i = 1; i <= 2 * n; i++) {
+            if (!used[i]) {
+                vec.add(new int[]{l, i});
+                used[i] = true;
+                ret = Math.max(ret, calc());
+                vec.remove(vec.size() - 1);
+                used[i] = false;
+            }
+        }
+        used[l] = false;
+        return ret;
     }
 //}
 
@@ -62,7 +110,7 @@ public class ABC236D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -79,7 +127,7 @@ public class ABC236D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """
