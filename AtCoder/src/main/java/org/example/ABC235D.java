@@ -34,12 +34,39 @@ public class ABC235D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc235/submissions/28542156
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
+        int a = sc.nextInt();
+        int n = sc.nextInt();
 
-        System.out.println();
+        Queue<Integer> que = new LinkedList<>();
+        que.add(1);
+        int[] dd = new int[10_000_000];
+        Arrays.fill(dd, -1);
+        dd[1] = 0;
+        while (!que.isEmpty()) {
+            int cur = que.poll();
+            long v = (long) cur * a;
+            int next = cur * a;
+            if (v < dd.length && dd[next] == -1) {
+                que.add(next);
+                dd[next] = dd[cur] + 1;
+            }
+
+            if (cur >= 10 && cur % 10 != 0) {
+                String s = String.valueOf(cur);
+                s = s.substring(s.length() - 1) + s.substring(0, s.length() - 1);
+                next = Integer.parseInt(s);
+                if (next < dd.length && dd[next] == -1) {
+                    que.add(next);
+                    dd[next] = dd[cur] + 1;
+                }
+            }
+        }
+        System.out.println(dd[n]);
     }
 //}
 
@@ -54,12 +81,11 @@ public class ABC235D {
                 4
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-
         ABC235D.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -75,7 +101,7 @@ public class ABC235D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """
@@ -91,7 +117,7 @@ public class ABC235D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case4() {
 
         String input = """
