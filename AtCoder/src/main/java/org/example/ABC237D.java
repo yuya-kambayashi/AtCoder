@@ -34,12 +34,29 @@ public class ABC237D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc237/submissions/28957791
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        final String s = sc.next();
 
-        System.out.println();
+        ArrayDeque<Integer> dd = new ArrayDeque<>();
+        dd.add(n);
+        for (int i = n - 1; i >= 0; i--) {
+            if (s.charAt(i) == 'L') {
+                dd.addLast(i);
+            } else {
+                dd.addFirst(i);
+            }
+        }
+
+        for (var d : dd) {
+            System.out.print(d + " ");
+        }
+
+
     }
 //}
 
@@ -60,7 +77,7 @@ public class ABC237D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -77,7 +94,7 @@ public class ABC237D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    //@Test
     public void Case3() {
 
         String input = """

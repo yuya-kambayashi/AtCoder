@@ -34,12 +34,33 @@ public class ABC238D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc238/submissions/55659816
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
+        final int t = sc.nextInt();
 
-        System.out.println();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < t; i++) {
+            long a = sc.nextLong();
+            long s = sc.nextLong();
+
+            long x = a;
+            long y = a;
+
+            if (x + y > s) {
+                System.out.println("No");
+                continue;
+            }
+
+            long z = s - (x + y);
+            if ((x & z) > 0) {
+                System.out.println("No");
+                continue;
+            }
+            System.out.println("Yes");
+        }
     }
 //}
 
@@ -62,7 +83,7 @@ public class ABC238D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
