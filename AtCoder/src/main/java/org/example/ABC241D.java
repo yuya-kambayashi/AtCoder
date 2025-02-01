@@ -34,10 +34,54 @@ public class ABC241D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc241/submissions/43048177
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
+        final int q = sc.nextInt();
+        TreeMap<Long, Integer> map = new TreeMap<>();
+
+        for (int i = 0; i < q; i++) {
+            int t = sc.nextInt();
+            long x = sc.nextLong();
+            if (t == 1) {
+                map.put(x, map.getOrDefault(x, 0) + 1);
+                //map.merge(x, 1, Integer::sum);
+
+            } else if (t == 2) {
+                int k = sc.nextInt();
+
+                Long ans = x + 1;
+                while (k > 0 && ans != null) {
+                    ans = map.floorKey(ans - 1);
+                    if (ans != null) {
+                        k -= map.get(ans);
+                    }
+                }
+                if (ans != null) {
+                    System.out.println(ans);
+                } else {
+                    System.out.println(-1);
+                }
+
+            } else if (t == 3) {
+                int k = sc.nextInt();
+
+                Long ans = x - 1;
+                while (k > 0 && ans != null) {
+                    ans = map.ceilingKey(ans + 1);
+                    if (ans != null) {
+                        k -= map.get(ans);
+                    }
+                }
+                if (ans != null) {
+                    System.out.println(ans);
+                } else {
+                    System.out.println(-1);
+                }
+            }
+        }
 
         System.out.println();
     }

@@ -34,12 +34,41 @@ public class ABC240D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc240/submissions/29590028
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        Deque<Ball> balls = new ArrayDeque<>();
+        int size = 0;
+        for (int i = 0; i < n; i++) {
+            int a = sc.nextInt();
+            if (balls.isEmpty() || balls.peek().num != a) {
+                balls.push(new Ball(a, 1));
+                size++;
+            } else {
+                Ball b = balls.pop();
+                b.count++;
+                if (b.count != a) {
+                    balls.push(b);
+                    size++;
+                }
+                if (b.count == a) {
+                    size -= b.count - 1;
+                }
+            }
+            System.out.println(size);
+        }
+    }
 
-        System.out.println();
+    static class Ball {
+        int num, count;
+
+        public Ball(int num, int count) {
+            this.num = num;
+            this.count = count;
+        }
     }
 //}
 
@@ -64,7 +93,7 @@ public class ABC240D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
