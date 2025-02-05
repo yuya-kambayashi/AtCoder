@@ -34,12 +34,39 @@ public class ABC242D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc242/submissions/29897189
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
+        String s = sc.next();
+        int q = sc.nextInt();
+        char[] cc= s.toCharArray();
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i <q; i++ ){
+            long t = sc.nextLong();
+            long k = sc.nextLong();
+            long diff = 0;
+            while (k > 0 && t > 0){
+                int leftRight = k % 2 == 0 ? 1 : 2;
+                diff += leftRight;
+                k /= 2;
+                t--;
+            }
+            diff += t;
+            char c = cc[(int)k];
+            char ans;
+            if (c == 'B'){
+                diff += 1;
+            }
+            else if (c == 'C'){
+                diff+=2;
+            }
+            ans = (char)('A' + (int)(diff%3));
+            sb.append(ans + "\n");
+        }
 
-        System.out.println();
+        System.out.println(sb);
     }
 //}
 
