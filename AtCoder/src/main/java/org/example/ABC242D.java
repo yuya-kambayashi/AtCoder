@@ -41,28 +41,27 @@ public class ABC242D {
 
         String s = sc.next();
         int q = sc.nextInt();
-        char[] cc= s.toCharArray();
+        char[] cc = s.toCharArray();
         StringBuilder sb = new StringBuilder();
-        for(int i = 0; i <q; i++ ){
+        for (int i = 0; i < q; i++) {
             long t = sc.nextLong();
-            long k = sc.nextLong();
+            long k = sc.nextLong() - 1;
             long diff = 0;
-            while (k > 0 && t > 0){
+            while (k > 0 && t > 0) {
                 int leftRight = k % 2 == 0 ? 1 : 2;
                 diff += leftRight;
                 k /= 2;
                 t--;
             }
             diff += t;
-            char c = cc[(int)k];
+            char c = cc[(int) k];
             char ans;
-            if (c == 'B'){
+            if (c == 'B') {
                 diff += 1;
+            } else if (c == 'C') {
+                diff += 2;
             }
-            else if (c == 'C'){
-                diff+=2;
-            }
-            ans = (char)('A' + (int)(diff%3));
+            ans = (char) ('A' + (int) (diff % 3));
             sb.append(ans + "\n");
         }
 
@@ -94,7 +93,7 @@ public class ABC242D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
