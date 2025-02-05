@@ -33,12 +33,27 @@ public class ABC243D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc243/submissions/30249252
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        final long x = sc.nextLong();
+        final String s = sc.next();
 
-        System.out.println();
+        var sb = new StringBuilder(Long.toBinaryString(x));
+        for (char c : s.toCharArray()) {
+            if (c == 'U') {
+                sb.deleteCharAt(sb.length() - 1);
+            } else if (c == 'L') {
+                sb.append("0");
+            } else if (c == 'R') {
+                sb.append("1");
+            }
+        }
+
+        System.out.println(Long.parseLong(sb.toString(), 2));
     }
 //}
 
@@ -59,7 +74,7 @@ public class ABC243D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -76,7 +91,7 @@ public class ABC243D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """
