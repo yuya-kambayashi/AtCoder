@@ -38,8 +38,26 @@ public class ABC245D {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        final int m = sc.nextInt();
+        int[] aa = new int[n + 1];
+        int[] cc = new int[n + m + 1];
+        for (int i = 0; i <= n; i++) {
+            aa[i] = sc.nextInt();
+        }
+        for (int i = 0; i <= n + m; i++) {
+            cc[i] = sc.nextInt();
+        }
 
-        System.out.println();
+        int[] bb = new int[m + 1];
+        for (int i = m; i >= 0; i--) {
+            bb[i] = cc[i + n] / aa[n];
+            for (int j = 0; j <= n; j++) {
+                cc[i + j] -= bb[i] * aa[j];
+            }
+        }
+        for (int i = 0; i <= m; i++) {
+            System.out.print(bb[i] + " ");
+        }
     }
 //}
 
@@ -61,7 +79,7 @@ public class ABC245D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
