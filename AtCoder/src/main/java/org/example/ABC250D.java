@@ -34,12 +34,53 @@ public class ABC250D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc250/submissions/31585154
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
+        final long n = sc.nextLong();
+        List<Integer> ll = new ArrayList<>();
+        for (int i = 1; i < 100_00_00; i++) {
+            if (isPrime(i)) {
+                ll.add(i);
+            }
+        }
+        long cnt = 0;
+        for (int i = 0; i < ll.size(); i++) {
+            long num = ll.get(i);
+            for (int j = i + 1; j < ll.size(); j++) {
+                long num2 = ll.get(j);
+                if (n / num >= num2 * num2 * num2) {
+                    cnt++;
+                } else {
+                    break;
+                }
+            }
+        }
+        System.out.println(cnt);
+    }
 
-        System.out.println();
+    static boolean isPrime(int n) {
+        // 1以下の数は素数ではない
+        if (n <= 1) {
+            return false;
+        }
+        // 2と3は素数
+        if (n <= 3) {
+            return true;
+        }
+        // 2または3で割り切れる数は素数ではない
+        if (n % 2 == 0 || n % 3 == 0) {
+            return false;
+        }
+        // 5以上の数を試し割り
+        for (long i = 5; i * i <= n; i += 6) {
+            if (n % i == 0 || n % (i + 2) == 0) {
+                return false;
+            }
+        }
+        return true;
     }
 //}
 
@@ -59,7 +100,7 @@ public class ABC250D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -75,7 +116,7 @@ public class ABC250D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """
