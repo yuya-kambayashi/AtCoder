@@ -5,6 +5,7 @@ import java.util.*;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCharSequence;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -34,12 +35,31 @@ public class ABC248D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc248/submissions/31065409
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        ArrayList<ArrayList<Integer>> aaa = new ArrayList<ArrayList<Integer>>();
+        for (int i = 0; i < n + 1; i++) {
+            ArrayList<Integer> aa = new ArrayList<>();
+            aaa.add(aa);
+        }
+        for (int i = 0; i < n; i++) {
+            int t = sc.nextInt();
+            aaa.get(t).add(i + 1);
+        }
+        int q = sc.nextInt();
+        for (int i = 0; i < q; i++) {
+            int left = sc.nextInt();
+            int right = sc.nextInt();
+            int x = sc.nextInt();
 
-        System.out.println();
+            int first = Collections.binarySearch(aaa.get(x), left, (a, b) -> a >= b ? 1 : -1);
+            int last = Collections.binarySearch(aaa.get(x), right + 1, (a, b) -> a >= b ? 1 : -1);
+            System.out.println(first - last);
+        }
     }
 //}
 
