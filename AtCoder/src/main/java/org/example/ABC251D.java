@@ -34,12 +34,28 @@ public class ABC251D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc251/submissions/58531224
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
-
-        System.out.println();
+        final int w = sc.nextInt();
+        List<Integer> ans = new ArrayList<>();
+        for (int i = 1; i <= 100; i++) {
+            if (i <= w) {
+                ans.add(i);
+            }
+            if (i * 100 <= w) {
+                ans.add(i * 100);
+            }
+            if (i * 10000 <= w) {
+                ans.add(i * 10000);
+            }
+        }
+        System.out.println(ans.size());
+        for (var a : ans) {
+            System.out.print(a + " ");
+        }
     }
 //}
 
