@@ -34,12 +34,28 @@ public class ABC254D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc254/submissions/32250922
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
 
-        System.out.println();
+        long ans = 0;
+
+        for (long i = 1; i <= n; i++) {
+            long k = i;
+            for (long j = 2; j * j <= k; j++) {
+                while (k % (j * j) == 0) {
+                    k /= j * j;
+                }
+            }
+            for (long j = 1; k * j * j <= n; j++) {
+                ans++;
+            }
+        }
+
+        System.out.println(ans);
     }
 //}
 
@@ -59,7 +75,7 @@ public class ABC254D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
