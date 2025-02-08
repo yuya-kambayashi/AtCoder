@@ -34,12 +34,39 @@ public class ABC255D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc255/submissions/32407102
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
-
-        System.out.println();
+        final int q = sc.nextInt();
+        long[] aa = new long[n + 1];
+        long[] temp = new long[n + 1];
+        for (int i = 1; i <= n; i++) {
+            aa[i] = sc.nextLong();
+        }
+        Arrays.sort(aa);
+        System.arraycopy(aa, 0, temp, 0, n + 1);
+        for (int i = 1; i <= n; i++) {
+            aa[i] += aa[i - 1];
+        }
+        for (int i = 0; i < q; i++) {
+            long x = sc.nextLong();
+            int left = 0, right = n;
+            while (left < right) {
+                int mid = (left + right) / 2;
+                if (temp[mid] >= x) {
+                    right = mid - 1;
+                } else {
+                    left = mid + 1;
+                }
+            }
+            if (temp[left] > x) {
+                left--;
+            }
+            System.out.println(x * left - aa[left] + aa[n] - aa[left] - x * (n - left));
+        }
     }
 //}
 
@@ -65,7 +92,7 @@ public class ABC255D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
