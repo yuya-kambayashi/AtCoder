@@ -37,27 +37,28 @@ public class ABC253D {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final long n = sc.nextLong();
-        final long a = sc.nextLong();
-        final long b = sc.nextLong();
-        long gcd = gcd(a, b);
-        long i = 1;
-        long multiGCD = 0;
-        while (true) {
+        long n = sc.nextLong();
+        long a = sc.nextLong();
+        long b = sc.nextLong();
 
-            long t = i * gcd;
-            if (t % a != 0 && t % b != 0) {
-                i++;
-                continue;
-            }
-            if (t > n) {
-                break;
-            }
-            multiGCD += t;
-            i++;
+        long total = n * (n + 1) / 2;
+
+        long sumA = 0;
+        long sumB = 0;
+        long sumAB = 0;
+        for (int i = 1; a * i <= n; i++) {
+            sumA += a * i;
         }
-        System.out.println(((n * (n + 1)) / 2) - multiGCD);
+        for (int i = 1; b * i <= n; i++) {
+            sumB += b * i;
+        }
+        long lcm = lcm(a, b);
+        for (int i = 1; lcm * i <= n; i++) {
+            sumAB += lcm * i;
+        }
 
+
+        System.out.println(total - sumA - sumB + sumAB);
     }
 
     public static long gcd(long a, long b) {
@@ -68,6 +69,11 @@ public class ABC253D {
             a = temp; // bの値をaに代入
         }
         return a; // aが最大公約数
+    }
+
+    // 最小公倍数（LCM）を求める関数
+    private static long lcm(long x, long y) {
+        return x / gcd(x, y) * y;  // オーバーフロー回避
     }
 //}
 
