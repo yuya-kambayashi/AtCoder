@@ -34,12 +34,28 @@ public class ABC270D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc270/submissions/45769648
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        final int k = sc.nextInt();
+        int[] aa = new int[k];
+        for (int i = 0; i < k; i++) {
+            aa[i] = sc.nextInt();
+        }
 
-        System.out.println();
+        int[] dp = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
+            for (var j : aa) {
+                if (i - j >= 0) {
+                    dp[i] = Math.max(dp[i], i - dp[i - j]);
+                }
+            }
+        }
+
+        System.out.println(dp[n]);
     }
 //}
 
@@ -60,7 +76,7 @@ public class ABC270D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -77,7 +93,7 @@ public class ABC270D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """
