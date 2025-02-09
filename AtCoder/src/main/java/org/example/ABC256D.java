@@ -38,8 +38,52 @@ public class ABC256D {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        int[] ll = new int[n];
+        int[] rr = new int[n];
+        for (int i = 0; i < n; i++) {
+            ll[i] = sc.nextInt();
+            rr[i] = sc.nextInt();
+        }
+        List<Pair> pp = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            pp.add(new Pair(ll[i], rr[i]));
+        }
+        Collections.sort(pp, Comparator.comparingInt(Pair::getLeft));
 
-        System.out.println();
+        List<Pair> ans = new ArrayList<>();
+        ans.add(pp.get(0));
+        for (int i = 1; i < n; i++) {
+            Pair p = pp.get(i);
+
+            if (p.left <= ans.get(ans.size() - 1).getRight()) {
+
+                ans.get(ans.size() - 1).right = Math.max(ans.get(ans.size() - 1).right, p.right);
+                ans.get(ans.size() - 1).left = Math.min(ans.get(ans.size() - 1).left, p.left);
+            } else {
+                ans.add(p);
+            }
+        }
+
+        for (var p : ans) {
+            System.out.println(p.left + " " + p.right);
+        }
+    }
+
+    static class Pair {
+        int left, right;
+
+        public Pair(int left, int right) {
+            this.left = left;
+            this.right = right;
+        }
+
+        public int getLeft() {
+            return left;
+        }
+
+        public int getRight() {
+            return right;
+        }
     }
 //}
 
@@ -63,7 +107,7 @@ public class ABC256D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -82,15 +126,18 @@ public class ABC256D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """
-                
+                3
+                20 30
+                10 50
+                30 40
                 """;
 
         String expected = """
-                
+                10 50
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
 
