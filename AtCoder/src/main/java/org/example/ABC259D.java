@@ -40,10 +40,10 @@ public class ABC259D {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
-        int sx = sc.nextInt();
-        int sy = sc.nextInt();
-        int gx = sc.nextInt();
-        int gy = sc.nextInt();
+        long sx = sc.nextLong();
+        long sy = sc.nextLong();
+        long gx = sc.nextLong();
+        long gy = sc.nextLong();
         long[] xx = new long[n];
         long[] yy = new long[n];
         long[] rr = new long[n];
@@ -54,18 +54,19 @@ public class ABC259D {
         }
         int startCircle = -1, goalCircle = -1;
         for (int i = 0; i < n; i++) {
-            long distS = (long) Math.pow(sx - xx[i], 2) + (long) Math.pow(sy - yy[i], 2);
-            long distG = (long) Math.pow(gx - xx[i], 2) + (long) Math.pow(gy - yy[i], 2);
-            if (distS == rr[i] * rr[i]) {
-                startCircle = i;
-            }
+            long distS = (sx - xx[i]) * (sx - xx[i]) + (sy - yy[i]) * (sy - yy[i]);
+            long distG = (gx - xx[i]) * (gx - xx[i]) + (gy - yy[i]) * (gy - yy[i]);
             if (distG == rr[i] * rr[i]) {
                 goalCircle = i;
+            }
+            if (distS == rr[i] * rr[i]) {
+                startCircle = i;
             }
         }
 
         Queue<Integer> que = new LinkedList<>();
         boolean[] visited = new boolean[n];
+        Arrays.fill(visited, false);
         visited[startCircle] = true;
         que.add(startCircle);
         while (!que.isEmpty()) {
