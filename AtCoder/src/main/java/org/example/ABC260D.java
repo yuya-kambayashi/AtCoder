@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.sun.source.tree.Tree;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -38,8 +39,41 @@ public class ABC260D {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        final int k = sc.nextInt();
+        int[] pp = new int[n];
+        for (int i = 0; i < n; i++) {
+            pp[i] = sc.nextInt();
+        }
+        int[] ans = new int[n];
+        Arrays.fill(ans, -1);
+        TreeMap<Integer, Set<Integer>> ba = new TreeMap<>();
+        for (int i = 0; i < n; i++) {
+            int x = pp[i];
 
-        System.out.println();
+            Integer min = ba.ceilingKey(x);
+            if (min == null) {
+                Set<Integer> ll = new HashSet<>();
+                ll.add(i);
+                ba.put(x, ll);
+            } else {
+                var v = ba.get(min);
+                v.add(i);
+                ba.put(x, v);
+                ba.remove(min);
+            }
+
+            if (ba.get(x).size() == k) {
+                for (var l : ba.get(x)) {
+                    ans[pp[l] - 1] = i + 1;
+                }
+                ba.remove(x);
+            }
+        }
+
+        for (var c : ans) {
+
+            System.out.println(c);
+        }
     }
 //}
 
@@ -64,7 +98,7 @@ public class ABC260D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -85,7 +119,7 @@ public class ABC260D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """
