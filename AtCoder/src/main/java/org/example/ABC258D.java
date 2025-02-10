@@ -34,12 +34,32 @@ public class ABC258D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc258/submissions/32944953
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        long x = sc.nextLong();
 
-        System.out.println();
+        long sum = 0;
+        long ret = Long.MAX_VALUE;
+
+        long[][] box = new long[n][2];
+
+        for (int i = 0; i < n; i++) {
+            box[i][0] = sc.nextLong();
+            box[i][1] = sc.nextLong();
+        }
+        for (int i = 0; i < n; i++) {
+            sum += box[i][0] + box[i][1];
+            ret = Math.min(sum + box[i][1] * (x - 1), ret);
+            x--;
+            if (x == 0) {
+                break;
+            }
+        }
+        System.out.println(ret);
     }
 //}
 
@@ -62,9 +82,8 @@ public class ABC258D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
-
         String input = """
                                        10 1000000000
                 3 3
