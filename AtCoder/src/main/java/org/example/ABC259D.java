@@ -34,12 +34,64 @@ public class ABC259D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc259/submissions/43235618
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        int sx = sc.nextInt();
+        int sy = sc.nextInt();
+        int gx = sc.nextInt();
+        int gy = sc.nextInt();
+        long[] xx = new long[n];
+        long[] yy = new long[n];
+        long[] rr = new long[n];
+        for (int i = 0; i < n; i++) {
+            xx[i] = sc.nextLong();
+            yy[i] = sc.nextLong();
+            rr[i] = sc.nextLong();
+        }
+        int startCircle = -1, goalCircle = -1;
+        for (int i = 0; i < n; i++) {
+            long distS = (long) Math.pow(sx - xx[i], 2) + (long) Math.pow(sy - yy[i], 2);
+            long distG = (long) Math.pow(gx - xx[i], 2) + (long) Math.pow(gy - yy[i], 2);
+            if (distS == rr[i] * rr[i]) {
+                startCircle = i;
+            }
+            if (distG == rr[i] * rr[i]) {
+                goalCircle = i;
+            }
+        }
 
-        System.out.println();
+        Queue<Integer> que = new LinkedList<>();
+        boolean[] visited = new boolean[n];
+        visited[startCircle] = true;
+        que.add(startCircle);
+        while (!que.isEmpty()) {
+            var now = que.poll();
+
+            for (int i = 0; i < n; i++) {
+                if (i == now) {
+                    continue;
+                }
+                if (visited[i]) {
+                    continue;
+                }
+
+                long dx = xx[now] - xx[i];
+                long dy = yy[now] - yy[i];
+                long drp = rr[now] + rr[i];
+                long drm = Math.abs(rr[now] - rr[i]);
+                long dist = dx * dx + dy * dy;
+                if (drm * drm <= dist && dist <= drp * drp) {
+                    que.add(i);
+                    visited[i] = true;
+                }
+            }
+        }
+
+        System.out.println(visited[goalCircle] ? "Yes" : "No");
     }
 //}
 
@@ -64,7 +116,7 @@ public class ABC259D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
