@@ -34,12 +34,44 @@ public class ABC257D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc257/submissions/32865689
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        int[] xx = new int[n];
+        int[] yy = new int[n];
+        int[] pp = new int[n];
+        for (int i = 0; i < n; i++) {
+            xx[i] = sc.nextInt();
+            yy[i] = sc.nextInt();
+            pp[i] = sc.nextInt();
+        }
+        long[][] dist = new long[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                dist[i][j] = ((long) Math.abs(xx[i] - xx[j]) + (long) Math.abs(yy[i] - yy[j]) + pp[i] - 1) / pp[i];
+            }
 
-        System.out.println();
+        }
+        for (int k = 0; k < n; k++) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    dist[i][j] = Math.min(dist[i][j], Math.max(dist[i][k], dist[k][j]));
+                }
+            }
+        }
+        long ans = Long.MAX_VALUE;
+        for (int i = 0; i < n; i++) {
+            long t = 0;
+            for (int j = 0; j < n; j++) {
+                t = Math.max(t, dist[i][j]);
+            }
+            ans = Math.min(ans, t);
+        }
+
+        System.out.println(ans);
     }
 //}
 
@@ -63,7 +95,7 @@ public class ABC257D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
