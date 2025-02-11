@@ -34,12 +34,33 @@ public class ABC261D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc261/submissions/33481990
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        final int m = sc.nextInt();
+        int[] xx = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
+            xx[i] = sc.nextInt();
+        }
+        int[] cy = new int[n + 1];
+        for (int i = 1; i <= m; i++) {
+            int c = sc.nextInt();
+            int y = sc.nextInt();
+            cy[c] = y;
+        }
 
-        System.out.println();
+        long[][] dp = new long[n + 2][n + 1];
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= i; j++) {
+                dp[i][j] = dp[i - 1][j - 1] + xx[i] + cy[j];
+                dp[i + 1][0] = Math.max(dp[i + 1][0], dp[i][j]);
+            }
+        }
+
+        System.out.println(dp[n + 1][0]);
     }
 //}
 
@@ -63,7 +84,7 @@ public class ABC261D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
