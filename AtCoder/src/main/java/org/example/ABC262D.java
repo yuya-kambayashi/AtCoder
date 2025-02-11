@@ -34,12 +34,35 @@ public class ABC262D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc262/submissions/33683683
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        int mod = 998244353;
 
         final int n = sc.nextInt();
-
-        System.out.println();
+        int[] aa = new int[n];
+        for (int i = 0; i < n; i++) {
+            aa[i] = sc.nextInt();
+        }
+        int ans = 0;
+        for (int p = 1; p <= n; p++) {
+            int[][][] dp = new int[n + 1][p + 2][p + 1];
+            dp[0][0][0] = 1;
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j <= p; j++) {
+                    for (int k = 0; k < p; k++) {
+                        dp[i + 1][j][k] += dp[i][j][k];
+                        dp[i + 1][j][k] %= mod;
+                        dp[i + 1][j + 1][(k + aa[i]) % p] += dp[i][j][k];
+                        dp[i + 1][j + 1][(k + aa[i]) % p] %= mod;
+                    }
+                }
+            }
+            ans += dp[n][p][0];
+            ans %= mod;
+        }
+        System.out.println(ans);
     }
 //}
 
@@ -60,7 +83,7 @@ public class ABC262D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
