@@ -5,6 +5,7 @@ import java.util.*;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -38,15 +39,14 @@ public class ABC264D {
         Scanner sc = new Scanner(System.in);
 
         final String s = sc.next();
-        int n = s.length();
 
         String atcoder = "atcoder";
+        int n = atcoder.length();
 
         char[] ta = s.toCharArray();
         int cnt = 0;
-        for (int i = 0; i < s.length(); i++) {
+        for (int i = 0; i < n; i++) {
             char target = atcoder.charAt(i);
-            // a
             String t = String.valueOf(ta);
             int index = t.indexOf(target);
             if (index != i) {
