@@ -34,12 +34,31 @@ public class ABC265D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc265/submissions/34848978
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        final long p = sc.nextLong();
+        final long q = sc.nextLong();
+        final long r = sc.nextLong();
+        Set<Long> set = new HashSet<>();
+        long[] cur = new long[n + 1];
+        for (int i = 1; i <= n; i++) {
+            long a = sc.nextLong();
+            cur[i] = a + cur[i - 1];
+            set.add(cur[i]);
+        }
 
-        System.out.println();
+        for (int i = 0; i < n + 1; i++) {
+            if (set.contains(p + cur[i]) && set.contains(p + q + cur[i]) && set.contains(p + q + r + cur[i])) {
+                System.out.println("Yes");
+                return;
+            }
+        }
+
+        System.out.println("No");
     }
 //}
 
@@ -60,7 +79,7 @@ public class ABC265D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -77,7 +96,7 @@ public class ABC265D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """
