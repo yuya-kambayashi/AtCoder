@@ -34,12 +34,46 @@ public class ABC276D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc276/submissions/36496338
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        int[] aa = new int[n];
+        for (int i = 0; i < n; i++) {
+            aa[i] = sc.nextInt();
+        }
 
-        System.out.println();
+        int g = 0;
+        for (int a : aa) {
+            g = gcd(g, a);
+        }
+        int ans = 0;
+        for (int a : aa) {
+            a /= g;
+            while (a % 2 == 0) {
+                ans++;
+                a /= 2;
+            }
+            while (a % 3 == 0) {
+                ans++;
+                a /= 3;
+            }
+            if (a != 1) {
+                System.out.println(-1);
+                return;
+            }
+        }
+
+        System.out.println(ans);
+    }
+
+    static int gcd(int a, int b) {
+        if (b == 0) {
+            return a;
+        }
+        return gcd(b, a % b);
     }
 //}
 
@@ -60,7 +94,7 @@ public class ABC276D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -77,7 +111,7 @@ public class ABC276D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """
