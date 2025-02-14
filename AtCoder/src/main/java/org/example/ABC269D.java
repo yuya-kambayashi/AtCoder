@@ -5,6 +5,7 @@ import java.util.*;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.setAllowComparingPrivateFields;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -34,12 +35,44 @@ public class ABC269D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc269/submissions/34969401
+
+    static HashSet<String> set = new HashSet<>();
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        int[] xx = new int[n];
+        int[] yy = new int[n];
 
-        System.out.println();
+        int count = 0;
+        for (int i = 0; i < n; i++) {
+            xx[i] = sc.nextInt();
+            yy[i] = sc.nextInt();
+            set.add(xx[i] + "," + yy[i]);
+        }
+
+        for (int i = 0; i < n; i++) {
+            if (set.contains(xx[i] + "," + yy[i])) {
+                set.remove(xx[i] + "," + yy[i]);
+                count++;
+                dfs(xx[i], yy[i]);
+            }
+        }
+
+        System.out.println(count);
+    }
+
+    static void dfs(int a, int b) {
+        int[] xa = {0, 1, 1, 0, -1, -1};
+        int[] ya = {1, 1, 0, -1, -1, 0};
+        for (int i = 0; i < 6; i++) {
+            if (set.contains((a + xa[i]) + "," + (b + ya[i]))) {
+                set.remove((a + xa[i]) + "," + (b + ya[i]));
+                dfs(a + xa[i], b + ya[i]);
+            }
+        }
     }
 //}
 
@@ -65,7 +98,7 @@ public class ABC269D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -85,7 +118,7 @@ public class ABC269D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """
