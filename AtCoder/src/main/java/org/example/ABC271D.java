@@ -34,12 +34,43 @@ public class ABC271D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc271/submissions/35322889
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        final int s = sc.nextInt();
+        int[] aa = new int[n];
+        int[] bb = new int[n];
+        for(int i = 0; i < n; i++){
+            aa[i] = sc.nextInt();
+            bb[i] = sc.nextInt();
+        }
+        var map = new TreeMap<Integer, String>();
+        map.put(0, "");
 
-        System.out.println();
+        for(int i =0; i < n; i++){
+            var next = new TreeMap<Integer, String>();
+            for(var e : map.entrySet()){
+                if (next.get(e.getKey() + aa[i]) == null){
+                    next.put(e.getKey() + aa[i], e.getValue() + "H");
+                }
+                if (next.get(e.getKey() + bb[i]) == null){
+                    next.put(e.getKey() + bb[i], e.getValue() + "T");
+                }
+            }
+            map = next;
+        }
+        for(var e : map.entrySet()){
+            if (e.getKey() == s){
+                System.out.println("Yes");
+                System.out.println(e.getValue());
+                return;
+            }
+        }
+
+        System.out.println("No");
     }
 //}
 
@@ -63,7 +94,7 @@ public class ABC271D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
