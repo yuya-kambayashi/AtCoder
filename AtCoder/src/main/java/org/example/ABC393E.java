@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ABC393C {
+public class ABC393E {
 
     private final StandardInputSnatcher in = new StandardInputSnatcher();
     private final StandardOutputSnatcher out = new StandardOutputSnatcher();
@@ -36,33 +36,19 @@ public class ABC393C {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
-        final int m = sc.nextInt();
 
-        Set<String> edgeSet = new HashSet<>();
-        int removeCount = 0;
+        System.out.println(n);
+    }
 
-        for (int i = 0; i < m; i++) {
-            int u = sc.nextInt();
-            int v = sc.nextInt();
-
-            if (u == v) {
-                // 自己ループは必ず削除
-                removeCount++;
-                continue;
-            }
-
-            // 無向グラフなので (u, v) と (v, u) を同じものとして扱う
-            String edge = u < v ? u + "," + v : v + "," + u;
-
-            if (edgeSet.contains(edge)) {
-                // 既にある辺なら多重辺なので削除
-                removeCount++;
-            } else {
-                edgeSet.add(edge);
-            }
+    static int gcd(int x, int y) {
+        if (y == 0) {
+            return x;
         }
-
-        System.out.println(removeCount);
+        int r = x % y;
+        if (r < 0) {
+            r += y;
+        }
+        return gcd(y, r);
     }
 //}
 
@@ -70,20 +56,21 @@ public class ABC393C {
     public void Case1() {
 
         String input = """
-                3 5
-                1 2
-                2 3
-                3 2
-                3 1
-                1 1
+                5 2
+                3 4 6 7 12
                 
                 """;
 
         String expected = """
-                2
+                3
+                4
+                6
+                1
+                6
+                
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        ABC393C.main(null);
+        ABC393E.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
@@ -91,15 +78,19 @@ public class ABC393C {
     public void Case2() {
 
         String input = """
-                1 0
+                3 3
+                6 10 15
                 
                 """;
 
         String expected = """
-                0
+                1
+                1
+                1
+                
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        ABC393C.main(null);
+        ABC393E.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
@@ -107,25 +98,26 @@ public class ABC393C {
     public void Case3() {
 
         String input = """
-                6 10
-                6 2
-                4 1
-                5 1
-                6 6
-                5 3
-                5 1
-                1 4
-                6 4
-                4 2
-                5 6
+                10 3
+                414003 854320 485570 52740 833292 625990 909680 885153 435420 221663
                 
                 """;
 
         String expected = """
-                3
+                59
+                590
+                590
+                879
+                879
+                590
+                20
+                879
+                590
+                59
+                
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        ABC393C.main(null);
+        ABC393E.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
@@ -140,7 +132,7 @@ public class ABC393C {
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        ABC393C.main(null);
+        ABC393E.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 }

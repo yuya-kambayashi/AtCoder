@@ -36,50 +36,75 @@ public class ABC393D {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        String s = sc.next();
 
-        System.out.println(n);
+        List<Integer> onePositions = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) {
+            if (s.charAt(i) == '1') {
+                onePositions.add(i);
+            }
+        }
+
+        int size = onePositions.size();
+        int medianIndex = size / 2;
+        int median = onePositions.get(medianIndex);
+        long moves = 0;
+
+        // 1 を median を中心に並べるための移動回数を計算
+        for (int i = 0; i < size; i++) {
+            moves += Math.abs(onePositions.get(i) - (median - (medianIndex - i)));
+        }
+
+        System.out.println(moves);
     }
 //}
 
-    //@Test
+    @Test
     public void Case1() {
 
         String input = """
+                7
+                0101001
                 
                 """;
 
         String expected = """
-                
+                3
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
         ABC393D.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //@Test
+    @Test
     public void Case2() {
 
         String input = """
+                3
+                100
                 
                 """;
 
         String expected = """
-                
+                0
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
         ABC393D.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //@Test
+    @Test
     public void Case3() {
 
         String input = """
+                10
+                0101001001
                 
                 """;
 
         String expected = """
-                
+                7
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
         ABC393D.main(null);

@@ -35,9 +35,21 @@ public class ABC393A {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
+        final String s1 = sc.next();
+        final String s2 = sc.next();
 
-        System.out.println(n);
+        int ret = 0;
+        if (s1.equals("sick") && s2.equals("sick")) {
+            ret = 1;
+        } else if (s1.equals("sick") && s2.equals("fine")) {
+            ret = 2;
+        } else if (s1.equals("fine") && s2.equals("sick")) {
+            ret = 3;
+        } else {
+            ret = 4;
+        }
+
+        System.out.println(ret);
     }
 //}
 
