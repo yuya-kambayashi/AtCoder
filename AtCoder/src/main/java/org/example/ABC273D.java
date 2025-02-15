@@ -37,9 +37,60 @@ public class ABC273D {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
-
-        System.out.println();
+        int h = sc.nextInt();
+        int w = sc.nextInt();
+        int rs = sc.nextInt();
+        int cs = sc.nextInt();
+        int n = sc.nextInt();
+        HashMap<Integer, TreeSet<Integer>> rr = new HashMap<>();
+        HashMap<Integer, TreeSet<Integer>> cc = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            int r = sc.nextInt();
+            int c = sc.nextInt();
+            if (!rr.containsKey(r)) {
+                rr.put(r, new TreeSet<Integer>());
+            }
+            rr.get(r).add(c);
+            if (!cc.containsKey(c)) {
+                cc.put(c, new TreeSet<Integer>());
+            }
+            cc.get(c).add(r);
+        }
+        int q = sc.nextInt();
+        TreeSet<Integer> empty = new TreeSet<>();
+        for (int i = 0; i < q; i++) {
+            char d = sc.next().charAt(0);
+            int l = sc.nextInt();
+            if (d == 'U') {
+                Integer b = cc.getOrDefault(cs, empty).floor(rs);
+                if (b == null) {
+                    b = 0;
+                }
+                rs -= Math.min(l, rs - b - 1);
+            }
+            if (d == 'D') {
+                Integer b = cc.getOrDefault(cs, empty).ceiling(rs);
+                if (b == null) {
+                    b = h + 1;
+                }
+                rs += Math.min(l, b - rs - 1);
+            }
+            if (d == 'L') {
+                Integer b = rr.getOrDefault(rs, empty).floor(cs);
+                if (b == null) {
+                    b = 0;
+                }
+                cs -= Math.min(l, cs - b - 1);
+            }
+            if (d == 'R') {
+                Integer b = rr.getOrDefault(rs, empty).ceiling(cs);
+                if (b == null) {
+                    b = w + 1;
+                }
+                cs += Math.min(l, b - cs - 1);
+            }
+            System.out.println(rs + " " + cs);
+        }
     }
 //}
 
@@ -71,7 +122,7 @@ public class ABC273D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
