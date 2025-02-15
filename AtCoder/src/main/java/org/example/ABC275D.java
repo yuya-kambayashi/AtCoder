@@ -34,12 +34,26 @@ public class ABC275D {
 //import java.util.stream.*;
 //public class Main {
 
+    //https://atcoder.jp/contests/abc275/submissions/36070721
+    static HashMap<Long, Long> memo = new HashMap<>();
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
+        final long n = sc.nextLong();
+        System.out.println(dfs(n));
+    }
 
-        System.out.println();
+    static long dfs(long k) {
+        if (k == 0) {
+            return 1;
+        }
+        if (memo.get(k) != null) {
+            return memo.get(k);
+        }
+        long res = dfs(k / 2) + dfs(k / 3);
+        memo.put(k, res);
+        return res;
     }
 //}
 
@@ -59,7 +73,7 @@ public class ABC275D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -75,7 +89,7 @@ public class ABC275D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """
