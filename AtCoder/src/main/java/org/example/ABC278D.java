@@ -38,8 +38,43 @@ public class ABC278D {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        long[] aa = new long[n];
+        for (int i = 0; i < n; i++) {
+            aa[i] = sc.nextInt();
+        }
+        int q = sc.nextInt();
+        long offset = 0;
+        Map<Integer, Long> map = new HashMap<>();
+        boolean isFilled = false;
+        long filledValue = 0;
+        for (int i = 0; i < q; i++) {
+            int t = sc.nextInt();
+            switch (t) {
+                case 1: {
+                    int x = sc.nextInt();
+                    filledValue = x;
+                    isFilled = true;
+                    offset = 0;
+                    map.clear();
+                    break;
+                }
+                case 2: {
+                    int ti = sc.nextInt();
+                    ti--;
+                    int x = sc.nextInt();
+                    map.put(ti, map.getOrDefault(ti, 0l) + x);
+                    break;
+                }
+                case 3: {
+                    int ti = sc.nextInt();
+                    ti--;
+                    long a = isFilled ? filledValue : aa[ti];
+                    System.out.println(a + offset + map.getOrDefault(ti, 0l));
 
-        System.out.println();
+                    break;
+                }
+            }
+        }
     }
 //}
 
@@ -69,7 +104,7 @@ public class ABC278D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -95,7 +130,7 @@ public class ABC278D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """

@@ -37,9 +37,31 @@ public class ABC279D {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
+        final long a = sc.nextLong();
+        final long b = sc.nextLong();
 
-        System.out.println();
+        //  java.util.function.Function<Long, Double> f = (n) -> (double) a / Math.sqrt(n + 1) + (double) b * n;
+
+        long left = 0, right = a / b;
+        while (right - left > 2) {
+            long m1 = (2 * left + right) / 3;
+            long m2 = (left + 2 * right) / 3;
+            if (f(m1, a, b) > f(m2, a, b)) {
+                left = m1;
+            } else {
+                right = m2;
+            }
+        }
+        double ans = a;
+        for (long i = left; i <= right; i++) {
+            ans = Math.min(ans, f(i, a, b));
+        }
+
+        System.out.println(ans);
+    }
+
+    static double f(long n, long a, long b) {
+        return (double) a / Math.sqrt(n + 1) + (double) b * n;
     }
 //}
 
@@ -59,7 +81,7 @@ public class ABC279D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -75,7 +97,7 @@ public class ABC279D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """
