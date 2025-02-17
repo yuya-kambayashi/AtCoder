@@ -34,12 +34,24 @@ public class ABC280D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc280/submissions/37584140
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
+        long k = sc.nextLong();
+        for (int i = 2; i <= 2e6; i++) {
+            k /= gcd(i, k);
+            if (k == 1) {
+                System.out.println(i);
+                return;
+            }
+        }
+        System.out.println(k);
+    }
 
-        System.out.println();
+    static long gcd(long a, long b) {
+        return b == 0 ? a : gcd(b, a % b);
     }
 //}
 
@@ -59,7 +71,7 @@ public class ABC280D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -75,7 +87,7 @@ public class ABC280D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """
