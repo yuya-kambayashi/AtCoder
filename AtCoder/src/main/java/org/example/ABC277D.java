@@ -34,12 +34,37 @@ public class ABC277D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc277/submissions/36511746
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        final int m = sc.nextInt();
+        int[] aa = new int[n];
+        long sum = 0;
+        for (int i = 0; i < n; i++) {
+            aa[i] = sc.nextInt();
+            sum += aa[i];
+        }
+        Arrays.sort(aa);
+        var sums = new ArrayList<Long>();
+        for (int i = 0; i < n; ) {
+            int now = aa[i];
+            long s = 0;
+            while (i < n && (aa[i] == now || aa[i] == now + 1)) {
+                s += aa[i];
+                now = aa[i];
+                i++;
+            }
+            sums.add(s);
+        }
+        if (aa[0] == 0 && aa[aa.length - 1] == m - 1 && sums.size() > 1) {
+            sums.set(0, sums.get(0) + sums.get(sums.size() - 1));
+            sums.remove((sums.size() - 1));
+        }
 
-        System.out.println();
+        System.out.println(sum - Collections.max(sums));
     }
 //}
 
@@ -60,7 +85,7 @@ public class ABC277D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -77,7 +102,7 @@ public class ABC277D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """
