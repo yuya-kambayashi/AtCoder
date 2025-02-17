@@ -37,26 +37,22 @@ public class ABC393D {
 
         final int n = sc.nextInt();
         String s = sc.next();
-
-        List<Integer> onePositions = new ArrayList<>();
-
-        for (int i = 0; i < n; i++) {
-            if (s.charAt(i) == '1') {
-                onePositions.add(i);
+        int onecnt = 0;
+        for (char c : s.toCharArray()) {
+            if (c == '1') {
+                onecnt++;
             }
         }
-
-        int size = onePositions.size();
-        int medianIndex = size / 2;
-        int median = onePositions.get(medianIndex);
-        long moves = 0;
-
-        // 1 を median を中心に並べるための移動回数を計算
-        for (int i = 0; i < size; i++) {
-            moves += Math.abs(onePositions.get(i) - (median - (medianIndex - i)));
+        int ref = 0;
+        long res = 0;
+        for (char c : s.toCharArray()) {
+            if (c == '0') {
+                res += Math.min(ref, onecnt - ref);
+            } else {
+                ref++;
+            }
         }
-
-        System.out.println(moves);
+        System.out.println(res);
     }
 //}
 
