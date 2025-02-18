@@ -34,12 +34,42 @@ public class ABC283D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc283/submissions/56146085
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
+        final String s = sc.next();
 
-        System.out.println();
+        HashSet<Character> set = new HashSet<>();
+        List<Character> cc = new ArrayList<>();
+        for (int i = 0; i < s.length(); i++) {
+            cc.add(s.charAt(i));
+        }
+
+        Stack<Character> stack = new Stack<>();
+        stack.push('(');
+
+        for (char c : cc) {
+            if (c == '(') {
+                stack.push(c);
+            } else if (c == ')') {
+                while (stack.peek() != '(') {
+                    char t = stack.pop();
+                    set.remove(t);
+                }
+                stack.pop();
+            } else {
+                if (set.contains(c)) {
+                    System.out.println("No");
+                    return;
+                }
+                set.add(c);
+                stack.push(c);
+            }
+
+        }
+        System.out.println("Yes");
     }
 //}
 
@@ -59,7 +89,7 @@ public class ABC283D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -75,7 +105,7 @@ public class ABC283D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """
@@ -91,11 +121,27 @@ public class ABC283D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case4() {
 
         String input = """
                    abca
+                """;
+
+        String expected = """
+                No
+                """;
+        Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
+
+        ABC283D.main(null);
+        Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
+    }
+
+    @Test
+    public void Case5() {
+
+        String input = """
+                   abc(a)
                 """;
 
         String expected = """
