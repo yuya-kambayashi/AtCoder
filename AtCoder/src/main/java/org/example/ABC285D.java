@@ -34,12 +34,34 @@ public class ABC285D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc285/submissions/38068169
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
-
-        System.out.println();
+        Map<String, String> map = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            String s = sc.next();
+            String t = sc.next();
+            map.put(s, t);
+        }
+        for (var key : map.keySet()) {
+            String first = key;
+            while (true) {
+                String next = map.get(key);
+                if (next == null) {
+                    break;
+                }
+                if (first.equals(next)) {
+                    System.out.println("No");
+                    return;
+                }
+                map.put(key, null);
+                key = next;
+            }
+        }
+        System.out.println("Yes");
     }
 //}
 
@@ -61,7 +83,7 @@ public class ABC285D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -80,7 +102,7 @@ public class ABC285D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """
