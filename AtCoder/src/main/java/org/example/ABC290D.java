@@ -37,10 +37,25 @@ public class ABC290D {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
+        final int t = sc.nextInt();
+        for (int i = 0; i < t; i++) {
+            long n = sc.nextLong();
+            long d = sc.nextLong();
+            long k = sc.nextLong();
 
-        System.out.println();
+            long ans = (k - 1) * gcd(n, d) / n + (k - 1) * d % n;
+            System.out.println(ans);
+
+        }
     }
+
+    static long gcd(long a, long b) {
+        if (a == 0) {
+            return b;
+        }
+        return gcd(b % a, a);
+    }
+
 //}
 
     @Test
