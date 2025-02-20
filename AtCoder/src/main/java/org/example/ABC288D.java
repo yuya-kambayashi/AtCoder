@@ -34,12 +34,42 @@ public class ABC288D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc288/editorial/5664
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        final int k = sc.nextInt();
+        int[] aa = new int[n];
+        for (int i = 0; i < n; i++) {
+            aa[i] = sc.nextInt();
+        }
 
-        System.out.println();
+        long[][] cum = new long[k][n + 1];
+        for (int j = 0; j < k; j++) {
+            for (int i = 0; i < n; i++) {
+                cum[j][i + 1] = cum[j][i] + (i % k == j ? aa[i] : 0);
+            }
+        }
+        int q = sc.nextInt();
+        for (int i = 0; i < q; i++) {
+            int left = sc.nextInt() - 1;
+            int right = sc.nextInt();
+
+            long val = get(cum, 0, left, right);
+            boolean same = true;
+            for (int j = 1; j < k; j++) {
+                if (val != get(cum, j, left, right)) {
+                    same = false;
+                    break;
+                }
+            }
+            System.out.println(same ? "Yes" : "No");
+        }
+    }
+
+    static long get(long[][] cum, int j, int l, int r) {
+        return cum[j][r] - cum[j][l];
     }
 //}
 
@@ -64,7 +94,7 @@ public class ABC288D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
