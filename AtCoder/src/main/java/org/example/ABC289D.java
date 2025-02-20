@@ -34,12 +34,37 @@ public class ABC289D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc289/submissions/50758161
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        int[] aa = new int[n];
+        for (int i = 0; i < n; i++) {
+            aa[i] = sc.nextInt();
+        }
+        final int m = sc.nextInt();
+        HashSet<Integer> mochi = new HashSet<>();
+        for (int i = 0; i < m; i++) {
+            mochi.add(sc.nextInt());
+        }
+        int x = sc.nextInt();
 
-        System.out.println();
+        boolean[] dp = new boolean[x + 1];
+        dp[0] = true;
+        for (int i = 0; i < x; i++) {
+            if (!dp[i]) {
+                continue;
+            }
+            for (int j = 0; j < n; j++) {
+                int up = aa[j];
+                if (i + up <= x && !mochi.contains(i + up)) {
+                    dp[i + up] = true;
+                }
+            }
+        }
+        System.out.println(dp[x] ? "Yes" : "No");
     }
 //}
 
@@ -63,7 +88,7 @@ public class ABC289D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -83,7 +108,7 @@ public class ABC289D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """
