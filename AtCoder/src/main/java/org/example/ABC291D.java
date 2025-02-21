@@ -34,12 +34,42 @@ public class ABC291D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc291/submissions/44583686
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
+        final int mod = 998244353;
 
-        System.out.println();
+        final int n = sc.nextInt();
+        int[][] cards = new int[2][n + 1];
+        long[][] dp = new long[2][n + 1];
+        for (int i = 1; i <= n; i++) {
+            cards[0][i] = sc.nextInt();
+            cards[1][i] = sc.nextInt();
+        }
+        dp[0][1] = 1;
+        dp[1][1] = 1;
+
+        for (int i = 2; i <= n; i++) {
+            if (cards[0][i] != cards[0][i - 1]) {
+                dp[0][i] += dp[0][i - 1];
+            }
+            if (cards[0][i] != cards[1][i - 1]) {
+                dp[0][i] += dp[1][i - 1];
+            }
+            dp[0][i] %= mod;
+
+            if (cards[1][i] != cards[0][i - 1]) {
+                dp[1][i] += dp[0][i - 1];
+            }
+            if (cards[1][i] != cards[1][i - 1]) {
+                dp[1][i] += dp[1][i - 1];
+            }
+            dp[1][i] %= mod;
+        }
+
+        System.out.println((dp[0][n] + dp[1][n]) % mod);
     }
 //}
 
@@ -62,7 +92,7 @@ public class ABC291D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -82,7 +112,7 @@ public class ABC291D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """
