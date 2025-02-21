@@ -34,12 +34,51 @@ public class ABC292D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc292/submissions/48860367
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        final int m = sc.nextInt();
+        List<Integer>[] graph = new ArrayList[n + 1];
+        for (int i = 0; i <= n; i++) {
+            graph[i] = new ArrayList<>();
+        }
+        for (int i = 0; i < m; i++) {
+            int a = sc.nextInt();
+            int b = sc.nextInt();
+            graph[a].add(b);
+            graph[b].add(a);
+        }
+        boolean f = true;
+        boolean[] visited = new boolean[n + 1];
+        for (int i = 1; i <= n; i++) {
+            if (visited[i]) {
+                continue;
+            }
+            int countVertex = 0, countEdge = 0;
+            Queue<Integer> que = new LinkedList<>();
+            que.add(i);
+            while (!que.isEmpty()) {
+                int node = que.poll();
+                visited[node] = true;
+                countVertex++;
+                for (int neighbour : graph[node]) {
+                    countEdge++;
+                    if (visited[neighbour]) {
+                        continue;
+                    }
+                    que.add(neighbour);
+                }
+            }
+            if (countVertex != countEdge / 2) {
+                f = false;
+                break;
+            }
+        }
 
-        System.out.println();
+        System.out.println(f ? "Yes" : "No");
     }
 //}
 
@@ -62,7 +101,7 @@ public class ABC292D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -83,7 +122,7 @@ public class ABC292D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """
