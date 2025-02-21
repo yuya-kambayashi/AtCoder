@@ -34,12 +34,64 @@ public class ABC293D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc293/submissions/39715193
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        final int m = sc.nextInt();
 
-        System.out.println();
+        List<List<Integer>> ggg = new ArrayList<>();
+        int[] deg = new int[n + 1];
+
+        for (int i = 0; i <= n; i++) {
+            ggg.add(new ArrayList<Integer>());
+        }
+        for (int i = 0; i < m; i++) {
+            int a = sc.nextInt();
+            String b = sc.next();
+            int c = sc.nextInt();
+            String d = sc.next();
+
+            ggg.get(a).add(c);
+            ggg.get(c).add(a);
+
+            deg[a]++;
+            deg[c]++;
+        }
+        int x = 0, y = 0;
+        boolean[] used = new boolean[n + 1];
+
+        for (int i = 1; i <= n; i++) {
+            if (used[i]) {
+                continue;
+            }
+            Queue<Integer> que = new LinkedList<>();
+            used[i] = true;
+            que.add(i);
+            boolean f = true;
+
+            while (!que.isEmpty()) {
+                int now = que.poll();
+                if (deg[now] != 2) {
+                    f = false;
+                }
+                for (int g : ggg.get(now)) {
+                    if (used[g]) {
+                        continue;
+                    }
+                    que.add(g);
+                    used[g] = true;
+                }
+            }
+            if (f) {
+                x++;
+            } else {
+                y++;
+            }
+        }
+        System.out.println(x + " " + y);
     }
 //}
 
@@ -62,7 +114,7 @@ public class ABC293D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -78,7 +130,7 @@ public class ABC293D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """

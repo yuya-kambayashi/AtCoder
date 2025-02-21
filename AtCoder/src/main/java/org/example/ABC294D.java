@@ -40,37 +40,25 @@ public class ABC294D {
         int n = sc.nextInt();
         int q = sc.nextInt();
 
-        Queue<Integer> que = new LinkedList<>();
-        Set<Integer> called = new HashSet<>();
-        int[] times = new int[n];
-        for (int i = 0; i < n; i++) {
-            que.offer(i + 1);
-        }
+        int head = 1;
+
+        TreeSet<Integer> set = new TreeSet<>();
 
         for (int i = 0; i < q; i++) {
-            int e = sc.nextInt();
-            if (e == 1) {
-                if (!que.isEmpty()) {
-                    int guest = que.poll();
-                    called.add(guest);
-                }
+            int t = sc.nextInt();
 
-            } else if (e == 2) {
+            if (t == 1) {
+                set.add(head);
+                head++;
+
+            } else if (t == 2) {
                 int x = sc.nextInt();
-                times[x - 1]++;
-
-            } else if (e == 3) {
-
-                for (var guest : called) {
-                    if (times[guest - 1] == 0) {
-                        System.out.println(guest);
-                        break;
-                    }
-                }
-
+                set.remove(x);
+            } else if (t == 3) {
+                int h = set.first();
+                System.out.println(h);
             }
         }
-
     }
 //}
 
