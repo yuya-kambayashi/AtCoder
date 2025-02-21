@@ -34,12 +34,42 @@ public class ABC295D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc295/submissions/41783546
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
+        final String s = sc.next();
 
-        System.out.println();
+        Map<String, Long> count = new HashMap<>();
+        int[] flg = new int[10];
+        count.put(toString(flg), 1l);
+
+        for (int i = 0; i < s.length(); i++) {
+            int sub = Integer.valueOf(s.substring(i, i + 1));
+            flg[sub] = (flg[sub] + 1) % 2;
+            String key = toString(flg);
+            if (count.containsKey(key)) {
+                count.replace(key, count.get(key) + 1);
+            } else {
+                count.put(key, 1l);
+            }
+        }
+
+        long ret = 0;
+        for (var v : count.values()) {
+            ret += (v * (v - 1)) / 2;
+        }
+        System.out.println(ret);
+
+    }
+
+    static String toString(int[] list) {
+        StringBuilder sb = new StringBuilder();
+        for (var n : list) {
+            sb.append(n);
+        }
+        return sb.toString();
     }
 //}
 
@@ -59,7 +89,7 @@ public class ABC295D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -75,7 +105,7 @@ public class ABC295D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """
