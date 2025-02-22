@@ -37,9 +37,24 @@ public class ABC296D {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
+        final long n = sc.nextLong();
+        final long m = sc.nextLong();
 
-        System.out.println();
+        long ret = (long) 1e18;
+        for (long a = 1; a <= n; a++) {
+            long b = (m + a - 1) / a;
+            if (a <= n && b <= n && a * b >= m) {
+                ret = Math.min(ret, a * b);
+            }
+            if (b < a) {
+                break;
+            }
+        }
+
+        if (ret == (long) 1e18) {
+            ret = -1;
+        }
+        System.out.println(ret);
     }
 //}
 
@@ -59,7 +74,7 @@ public class ABC296D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //  @Test
+    @Test
     public void Case2() {
 
         String input = """
@@ -75,7 +90,7 @@ public class ABC296D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """
