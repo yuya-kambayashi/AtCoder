@@ -29,37 +29,41 @@ public class ABC297D {
         System.setIn(null);
         System.setOut(null);
     }
-//import java.math.*;
+
+    //import java.math.*;
 //import java.util.*;
 //import java.util.stream.*;
 //public class Main {
-
-    // calc
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         long a = sc.nextLong();
         long b = sc.nextLong();
+        if (a == b) {
+            System.out.println(0);
+            return;
+        }
 
-        long cnt = 0;
-        while (a != b) {
-            if (a < b) {
-                long c = a;
-                a = b;
-                b = c;
-            }
-            long p = a / b;
-            long q = (a - 1) / b;
-            long r = a % b;
-            if (r == 0) {
-                a -= q * b;
-                cnt += q;
-            } else {
-                a -= p * b;
-                cnt += p;
+        if (a > b) {
+            long t = b;
+            b = a;
+            a = t;
+        }
+
+        long ans = 0;
+        while (a != b && a != 0 && b != 0) {
+
+            long t1 = b / a;
+            ans += t1;
+            b = b % a;
+
+            if (a > b) {
+                long t = b;
+                b = a;
+                a = t;
             }
         }
-        System.out.println(cnt);
+        System.out.println(ans - 1);
     }
 //}
 

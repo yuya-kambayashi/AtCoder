@@ -1,6 +1,5 @@
 package org.example;
 
-
 import java.util.*;
 import java.util.stream.Stream;
 
@@ -11,12 +10,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ABC298D {
+public class ABC394C {
 
-    final private StandardInputSnatcher in = new StandardInputSnatcher();
-    final private StandardOutputSnatcher out = new StandardOutputSnatcher();
+    private final StandardInputSnatcher in = new StandardInputSnatcher();
+    private final StandardOutputSnatcher out = new StandardOutputSnatcher();
 
     @BeforeAll
     public void beforeAll() {
@@ -37,31 +35,45 @@ public class ABC298D {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        int mod = 998244353;
+        final String s = sc.next();
+        int n = s.length();
+        char[] cc = s.toCharArray();
 
-        Queue<Integer> que = new LinkedList<>();
-        que.add(1);
+        char[] aa = new char[n];
+        boolean startWithA = false;
 
-        final int q = sc.nextInt();
-        for (int i = 0; i < q; i++) {
-            int t = sc.nextInt();
-            if (t == 1) {
-                int x = sc.nextInt();
-                que.add(x);
-            } else if (t == 2) {
-                que.poll();
-            } else if (t == 3) {
-                StringBuilder sb = new StringBuilder();
-                for (var p : que) {
-                    sb.append(p);
-                    if (sb.length() > 9) {
-                        break;
-                    }
+        for (int i = n - 1; i >= 0; i--) {
+            char c = cc[i];
+            if (c == 'A') {
+                if (i != 0 && cc[i - 1] == 'W') {
+                    aa[i] = 'C';
+                } else {
+                    aa[i] = 'A';
                 }
-                Long l = Long.parseLong(sb.toString());
-                System.out.println(l % mod);
+                startWithA = true;
+            } else if (c == 'W') {
+
+                if (startWithA) {
+                    if (i == 0) {
+                        aa[i] = 'A';
+                    } else if (cc[i - 1] == 'W') {
+                        aa[i] = 'C';
+                    } else {
+                        aa[i] = 'A';
+                    }
+                } else {
+                    aa[i] = 'W';
+                }
+
+
+            } else {
+                aa[i] = c;
+                startWithA = false;
             }
         }
+        StringBuilder sb = new StringBuilder();
+        sb.append(aa);
+        System.out.println(sb);
     }
 //}
 
@@ -69,19 +81,16 @@ public class ABC298D {
     public void Case1() {
 
         String input = """
-                                       3
-                3
-                1 2
-                3
+                WACWA
+                
                 """;
 
         String expected = """
-                                          1
-                12
+                ACCAC
+                
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-
-        ABC298D.main(null);
+        ABC394C.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
@@ -89,49 +98,37 @@ public class ABC298D {
     public void Case2() {
 
         String input = """
-                                       3
-                1 5
-                2
-                3
+                WWA
+                
                 """;
 
         String expected = """
-                5
+                ACC
+                
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-
-        ABC298D.main(null);
+        ABC394C.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """
-                                       11
-                1 9
-                1 9
-                1 8
-                1 2
-                1 4
-                1 4
-                1 3
-                1 5
-                1 3
-                2
-                3
+                WWWWW
+                
                 """;
 
         String expected = """
-                0
+                WWWWW
+                
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-
-        ABC298D.main(null);
+        ABC394C.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    //@Test
     public void Case4() {
 
         String input = """
@@ -142,8 +139,7 @@ public class ABC298D {
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-
-        ABC298D.main(null);
+        ABC394C.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 }
