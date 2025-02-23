@@ -34,32 +34,39 @@ public class ABC298D {
 //import java.util.stream.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc298/submissions/55754929
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         int mod = 998244353;
+        int q = sc.nextInt();
+        Queue<Long> que = new LinkedList<>();
+        que.add(1L);
+        long now = 1;
 
-        Queue<Integer> que = new LinkedList<>();
-        que.add(1);
+        long[] mod10 = new long[q + 1];
+        mod10[1] = 1;
+        for (int i = 2; i <= q; i++) {
+            mod10[i] = (mod10[i - 1] * 10) % mod;
+        }
 
-        final int q = sc.nextInt();
         for (int i = 0; i < q; i++) {
             int t = sc.nextInt();
             if (t == 1) {
-                int x = sc.nextInt();
+                long x = sc.nextLong();
+                now = (now * 10 + x) % mod;
                 que.add(x);
             } else if (t == 2) {
-                que.poll();
-            } else if (t == 3) {
-                StringBuilder sb = new StringBuilder();
-                for (var p : que) {
-                    sb.append(p);
-                    if (sb.length() > 9) {
-                        break;
-                    }
+                int len = que.size();
+                long x = que.poll();
+                now = (now - (mod10[len] * x) % mod);
+                if (now < 0) {
+                    now += mod;
                 }
-                Long l = Long.parseLong(sb.toString());
-                System.out.println(l % mod);
+
+            } else if (t == 3) {
+                System.out.println(now);
             }
         }
     }
@@ -104,7 +111,7 @@ public class ABC298D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case3() {
 
         String input = """
@@ -131,15 +138,26 @@ public class ABC298D {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    //@Test
     public void Case4() {
 
         String input = """
-                
+                11
+                1 1
+                1 2
+                1 3
+                1 4
+                1 5
+                1 6
+                1 7
+                1 8
+                1 9
+                1 1
+                3
                 """;
 
         String expected = """
-                
+                1
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
 
