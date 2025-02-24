@@ -39,7 +39,18 @@ public class ABC299D {
 
         final int n = sc.nextInt();
 
-        System.out.println();
+        int left = 1, right = n;
+        while (left + 1 < right) {
+            int mid = (left + right) / 2;
+            System.out.println("? " + mid);
+            int x = sc.nextInt();
+            if (x == 0) {
+                left = mid;
+            } else {
+                right = mid;
+            }
+        }
+        System.out.println("! " + left);
     }
 //}
 
