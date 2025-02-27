@@ -51,7 +51,7 @@ public class ABC202D {
         }
         String ans = "";
         while (a + b > 0) {
-            long x = 0;
+            long x = 0l;
             if (a > 0) {
                 x = dp[a + b - 1][a - 1];
             }
