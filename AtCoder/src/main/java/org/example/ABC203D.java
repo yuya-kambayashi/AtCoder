@@ -12,7 +12,10 @@ import org.junit.jupiter.api.TestInstance;
 
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ABC203D {
+public class
+
+
+ABC203D {
 
     final private StandardInputSnatcher in = new StandardInputSnatcher();
     final private StandardOutputSnatcher out = new StandardOutputSnatcher();
@@ -45,7 +48,6 @@ public class ABC203D {
                 aaa[i][j] = sc.nextInt();
             }
         }
-
         int ok = 1_000_000_000;
         int ng = -1;
 
@@ -66,6 +68,7 @@ public class ABC203D {
                     int count = sss[i][j] - sss[i - k][j] - sss[i][j - k] + sss[i - k][j - k];
                     if (count < k * k / 2 + 1) {
                         found = true;
+                        break;
                     }
                 }
                 if (found) {
