@@ -59,6 +59,7 @@ public class ABC204D {
         for (int i = (sum + 1) / 2; i <= sum; i++) {
             if (dp[n][i]) {
                 System.out.println(i);
+                
                 return;
             }
         }
