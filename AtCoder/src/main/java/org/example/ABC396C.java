@@ -33,56 +33,37 @@ public class ABC396C {
 //import java.util.stream.*;
 //public class Main {
 
+    // http://atcoder.jp/contests/abc396/submissions/63587719
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
         final int m = sc.nextInt();
-        List<Integer> bb = new ArrayList<>();
-        List<Integer> ww = new ArrayList<>();
+        int[] bb = new int[n];
+        int[] ww = new int[m];
+        long sum = 0, max = 0;
         for (int i = 0; i < n; i++) {
-            int t = sc.nextInt();
-            if (t > 0) {
-                bb.add(t);
-            }
+            bb[i] = sc.nextInt();
         }
         for (int i = 0; i < m; i++) {
-            int t = sc.nextInt();
-            if (t > 0) {
-                ww.add(t);
-            }
+            ww[i] = sc.nextInt();
         }
-        if (bb.isEmpty()) {
-            System.out.println(0);
-            return;
-        }
-        Collections.sort(bb);
-        Collections.reverse(bb);
-        Collections.sort(ww);
-        Collections.reverse(ww);
+        Arrays.sort(bb);
+        Arrays.sort(ww);
 
-        List<Integer> bb2 = new ArrayList<>();
-        List<Integer> ww2 = new ArrayList<>();
-        int t = 0;
-        for (var b : bb) {
-            bb2.add(b + t);
-            t += b;
-        }
-        t = 0;
-        for (var w : ww) {
-            ww2.add(w + t);
-            t += w;
-        }
-        long max = 0;
-        for (int i = 0; i < ww2.size(); i++) {
-            for (int j = i; j < bb2.size(); j++) {
-                max = Math.max(max, ww2.get(i) + bb2.get(j));
+        int j = 0;
+
+        for (int i = 0; i < n; i++) {
+            sum += bb[n - i - 1];
+            while (j < m && j <= i && ww[m - j - 1] > 0) {
+                sum += ww[m - j - 1];
+                j++;
             }
+            max = Math.max(max, sum);
         }
         System.out.println(max);
-
     }
-
 //}
 
     @Test

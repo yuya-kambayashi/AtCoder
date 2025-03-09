@@ -32,76 +32,47 @@ public class ABC396D {
 //import java.util.stream.*;
 //public class Main {
 
-//import java.util.*;
-
-    // public class Main {
-    static int N, M;
-    static ArrayList<int[]>[] graph;
-    static long[] xorDist;
-    static ArrayList<Long> basis;
-
+    // https://atcoder.jp/contests/abc396/submissions/63541012
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        N = sc.nextInt();
-        M = sc.nextInt();
-
-        graph = new ArrayList[N + 1];
-        for (int i = 1; i <= N; i++) graph[i] = new ArrayList<>();
-
-        for (int i = 0; i < M; i++) {
-            int u = sc.nextInt();
-            int v = sc.nextInt();
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+        long[][] ggg = new long[n][n];
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(ggg[i], -1L);
+        }
+        for (int i = 0; i < m; i++) {
+            int v = sc.nextInt() - 1;
+            int u = sc.nextInt() - 1;
             long w = sc.nextLong();
-            graph[u].add(new int[]{v, (int) w});
-            graph[v].add(new int[]{u, (int) w});
+            ggg[v][u] = w;
+            ggg[u][v] = w;
+        }
+        long ans = bfs(ggg, new boolean[n], 0, 0);
+        System.out.println(ans);
+    }
+
+    static public long bfs(long[][] ggg, boolean[] visited, long xor, int now) {
+        if (now == ggg.length - 1) {
+            return xor;
         }
 
-        // 1. 各頂点へのXOR距離を求める
-        xorDist = new long[N + 1];
-        Arrays.fill(xorDist, -1);
-        xorDist[1] = 0;
-
-        Queue<Integer> queue = new LinkedList<>();
-        queue.add(1);
-
-        basis = new ArrayList<>();
-
-        while (!queue.isEmpty()) {
-            int node = queue.poll();
-            for (int[] edge : graph[node]) {
-                int next = edge[0];
-                long weight = edge[1];
-
-                if (xorDist[next] == -1) {
-                    xorDist[next] = xorDist[node] ^ weight;
-                    queue.add(next);
+        long min = Long.MAX_VALUE;
+        for (int i = 0; i < ggg.length; i++) {
+            if (!visited[i] && ggg[now][i] != -1) {
+                boolean[] copy = Arrays.copyOf(visited, visited.length);
+                copy[i] = true;
+                long result;
+                if (now == 0) {
+                    result = bfs(ggg, copy, ggg[now][i], i);
                 } else {
-                    // 閉路ができる -> XORベースに追加
-                    long cycleXor = xorDist[node] ^ xorDist[next] ^ weight;
-                    addBasis(cycleXor);
+                    result = bfs(ggg, copy, xor ^ ggg[now][i], i);
                 }
+                min = Math.min(min, result);
             }
         }
-
-        // 2. xorDist[N] をXORベースを用いて最小化
-        long result = xorDist[N];
-        for (long base : basis) {
-            result = Math.min(result, result ^ base);
-        }
-
-        System.out.println(result);
-        sc.close();
+        return min;
     }
-
-    // XORベースに追加
-    static void addBasis(long x) {
-        for (long b : basis) {
-            x = Math.min(x, x ^ b);
-        }
-        if (x > 0) basis.add(x);
-        Collections.sort(basis); // 小さい順に並べておく
-    }
-    //}
 //}
 
     @Test
@@ -128,11 +99,10 @@ public class ABC396D {
     public void Case2() {
 
         String input = """
-                4 4
-                1 2 3
-                2 4 5
-                1 3 4
-                3 4 7
+                4 3
+                1 2 1
+                2 3 2
+                3 4 4
                 
                 """;
 
