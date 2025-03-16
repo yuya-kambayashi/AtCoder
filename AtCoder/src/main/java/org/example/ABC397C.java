@@ -10,12 +10,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ABC204D {
+public class ABC397C {
 
-    final private StandardInputSnatcher in = new StandardInputSnatcher();
-    final private StandardOutputSnatcher out = new StandardOutputSnatcher();
+    private final StandardInputSnatcher in = new StandardInputSnatcher();
+    private final StandardOutputSnatcher out = new StandardOutputSnatcher();
 
     @BeforeAll
     public void beforeAll() {
@@ -33,35 +32,34 @@ public class ABC204D {
 //import java.util.stream.*;
 //public class Main {
 
-    // https://atcoder.jp/contests/abc204/submissions/57149310
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
-        int[] tt = new int[n];
-        int sum = 0;
+        int[] aa = new int[n];
         for (int i = 0; i < n; i++) {
-            tt[i] = sc.nextInt();
-            sum += tt[i];
+            aa[i] = sc.nextInt();
+        }
+        Set<Integer> setLeft = new HashSet<>();
+        int[] cntll = new int[n];
+        Set<Integer> setRight = new HashSet<>();
+        int[] cntrr = new int[n];
+
+        for (int i = 0; i < n; i++) {
+            setLeft.add(aa[i]);
+            cntll[i] = setLeft.size();
+        }
+        for (int i = n - 1; i >= 0; i--) {
+            setRight.add(aa[i]);
+            cntrr[i] = setRight.size();
         }
 
-        boolean[][] dp = new boolean[n + 1][sum + 1];
-        dp[0][0] = true;
+        int max = 0;
+        for (int i = 0; i < n - 1; i++) {
+            max = Math.max(max, cntll[i] + cntrr[i + 1]);
+        }
 
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j <= sum; j++) {
-                dp[i + 1][j] |= dp[i][j];
-                if (j + tt[i] <= sum) {
-                    dp[i + 1][j + tt[i]] |= dp[i][j];
-                }
-            }
-        }
-        for (int i = (sum + 1) / 2; i <= sum; i++) {
-            if (dp[n][i]) {
-                System.out.println(i);
-                return;
-            }
-        }
+        System.out.println(max);
     }
 //}
 
@@ -69,16 +67,16 @@ public class ABC204D {
     public void Case1() {
 
         String input = """
-                                       5
-                8 3 7 2 5
+                5
+                3 1 4 1 5
+                
                 """;
 
         String expected = """
-                13
+                5
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-
-        ABC204D.main(null);
+        ABC397C.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
@@ -86,37 +84,35 @@ public class ABC204D {
     public void Case2() {
 
         String input = """
-                                       2
-                1000 1
+                10
+                2 5 6 5 2 1 7 9 7 2
+                
                 """;
 
         String expected = """
-                1000
+                8
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-
-        ABC204D.main(null);
+        ABC397C.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    @Test
+    //@Test
     public void Case3() {
 
         String input = """
-                                       9
-                3 14 15 9 26 5 35 89 79
+                
                 """;
 
         String expected = """
-                138
+                
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-
-        ABC204D.main(null);
+        ABC397C.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    //@Test
     public void Case4() {
 
         String input = """
@@ -127,8 +123,7 @@ public class ABC204D {
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-
-        ABC204D.main(null);
+        ABC397C.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 }
