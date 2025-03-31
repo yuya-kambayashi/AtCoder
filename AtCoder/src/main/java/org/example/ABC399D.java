@@ -41,14 +41,24 @@ public class ABC399D {
     }
 //}
 
-    //@Test
+    @Test
     public void Case1() {
 
         String input = """
+                3
+                3
+                1 2 3 3 1 2
+                4
+                1 1 2 2 3 3 4 4
+                5
+                1 2 3 4 5 1 2 3 4 5
                 
                 """;
 
         String expected = """
+                1
+                0
+                4
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
