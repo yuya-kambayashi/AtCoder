@@ -45,7 +45,8 @@ public class ABC403E {
     public void Case1() {
 
         String input = """
-                
+
+            
                 """;
 
         String expected = """
