@@ -105,7 +105,7 @@ public class ABC205D {
 
         String input = """
                                        5 2
-                1 2 3 4 5
+                1 2 3 4 5 a
                 1
                 10
                 """;
