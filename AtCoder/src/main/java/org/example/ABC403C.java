@@ -10,12 +10,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ABC205D {
+public class ABC403C {
 
-    final private StandardInputSnatcher in = new StandardInputSnatcher();
-    final private StandardOutputSnatcher out = new StandardOutputSnatcher();
+    private final StandardInputSnatcher in = new StandardInputSnatcher();
+    private final StandardOutputSnatcher out = new StandardOutputSnatcher();
 
     @BeforeAll
     public void beforeAll() {
@@ -32,49 +31,41 @@ public class ABC205D {
 //import java.util.*;
 //import java.util.stream.*;
 //public class Main {
-    // https://atcoder.jp/contests/abc205/submissions/54710193
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        final int m = sc.nextInt();
         final int q = sc.nextInt();
-        long[] as = new long[n];
-        for (int i = 0; i < n; i++) {
-            as[i] = sc.nextLong();
-        }
 
-        long[] sums = new long[n];
-        sums[0] = as[0] - 1;
-        for (int i = 0; i < n - 1; i++) {
-            long a = as[i];
-            long nextA = as[i + 1];
-            sums[i + 1] = nextA - a - 1 + sums[i];
-        }
+        Set<String> all = new HashSet<>();
+
         for (int i = 0; i < q; i++) {
-            long k = sc.nextLong();
+            int t = sc.nextInt();
+            int x = sc.nextInt();
+            if (t == 1) {
+                int y = sc.nextInt();
+                String s = Integer.toString(x) + "," + Integer.toString(y);
+                all.add(s);
 
-            if (k > sums[n - 1]) {
-                System.out.println(as[n - 1] + k - sums[n - 1]);
-                continue;
-            } else if (k <= sums[0]) {
-                System.out.println(k);
-                continue;
-            }
+            } else if (t == 2) {
+                String s = Integer.toString(x) + ",all";
+                all.add(s);
 
-            int left = 0;
-            int right = n - 1;
-            while (right - left > 1) {
-                int mid = (left + right) / 2;
-                if (k <= sums[mid]) {
-                    right = mid;
+            } else if (t == 3) {
+                int y = sc.nextInt();
+                String s1 = Integer.toString(x) + ",all";
+                String s2 = Integer.toString(x) + "," + Integer.toString(y);
+
+                if (all.contains(s1) || all.contains(s2)) {
+                    System.out.println("Yes");
                 } else {
-                    left = mid;
+                    System.out.println("No");
                 }
             }
-            long ans = as[left] + (k - sums[left]);
-            System.out.println(ans);
         }
+
     }
 //}
 
@@ -82,21 +73,23 @@ public class ABC205D {
     public void Case1() {
 
         String input = """
-                                       4 3
-                3 5 6 7
-                2
-                5
-                3
+                2 3 5
+                1 1 2
+                3 1 1
+                3 1 2
+                2 2
+                3 2 3
+                
                 """;
 
         String expected = """
-                                          2
-                9
-                4
+                No
+                Yes
+                Yes
+                
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-
-        ABC205D.main(null);
+        ABC403C.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
@@ -104,19 +97,29 @@ public class ABC205D {
     public void Case2() {
 
         String input = """
-                                       5 2
-                1 2 3 4 5 a
-                1
-                10
+                5 5 10
+                2 2
+                3 4 4
+                1 1 1
+                1 4 1
+                1 4 2
+                1 4 4
+                1 2 4
+                3 3 2
+                3 5 4
+                3 2 1
+                
                 """;
 
         String expected = """
-                                          6
-                15
+                No
+                No
+                No
+                Yes
+                
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-
-        ABC205D.main(null);
+        ABC403C.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
@@ -131,24 +134,31 @@ public class ABC205D {
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-
-        ABC205D.main(null);
+        ABC403C.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    //@Test
     public void Case4() {
 
         String input = """
+                2 3 5
+                1 1 2
+                3 1 1
+                3 1 2
+                2 2
+                3 2 3
                 
                 """;
 
         String expected = """
+                No
+                Yes
+                Yes
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-
-        ABC205D.main(null);
+        ABC403C.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 }

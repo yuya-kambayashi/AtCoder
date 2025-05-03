@@ -10,12 +10,11 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
-
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ABC205D {
+public class ABC403D {
 
-    final private StandardInputSnatcher in = new StandardInputSnatcher();
-    final private StandardOutputSnatcher out = new StandardOutputSnatcher();
+    private final StandardInputSnatcher in = new StandardInputSnatcher();
+    private final StandardOutputSnatcher out = new StandardOutputSnatcher();
 
     @BeforeAll
     public void beforeAll() {
@@ -32,49 +31,45 @@ public class ABC205D {
 //import java.util.*;
 //import java.util.stream.*;
 //public class Main {
-    // https://atcoder.jp/contests/abc205/submissions/54710193
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int d = sc.nextInt();
+        int[] a = new int[n];
 
-        final int n = sc.nextInt();
-        final int q = sc.nextInt();
-        long[] as = new long[n];
+        Map<Integer, Integer> count = new HashMap<>();
         for (int i = 0; i < n; i++) {
-            as[i] = sc.nextLong();
+            a[i] = sc.nextInt();
+            count.put(a[i], count.getOrDefault(a[i], 0) + 1);
         }
 
-        long[] sums = new long[n];
-        sums[0] = as[0] - 1;
-        for (int i = 0; i < n - 1; i++) {
-            long a = as[i];
-            long nextA = as[i + 1];
-            sums[i + 1] = nextA - a - 1 + sums[i];
-        }
-        for (int i = 0; i < q; i++) {
-            long k = sc.nextLong();
+        int removed = 0;
 
-            if (k > sums[n - 1]) {
-                System.out.println(as[n - 1] + k - sums[n - 1]);
-                continue;
-            } else if (k <= sums[0]) {
-                System.out.println(k);
-                continue;
+        if (d == 0) {
+            // 特別ケース: D=0 のとき、同じ数が2個以上あるとダメ
+            for (int c : count.values()) {
+                removed += c - 1;
             }
+        } else {
+            List<Integer> keys = new ArrayList<>(count.keySet());
+            Collections.sort(keys);
 
-            int left = 0;
-            int right = n - 1;
-            while (right - left > 1) {
-                int mid = (left + right) / 2;
-                if (k <= sums[mid]) {
-                    right = mid;
-                } else {
-                    left = mid;
+            for (int x : keys) {
+                if (count.containsKey(x)) {
+                    int cntX = count.get(x);
+                    if (count.containsKey(x + d)) {
+                        int cntXD = count.get(x + d);
+                        int min = Math.min(cntX, cntXD);
+                        // x+D側から min 個削除
+                        count.put(x + d, cntXD - min);
+                        removed += min;
+                    }
                 }
             }
-            long ans = as[left] + (k - sums[left]);
-            System.out.println(ans);
         }
+
+        System.out.println(removed);
     }
 //}
 
@@ -82,21 +77,16 @@ public class ABC205D {
     public void Case1() {
 
         String input = """
-                                       4 3
-                3 5 6 7
-                2
-                5
-                3
+                5 2
+                3 1 4 1 5
+                
                 """;
 
         String expected = """
-                                          2
-                9
-                4
+                1
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-
-        ABC205D.main(null);
+        ABC403D.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
@@ -104,51 +94,49 @@ public class ABC205D {
     public void Case2() {
 
         String input = """
-                                       5 2
-                1 2 3 4 5 a
-                1
-                10
+                4 3
+                1 6 1 8
+                
                 """;
 
         String expected = """
-                                          6
-                15
+                0
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-
-        ABC205D.main(null);
+        ABC403D.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //@Test
+    @Test
     public void Case3() {
 
         String input = """
+                10 3
+                1 6 2 10 2 3 2 10 6 4
                 
                 """;
 
         String expected = """
-                
+                2
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-
-        ABC205D.main(null);
+        ABC403D.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    // @Test
+    @Test
     public void Case4() {
 
         String input = """
-                
+                6 2
+                1 3 3 4 5 5
                 """;
 
         String expected = """
-                
+                2
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-
-        ABC205D.main(null);
+        ABC403D.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 }
