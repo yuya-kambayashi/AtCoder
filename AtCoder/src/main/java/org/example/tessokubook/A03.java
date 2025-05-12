@@ -10,10 +10,9 @@ import org.example.template.StandardOutputSnatcher;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.Test;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class XXX {
+public class A03 {
 
     private final StandardInputSnatcher in = new StandardInputSnatcher();
     private final StandardOutputSnatcher out = new StandardOutputSnatcher();
@@ -37,8 +36,21 @@ public class XXX {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        final int k = sc.nextInt();
+        Set<Integer> target = new HashSet<>();
+        for (int i = 0; i < n; i++) {
+            int p = sc.nextInt();
+            target.add(k - p);
+        }
+        for (int i = 0; i < n; i++) {
+            int q = sc.nextInt();
+            if (target.contains(q)) {
+                System.out.println("Yes");
+                return;
+            }
+        }
 
-        System.out.println(n);
+        System.out.println("No");
     }
 //}
 
@@ -53,7 +65,7 @@ public class XXX {
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        XXX.main(null);
+        A03.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
@@ -68,7 +80,7 @@ public class XXX {
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        XXX.main(null);
+        A03.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
@@ -83,7 +95,7 @@ public class XXX {
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        XXX.main(null);
+        A03.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
@@ -98,7 +110,7 @@ public class XXX {
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        XXX.main(null);
+        A03.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 }
