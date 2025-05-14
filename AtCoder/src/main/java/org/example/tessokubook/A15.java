@@ -9,6 +9,7 @@ import org.example.template.StandardInputSnatcher;
 import org.example.template.StandardOutputSnatcher;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -36,19 +37,31 @@ public class A15 {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        int[] aa = new int[n];
+        for (int i = 0; i < n; i++) {
+            aa[i] = sc.nextInt();
+        }
 
-        System.out.println(n);
+        int[] bb = Arrays.stream(aa).distinct().sorted().toArray();
+        for (int i = 0; i < n; i++) {
+            int a = aa[i];
+            int ret = Arrays.binarySearch(bb, a) + 1;
+            System.out.print(ret + " ");
+        }
     }
 //}
 
-    //@Test
+    @Test
     public void Case1() {
 
         String input = """
+                5
+                46 80 11 77 46
                 
                 """;
 
         String expected = """
+                2 4 1 3 2
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);

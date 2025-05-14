@@ -9,6 +9,7 @@ import org.example.template.StandardInputSnatcher;
 import org.example.template.StandardOutputSnatcher;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -36,20 +37,59 @@ public class A14 {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        final int k = sc.nextInt();
+        int[] aa = new int[n];
+        int[] bb = new int[n];
+        int[] cc = new int[n];
+        int[] dd = new int[n];
+        Set<Integer> setd = new HashSet<>();
+        for (int i = 0; i < n; i++) {
+            aa[i] = sc.nextInt();
+        }
+        for (int i = 0; i < n; i++) {
+            bb[i] = sc.nextInt();
+        }
+        for (int i = 0; i < n; i++) {
+            cc[i] = sc.nextInt();
+        }
+        for (int i = 0; i < n; i++) {
+            dd[i] = sc.nextInt();
+            setd.add(dd[i]);
+        }
+        Arrays.sort(aa);
+        Arrays.sort(bb);
+        Arrays.sort(cc);
+        Arrays.sort(dd);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                for (int p = 0; p < n; p++) {
+                    int t = k - aa[i] - bb[j] - cc[p];
+                    if (setd.contains(t)) {
+                        System.out.println("Yes");
+                        return;
+                    }
+                }
+            }
+        }
 
-        System.out.println(n);
+        System.out.println("No");
     }
 //}
 
-    //@Test
+    @Test
     public void Case1() {
 
         String input = """
+                3 50
+                3 9 17
+                4 7 9
+                10 20 30
+                1 2 3
                 
                 """;
 
         String expected = """
-                
+                Yes
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
         A14.main(null);
