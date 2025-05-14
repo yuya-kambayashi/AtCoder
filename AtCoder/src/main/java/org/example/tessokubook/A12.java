@@ -9,6 +9,7 @@ import org.example.template.StandardInputSnatcher;
 import org.example.template.StandardOutputSnatcher;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -32,24 +33,57 @@ public class A12 {
 //import java.util.*;
 //public class Main {
 
+    static int n;
+    static long k;
+    static long[] aa;
+
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
+        n = sc.nextInt();
+        k = sc.nextInt();
+        aa = new long[n + 1];
+        for (int i = 1; i <= n; i++) {
+            aa[i] = sc.nextInt();
+        }
+        Arrays.sort(aa);
 
-        System.out.println(n);
+        long left = 1, right = 1000000000;
+        while (left < right) {
+            long mid = (left + right) / 2;
+            boolean found = check(mid);
+
+            if (found) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+
+        System.out.println(left);
+    }
+
+    static boolean check(long x) {
+        long sum = 0;
+        for (int i = 1; i <= n; i++) {
+            sum += x / aa[i];
+        }
+        return sum >= k;
     }
 //}
 
-    //@Test
+    @Test
     public void Case1() {
 
         String input = """
+                4 10
+                1 2 3 4
                 
                 """;
 
         String expected = """
-                
+                6
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
         A12.main(null);
