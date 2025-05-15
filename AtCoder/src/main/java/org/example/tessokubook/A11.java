@@ -44,20 +44,9 @@ public class A11 {
         }
         Arrays.sort(aa);
 
-        int left = 0, right = n;
-        while (left <= right) {
-            int mid = (left + right) / 2;
+        int r = Arrays.binarySearch(aa, x);
+        System.out.println(r + 1);
 
-            int m = aa[mid];
-            if (x < m) {
-                right = mid - 1;
-            } else if (x == m) {
-                System.out.println(mid + 1);
-                return;
-            } else {
-                left = mid + 1;
-            }
-        }
     }
 //}
 
