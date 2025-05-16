@@ -9,6 +9,7 @@ import org.example.template.StandardInputSnatcher;
 import org.example.template.StandardOutputSnatcher;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -35,36 +36,51 @@ public class A20 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
+        final String s = sc.next();
+        final String t = sc.next();
 
-        System.out.println(n);
+        int[][] dp = new int[s.length() + 1][t.length() + 1];
+        for (int i = 0; i < s.length(); i++) {
+            for (int j = 0; j < t.length(); j++) {
+                if (s.charAt(i) == t.charAt(j)) {
+                    dp[i + 1][j + 1] = Math.max(dp[i][j + 1], dp[i][j] + 1);
+                }
+                dp[i + 1][j + 1] = Math.max(Math.max(dp[i + 1][j + 1], dp[i + 1][j]), dp[i][j + 1]);
+            }
+        }
+
+        System.out.println(dp[s.length()][t.length()]);
     }
 //}
 
-    //@Test
+    @Test
     public void Case1() {
 
         String input = """
+                mynavi
+                monday
                 
                 """;
 
         String expected = """
-                
+                3
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
         A20.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //@Test
+    @Test
     public void Case2() {
 
         String input = """
+                tokyo
+                kyoto
                 
                 """;
 
         String expected = """
-                
+                3
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
         A20.main(null);
