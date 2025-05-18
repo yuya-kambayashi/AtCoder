@@ -33,59 +33,36 @@ public class ABC406C {
 //import java.util.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/abc406/submissions/65934523
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
         int[] aa = new int[n];
         for (int i = 0; i < n; i++) {
             aa[i] = sc.nextInt();
+
         }
 
-        TreeSet<Integer> mountain = new TreeSet<>();
-        TreeSet<Integer> valley = new TreeSet<>();
+        int mountain = -1, valley = -1, last = n;
+        long ans = 0;
 
-
-        for (int i = 1; i < n - 1; i++) {
-            if (aa[i - 1] < aa[i] && aa[i] > aa[i + 1]) {
-                mountain.add(i);
+        for (int i = n - 3; i >= 0; i--) {
+            if (aa[i] < aa[i + 1] && aa[i + 1] > aa[i + 2]) {
+                last = mountain == -1 ? n : mountain;
+                mountain = i + 2;
+            } else if (aa[i] > aa[i + 1] && aa[i + 1] < aa[i + 2]) {
+                last = valley == -1 ? n : valley;
+                valley = i + 2;
             }
-            if (aa[i - 1] > aa[i] && aa[i] < aa[i + 1]) {
-                valley.add(i);
-            }
-        }
-        int ans = 0;
 
-        for (int i = 0; i < n - 1; i++) {
-            
-
-            int m = 0, v = 0;
-            boolean canm = false, canv = false;
-            for (int j = i + 1; j < n; j++) {
-
-                if (canm) {
-                    m++;
-                    canm = false;
-                }
-                if (canv) {
-                    v++;
-                    canv = false;
-                }
-
-                if (mountain.contains(j)) {
-                    canm = true;
-                }
-                if (valley.contains(j)) {
-                    canv = true;
-                }
-                if (m == 1 && v == 1 && j - i >= 3) {
-                    ans++;
-                } else if (m > 1 || v > 1) {
-                    break;
-                }
+            if (mountain != -1 && valley != -1 && aa[i] < aa[i + 1]) {
+                int max = Math.max(mountain, valley);
+                ans += (last - max);
             }
         }
+
         System.out.println(ans);
-
     }
 //}
 
