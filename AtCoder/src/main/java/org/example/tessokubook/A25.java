@@ -9,6 +9,7 @@ import org.example.template.StandardInputSnatcher;
 import org.example.template.StandardOutputSnatcher;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -32,53 +33,118 @@ public class A25 {
 //import java.util.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/tessoku-book/submissions/38851228
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
+        final int h = sc.nextInt();
+        final int w = sc.nextInt();
+        char[][] grid = new char[h][w];
+        for (int i = 0; i < h; i++) {
+            String s = sc.next();
+            grid[i] = s.toCharArray();
+        }
 
-        System.out.println(n);
+        long[][] dp = new long[h][w];
+        for (int row = 0; row < h; row++) {
+            for (int col = 0; col < w; col++) {
+                if (row == 0 && col == 0) {
+                    dp[row][col] = 1;
+                } else {
+                    if (row > 0 && grid[row - 1][col] == '.') {
+                        dp[row][col] += dp[row - 1][col];
+                    }
+                    if (col > 0 && grid[row][col - 1] == '.') {
+                        dp[row][col] += dp[row][col - 1];
+                    }
+                }
+            }
+        }
+
+
+        System.out.println(dp[h - 1][w - 1]);
     }
 //}
 
-    //@Test
+    @Test
     public void Case1() {
 
         String input = """
+                4 8
+                .....#..
+                ........
+                ..#...#.
+                #.......
                 
                 """;
 
         String expected = """
-                
+                35
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
         A25.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //@Test
+    @Test
     public void Case2() {
 
         String input = """
+                2 8
+                ....#...
+                ....#...
                 
                 """;
 
         String expected = """
-                
+                0
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
         A25.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //@Test
+    @Test
     public void Case3() {
 
         String input = """
+                30 30
+                ..............................
+                ..............................
+                ..............................
+                ..............................
+                ..............................
+                ..............................
+                ..............................
+                ..............................
+                ..............................
+                ..............................
+                ..............................
+                ..............................
+                ..............................
+                ..............................
+                ..............................
+                ..............................
+                ..............................
+                ..............................
+                ..............................
+                ..............................
+                ..............................
+                ..............................
+                ..............................
+                ..............................
+                ..............................
+                ..............................
+                ..............................
+                ..............................
+                ..............................
+                ..............................
                 
                 """;
 
         String expected = """
+                30067266499541040
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
