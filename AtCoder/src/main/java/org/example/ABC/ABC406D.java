@@ -38,28 +38,33 @@ public class ABC406D {
 
         final int h = sc.nextInt();
         final int w = sc.nextInt();
-        final int N = sc.nextInt();
-        // 行 → 落てる列
+        final int n = sc.nextInt();
+
         Map<Integer, Set<Integer>> rowMap = new HashMap<>();
-        // 列 → 落ちてる行
         Map<Integer, Set<Integer>> colMap = new HashMap<>();
 
-        for (int i = 0; i < N; i++) {
+        for (int i = 0; i < n; i++) {
             int x = sc.nextInt();
             int y = sc.nextInt();
 
-            rowMap.computeIfAbsent(x, k -> new HashSet<>()).add(y);
-            colMap.computeIfAbsent(y, k -> new HashSet<>()).add(x);
+            var map1 = rowMap.getOrDefault(x, new HashSet<Integer>());
+            map1.add(y);
+            rowMap.put(x, map1);
+
+            var map2 = colMap.getOrDefault(y, new HashSet<Integer>());
+            map2.add(x);
+            colMap.put(y, map2);
+
+
+//            rowMap.computeIfAbsent(x, k -> new HashSet<>()).add(y);
+//            colMap.computeIfAbsent(y, k -> new HashSet<>()).add(x);
         }
-
-        int Q = sc.nextInt();
-
-        for (int i = 0; i < Q; i++) {
-            int type = sc.nextInt();
+        int q = sc.nextInt();
+        for (int i = 0; i < q; i++) {
+            int t = sc.nextInt();
             int index = sc.nextInt();
 
-            if (type == 1) {
-                // 行のクエリ
+            if (t == 1) {
                 Set<Integer> cols = rowMap.getOrDefault(index, new HashSet<>());
                 System.out.println(cols.size());
 
@@ -67,13 +72,14 @@ public class ABC406D {
                     Set<Integer> rows = colMap.get(y);
                     if (rows != null) {
                         rows.remove(index);
-                        if (rows.isEmpty()) colMap.remove(y);
+                        if (rows.isEmpty()) {
+                            colMap.remove(y);
+                        }
                     }
                 }
+                rowMap.remove(index);
 
-                rowMap.remove(index); // 行ごと削除
-            } else {
-                // 列のクエリ
+            } else if (t == 2) {
                 Set<Integer> rows = colMap.getOrDefault(index, new HashSet<>());
                 System.out.println(rows.size());
 
@@ -81,11 +87,12 @@ public class ABC406D {
                     Set<Integer> cols = rowMap.get(x);
                     if (cols != null) {
                         cols.remove(index);
-                        if (cols.isEmpty()) rowMap.remove(x);
+                        if (cols.isEmpty()) {
+                            rowMap.remove(x);
+                        }
                     }
                 }
-
-                colMap.remove(index); // 列ごと削除
+                colMap.remove(index);
             }
         }
     }
