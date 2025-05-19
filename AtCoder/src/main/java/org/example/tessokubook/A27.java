@@ -9,6 +9,7 @@ import org.example.template.StandardInputSnatcher;
 import org.example.template.StandardOutputSnatcher;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -35,36 +36,46 @@ public class A27 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
+        final int a = sc.nextInt();
+        final int b = sc.nextInt();
 
-        System.out.println(n);
+        System.out.println(gcd(a, b));
+    }
+
+    static int gcd(int a, int b) {
+        if (b == 0) {
+            return a;
+        }
+        return gcd(b, a % b);
     }
 //}
 
-    //@Test
+    @Test
     public void Case1() {
 
         String input = """
+                33 88
                 
                 """;
 
         String expected = """
-                
+                11
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
         A27.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //@Test
+    @Test
     public void Case2() {
 
         String input = """
+                123 777
                 
                 """;
 
         String expected = """
-                
+                3
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
         A27.main(null);
