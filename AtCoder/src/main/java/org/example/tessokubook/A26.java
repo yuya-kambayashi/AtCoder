@@ -9,6 +9,7 @@ import org.example.template.StandardInputSnatcher;
 import org.example.template.StandardOutputSnatcher;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -36,19 +37,53 @@ public class A26 {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        for (int i = 0; i < n; i++) {
+            String ret = "No";
+            if (isPrime(sc.nextInt())) {
+                ret = "Yes";
+            }
+            System.out.println(ret);
+        }
 
-        System.out.println(n);
+    }
+
+    static boolean isPrime(int n) {
+        if (n <= 1) {
+            return false;
+        }
+        if (n <= 3) {
+            return true;
+        }
+
+        if (n % 2 == 0 || n % 3 == 0) {
+            return false;
+        }
+        for (int i = 5; i * i <= n; i += 6) {
+            if (n % i == 0 || n % (i + 2) == 0) {
+                return false;
+            }
+        }
+        return true;
     }
 //}
 
-    //@Test
+    @Test
     public void Case1() {
 
         String input = """
+                4
+                17
+                31
+                35
+                49
                 
                 """;
 
         String expected = """
+                Yes
+                Yes
+                No
+                No
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
