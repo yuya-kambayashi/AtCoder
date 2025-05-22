@@ -9,6 +9,7 @@ import org.example.template.StandardInputSnatcher;
 import org.example.template.StandardOutputSnatcher;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -28,58 +29,56 @@ public class A31 {
         System.setIn(null);
         System.setOut(null);
     }
-//import java.math.*;
+
+    //import java.math.*;
 //import java.util.*;
 //public class Main {
-
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
-        final int n = sc.nextInt();
-
-        System.out.println(n);
+        Scanner s = new Scanner(System.in);
+        long n = s.nextLong();
+        System.out.println(n / 3 + n / 5 - n / 15);
     }
 //}
 
-    //@Test
+    @Test
     public void Case1() {
 
         String input = """
-                
+                10
                 """;
 
         String expected = """
-                
+                5
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
         A31.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //@Test
+    @Test
     public void Case2() {
 
         String input = """
-                
+                30
                 """;
 
         String expected = """
-                
+                14
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
         A31.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //@Test
+    @Test
     public void Case3() {
 
         String input = """
-                
+                100000000000
                 """;
 
         String expected = """
-                
+                46666666667
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
         A31.main(null);
