@@ -9,6 +9,7 @@ import org.example.template.StandardInputSnatcher;
 import org.example.template.StandardOutputSnatcher;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -35,51 +36,71 @@ public class A32 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
+        int n = sc.nextInt();
+        int a = sc.nextInt();
+        int b = sc.nextInt();
 
-        System.out.println(n);
+        boolean[] dp = new boolean[n + 1];
+        for (int i = 0; i <= n; i++) {
+            if (i >= a && !dp[i - a]) {
+                dp[i] = true;
+            } else if (i >= b && !dp[i - b]) {
+                dp[i] = true;
+            } else {
+                dp[i] = false;
+            }
+        }
+        String ret = "First";
+        if (!dp[n]) {
+            ret = "Second";
+        }
+        System.out.println(ret);
+
+
     }
 //}
 
-    //@Test
+    @Test
     public void Case1() {
 
         String input = """
+                8 2 3
                 
                 """;
 
         String expected = """
-                
+                First
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
         A32.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //@Test
+    @Test
     public void Case2() {
 
         String input = """
+                6 2 3
                 
                 """;
 
         String expected = """
-                
+                Second
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
         A32.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //@Test
+    @Test
     public void Case3() {
 
         String input = """
-                
+                2 2 3
                 """;
 
         String expected = """
-                
+                First
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
         A32.main(null);

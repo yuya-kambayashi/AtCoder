@@ -9,6 +9,7 @@ import org.example.template.StandardInputSnatcher;
 import org.example.template.StandardOutputSnatcher;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -36,35 +37,49 @@ public class A33 {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        int[] aa = new int[n];
+        int xorSum = 0;
+        for (int i = 0; i < n; i++) {
+            aa[i] = sc.nextInt();
+            xorSum ^= aa[i];
+        }
+        if (xorSum == 0) {
+            System.out.println("Second");
+        } else {
+            System.out.println("First");
+        }
 
-        System.out.println(n);
     }
 //}
 
-    //@Test
+    @Test
     public void Case1() {
 
         String input = """
+                2
+                7 7
                 
                 """;
 
         String expected = """
-                
+                Second
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
         A33.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //@Test
+    @Test
     public void Case2() {
 
         String input = """
+                2
+                5 8
                 
                 """;
 
         String expected = """
-                
+                First
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
         A33.main(null);
