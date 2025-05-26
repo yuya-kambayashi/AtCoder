@@ -32,12 +32,21 @@ public class A36 {
 //import java.util.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/tessoku-book/submissions/45738186
+
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        long n = sc.nextLong();
+        long k = sc.nextLong();
 
-        final int n = sc.nextInt();
+        long requred = (n - 1) * 2;
 
-        System.out.println(n);
+        if (k >= requred && (k - requred) % 2 == 0) {
+            System.out.println("Yes");
+        } else {
+            System.out.println("No");
+        }
     }
 //}
 
@@ -45,10 +54,12 @@ public class A36 {
     public void Case1() {
 
         String input = """
+                5 10
                 
                 """;
 
         String expected = """
+                Yes
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
