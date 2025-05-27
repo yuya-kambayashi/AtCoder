@@ -9,6 +9,7 @@ import org.example.template.StandardInputSnatcher;
 import org.example.template.StandardOutputSnatcher;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -36,50 +37,64 @@ public class A41 {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        String s = sc.next();
+        for (int i = 1; i < n - 1; i++) {
 
-        System.out.println(n);
+            if (s.charAt(i - 1) == s.charAt(i) && s.charAt(i) == s.charAt(i + 1)) {
+                System.out.println("Yes");
+                return;
+            }
+        }
+
+        System.out.println("No");
+
     }
 //}
 
-    //@Test
+    @Test
     public void Case1() {
 
         String input = """
+                7
+                BBRRRBB
                 
                 """;
 
         String expected = """
-                
+                Yes
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
         A41.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //@Test
+    @Test
     public void Case2() {
 
         String input = """
+                5
+                RBRBR
                 
                 """;
 
         String expected = """
-                
+                No
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
         A41.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //@Test
+    @Test
     public void Case3() {
 
         String input = """
-                
+                3
+                RRR
                 """;
 
         String expected = """
-                
+                Yes
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
         A41.main(null);
