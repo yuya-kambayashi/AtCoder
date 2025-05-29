@@ -9,6 +9,7 @@ import org.example.template.StandardInputSnatcher;
 import org.example.template.StandardOutputSnatcher;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -37,18 +38,39 @@ public class A52 {
 
         final int n = sc.nextInt();
 
-        System.out.println(n);
+        Queue<String> queue = new LinkedList<>();
+        for (int i = 0; i < n; i++) {
+            int t = sc.nextInt();
+            if (t == 1) {
+                String x = sc.next();
+                queue.offer(x);
+            } else if (t == 2) {
+                String x = queue.peek();
+                System.out.println(x);
+            } else if (t == 3) {
+                queue.poll();
+            }
+        }
     }
 //}
 
-    //@Test
+    @Test
     public void Case1() {
 
         String input = """
+                5
+                1 taro
+                1 hanako
+                2
+                3
+                2
                 
                 """;
 
         String expected = """
+                taro
+                hanako
+                
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);

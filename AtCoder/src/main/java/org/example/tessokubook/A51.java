@@ -9,6 +9,7 @@ import org.example.template.StandardInputSnatcher;
 import org.example.template.StandardOutputSnatcher;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -37,18 +38,41 @@ public class A51 {
 
         final int n = sc.nextInt();
 
-        System.out.println(n);
+        Stack<String> stack = new Stack<>();
+
+        for (int i = 0; i < n; i++) {
+            int t = sc.nextInt();
+            if (t == 1) {
+                String x = sc.next();
+                stack.push(x);
+
+            } else if (t == 2) {
+                String s = stack.peek();
+                System.out.println(s);
+
+            } else if (t == 3) {
+                stack.pop();
+            }
+        }
     }
 //}
 
-    //@Test
+    @Test
     public void Case1() {
 
         String input = """
+                5
+                1 futuremap
+                1 howtospeak
+                2
+                3
+                2
                 
                 """;
 
         String expected = """
+                howtospeak
+                futuremap
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
