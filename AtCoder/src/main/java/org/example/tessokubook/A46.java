@@ -51,7 +51,7 @@ public class A46 {
                 var d = pp.get(i - 1).distance(pp.get(j - 1));
                 ds.add(new Distance(j, d));
             }
-            ds.sort(Comparator.comparing(Distance::getDistance));
+            ds.sort(Comparator.comparing(Distance::getDistance).thenComparing(Distance::getIndex));
             map.put(i, ds);
         }
 
@@ -101,6 +101,10 @@ public class A46 {
 
         double getDistance() {
             return distance;
+        }
+
+        int getIndex() {
+            return index;
         }
     }
 //}

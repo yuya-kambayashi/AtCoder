@@ -9,6 +9,7 @@ import org.example.template.StandardInputSnatcher;
 import org.example.template.StandardOutputSnatcher;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -36,19 +37,79 @@ public class A49 {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        int[] pp = new int[n];
+        int[] qq = new int[n];
+        int[] rr = new int[n];
+        for (int i = 0; i < n; i++) {
+            pp[i] = sc.nextInt() - 1;
+            qq[i] = sc.nextInt() - 1;
+            rr[i] = sc.nextInt() - 1;
+        }
 
-        System.out.println(n);
+        int[] tt = new int[20];
+
+        for (int i = 0; i < n; i++) {
+            int as = getScorePlus(tt, pp[i], qq[i], rr[i]);
+            int bs = getScoreMinus(tt, pp[i], qq[i], rr[i]);
+
+            if (as <= bs) {
+                System.out.println("B");
+                tt[pp[i]]--;
+                tt[qq[i]]--;
+                tt[rr[i]]--;
+            } else {
+                System.out.println("A");
+                tt[pp[i]]++;
+                tt[qq[i]]++;
+                tt[rr[i]]++;
+            }
+        }
+    }
+
+    static int getScorePlus(int[] arr, int p, int q, int r) {
+        int score = 0;
+        for (int i = 0; i < arr.length; i++) {
+            int a = arr[i];
+            if (i == p || i == q || i == r) {
+                a++;
+            }
+            if (a == 0) {
+                score++;
+            }
+        }
+        return score;
+    }
+
+    static int getScoreMinus(int[] arr, int p, int q, int r) {
+        int score = 0;
+        for (int i = 0; i < arr.length; i++) {
+            int a = arr[i];
+            if (i == p || i == q || i == r) {
+                a--;
+            }
+            if (a == 0) {
+                score++;
+            }
+        }
+        return score;
     }
 //}
 
-    //@Test
+    @Test
     public void Case1() {
 
         String input = """
+                3
+                1 2 3
+                2 3 4
+                3 4 5
                 
                 """;
 
         String expected = """
+                A
+                B
+                A
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
