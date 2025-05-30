@@ -9,6 +9,7 @@ import org.example.template.StandardInputSnatcher;
 import org.example.template.StandardOutputSnatcher;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -36,19 +37,40 @@ public class A53 {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for (int i = 0; i < n; i++) {
+            int t = sc.nextInt();
+            if (t == 1) {
+                int x = sc.nextInt();
+                pq.add(x);
+
+            } else if (t == 2) {
+                int x = pq.peek();
+                System.out.println(x);
+
+            } else if (t == 3) {
+                pq.poll();
+
+            }
+        }
 
         System.out.println(n);
     }
 //}
 
-    //@Test
+    @Test
     public void Case1() {
 
         String input = """
+                3
+                1 2420
+                1 1650
+                2
                 
                 """;
 
         String expected = """
+                1650
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
