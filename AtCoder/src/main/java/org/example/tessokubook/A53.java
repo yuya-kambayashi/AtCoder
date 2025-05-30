@@ -53,8 +53,6 @@ public class A53 {
 
             }
         }
-
-        System.out.println(n);
     }
 //}
 
