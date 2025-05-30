@@ -9,6 +9,7 @@ import org.example.template.StandardInputSnatcher;
 import org.example.template.StandardOutputSnatcher;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -36,19 +37,51 @@ public class A56 {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        final int q = sc.nextInt();
+        final String s = sc.next();
+        for (int i = 0; i < q; i++) {
+            int a = sc.nextInt();
+            int b = sc.nextInt();
+            int c = sc.nextInt();
+            int d = sc.nextInt();
+            a--;
+            b--;
+            c--;
+            d--;
 
-        System.out.println(n);
+            if (b - a != d - c) {
+                System.out.println("No");
+            } else {
+                boolean ok = true;
+                for (int j = 0; j < b - a; j++) {
+                    if (s.charAt(a + j) != s.charAt(c + j)) {
+                        ok = false;
+                        break;
+                    }
+                }
+                String ret = ok ? "Yes" : "No";
+                System.out.println(ret);
+            }
+        }
     }
 //}
 
-    //@Test
+    @Test
     public void Case1() {
 
         String input = """
+                7 3
+                abcbabc
+                1 3 5 7
+                1 5 2 6
+                1 2 6 7
                 
                 """;
 
         String expected = """
+                Yes
+                No
+                No
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
