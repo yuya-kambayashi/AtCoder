@@ -9,6 +9,7 @@ import org.example.template.StandardInputSnatcher;
 import org.example.template.StandardOutputSnatcher;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -36,19 +37,46 @@ public class A55 {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        TreeSet<Integer> set = new TreeSet<>();
+        for (int i = 0; i < n; i++) {
+            int t = sc.nextInt();
+            if (t == 1) {
+                int x = sc.nextInt();
+                set.add(x);
 
-        System.out.println(n);
+            } else if (t == 2) {
+                int x = sc.nextInt();
+                set.remove(x);
+
+            } else if (t == 3) {
+                int x = sc.nextInt();
+
+                Integer y = set.ceiling(x);
+                if (y == null) {
+                    System.out.println(-1);
+
+                } else {
+                    System.out.println(y);
+                }
+            }
+        }
     }
 //}
 
-    //@Test
+    @Test
     public void Case1() {
 
         String input = """
+                3
+                1 77
+                3 40
+                3 80
                 
                 """;
 
         String expected = """
+                77
+                -1
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
