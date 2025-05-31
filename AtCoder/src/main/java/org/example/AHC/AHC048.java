@@ -1,4 +1,4 @@
-package org.example.template;
+package org.example.AHC;
 
 import java.util.*;
 import java.util.stream.Stream;
