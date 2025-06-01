@@ -41,13 +41,13 @@ public class AHC048 {
         final int h = sc.nextInt();
         final int t = sc.nextInt();
         final int d = sc.nextInt();
-        List<Color> own = new ArrayList<>();
+        List<Color> owns = new ArrayList<>();
         for (int i = 0; i < k; i++) {
-            own.add(new Color(sc.nextDouble(), sc.nextDouble(), sc.nextDouble()));
+            owns.add(new Color(i, sc.nextDouble(), sc.nextDouble(), sc.nextDouble()));
         }
-        List<Color> target = new ArrayList<>();
+        List<Color> targets = new ArrayList<>();
         for (int i = 0; i < h; i++) {
-            target.add(new Color(sc.nextDouble(), sc.nextDouble(), sc.nextDouble()));
+            targets.add(new Color(i, sc.nextDouble(), sc.nextDouble(), sc.nextDouble()));
         }
 
         int[][] vv = new int[n][n - 1];
@@ -57,6 +57,14 @@ public class AHC048 {
         }
         for (int i = 0; i < n - 1; i++) {
             Arrays.fill(hh[i], 1);
+        }
+
+        Arrays.fill(vv[0], 1);
+
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < n - 1; j++) {
+                vv[i][j] = j % 2 == 1 ? 1 : 0;
+            }
         }
 
         for (int i = 0; i < n; i++) {
@@ -70,26 +78,66 @@ public class AHC048 {
             }
         }
         System.out.println();
-//
-//        for (int i = 0; i < k; i++) {
-//            String s = "1 0 " + i + " " + i;
-//            System.out.println(s);
-//        }
 
-        for (int i = 0; i < h; i++) {
-            String s = "1 0 0 0";
+        for (int i = 0; i < owns.size(); i++) {
+            for (int j = i + 1; j < owns.size(); j++) {
+                String s1 = "1 " + (i + 1) + " " + (j * 2) + " " + i;
+                String s2 = "1 " + (i + 1) + " " + (j * 2) + " " + j;
+                System.out.println(s1);
+                System.out.println(s2);
+
+            }
+        }
+
+
+        for (var target : targets) {
+
+            double max = Double.MAX_VALUE;
+            int maxIndex = 0;
+
+            for (var own : owns) {
+                double diff = target.diff(own);
+                if (diff < max) {
+                    max = diff;
+                    maxIndex = own.index;
+                }
+            }
+
+            String s = "1 0 0 " + maxIndex;
             System.out.println(s);
             System.out.println("2 0 0");
         }
     }
 
+    static class Cell {
+        int i, j;
+        double c, m, y;
+        List<Integer> orign = new ArrayList<>();
+
+        Cell(int i, int j, Color c1, Color c2) {
+            this.i = i;
+            this.j = j;
+            this.c = (c1.c + c2.c) / 2;
+            this.m = (c1.m + c2.m) / 2;
+            this.y = (c1.y + c2.y) / 2;
+            orign.add(c1.index);
+            orign.add(c2.index);
+        }
+    }
+
     static class Color {
+        int index;
         double c, m, y;
 
-        Color(double c, double m, double y) {
+        Color(int index, double c, double m, double y) {
+            this.index = index;
             this.c = c;
             this.m = m;
             this.y = y;
+        }
+
+        double diff(Color other) {
+            return Math.pow(other.m - this.m, 2) + Math.pow(other.y - this.y, 2) + Math.pow(other.c - this.c, 2);
         }
     }
 //}
