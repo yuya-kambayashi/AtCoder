@@ -9,6 +9,7 @@ import org.example.template.StandardInputSnatcher;
 import org.example.template.StandardOutputSnatcher;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -32,36 +33,45 @@ public class A57 {
 //import java.util.*;
 //public class Main {
 
-    // https://atcoder.jp/contests/tessoku-book/submissions/51145784
+    // https://atcoder.jp/contests/tessoku-book/submissions/65204883
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
         final int q = sc.nextInt();
+        int kmax = 30;
         int[] aa = new int[n + 1];
+
         for (int i = 1; i <= n; i++) {
             aa[i] = sc.nextInt();
         }
-        int[][] dp = new int[30][n + 1];
+
+        int[][] dp = new int[kmax][n + 1];
         for (int i = 1; i <= n; i++) {
+            dp[0][i] = aa[i];
+        }
+        for (int i = 1; i < kmax; i++) {
             for (int j = 1; j <= n; j++) {
                 dp[i][j] = dp[i - 1][dp[i - 1][j]];
             }
         }
+
         for (int i = 0; i < q; i++) {
-            int x = sc.nextInt() - 1;
-            int y = sc.nextInt() - 1;
+            int x = sc.nextInt();
+            int y = sc.nextInt();
 
-
+            for (int j = 0; j < kmax; j++) {
+                if ((y & (1 << j)) != 0) {
+                    x = dp[j][x];
+                }
+            }
+            System.out.println(x);
         }
-
-
-        System.out.println(n);
     }
 //}
 
-    //@Test
+    @Test
     public void Case1() {
 
         String input = """
