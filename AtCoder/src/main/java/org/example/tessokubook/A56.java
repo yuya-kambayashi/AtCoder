@@ -29,9 +29,12 @@ public class A56 {
         System.setIn(null);
         System.setOut(null);
     }
-//import java.math.*;
+
+    //import java.math.*;
 //import java.util.*;
 //public class Main {
+    private static final long mod = 1000000007;
+
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -39,29 +42,24 @@ public class A56 {
         final int n = sc.nextInt();
         final int q = sc.nextInt();
         final String s = sc.next();
+        long[] hash = new long[n + 1];
+        long[] power = new long[n + 1];
+        power[0] = 1;
+        for (int i = 0; i < n; i++) {
+            hash[i + 1] = (hash[i] * 131 + s.charAt(i)) % mod;
+            power[i + 1] = power[i] * 131 % mod;
+        }
         for (int i = 0; i < q; i++) {
-            int a = sc.nextInt();
+            int a = sc.nextInt() - 1;
             int b = sc.nextInt();
-            int c = sc.nextInt();
+            int c = sc.nextInt() - 1;
             int d = sc.nextInt();
-            a--;
-            b--;
-            c--;
-            d--;
 
-            if (b - a != d - c) {
-                System.out.println("No");
-            } else {
-                boolean ok = true;
-                for (int j = 0; j < b - a; j++) {
-                    if (s.charAt(a + j) != s.charAt(c + j)) {
-                        ok = false;
-                        break;
-                    }
-                }
-                String ret = ok ? "Yes" : "No";
-                System.out.println(ret);
-            }
+            long hashA = (hash[b] - hash[a] * power[b - a] % mod + mod) % mod;
+            long hashB = (hash[d] - hash[c] * power[d - c] % mod + mod) % mod;
+
+            System.out.println(hashA == hashB ? "Yes" : "No");
+
         }
     }
 //}
