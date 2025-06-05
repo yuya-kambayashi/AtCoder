@@ -64,7 +64,6 @@ public class A58 {
                 int l = sc.nextInt();
                 int r = sc.nextInt();
                 System.out.println(query(segTree, l, r, 1, size + 1, 1));
-
             }
         }
     }
