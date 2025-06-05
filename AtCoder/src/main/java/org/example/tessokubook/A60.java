@@ -44,7 +44,7 @@ public class A60 {
             aa[i] = sc.nextInt();
         }
 
-        Deque<Integer> stack = new ArrayDeque<>();
+        Stack<Integer> stack = new Stack<>();
         for (int i = 0; i < n; i++) {
             while (!stack.isEmpty() && aa[stack.peek()] <= aa[i]) {
                 stack.pop();
