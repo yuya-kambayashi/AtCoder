@@ -1,4 +1,4 @@
-package org.example.tessokubook;
+package org.example.ABC;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class B61 {
+public class ABC409 {
 
     private final StandardInputSnatcher in = new StandardInputSnatcher();
     private final StandardOutputSnatcher out = new StandardOutputSnatcher();
@@ -37,25 +37,21 @@ public class B61 {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
-        final int m = sc.nextInt();
-
-        Map<Integer, Integer> map = new HashMap<>();
-        for (int i = 0; i < m; i++) {
-            int a = sc.nextInt();
-            int b = sc.nextInt();
-            map.put(a, map.getOrDefault(a, 0) + 1);
-            map.put(b, map.getOrDefault(b, 0) + 1);
+        int[] aa = new int[n];
+        for (int i = 0; i < n; i++) {
+            aa[i] = sc.nextInt();
         }
-        int max = Integer.MIN_VALUE;
-        int maxKey = Integer.MIN_VALUE;
-        for (var entry : map.entrySet()) {
-            if (max < entry.getValue()) {
-                max = entry.getValue();
-                maxKey = entry.getKey();
+        Arrays.sort(aa);
+
+        int ans = 0;
+
+        for (int i = 0; i < n; i++) {
+            int t = n - i;
+            if (aa[i] >= t) {
+                ans = Math.max(ans, t);
             }
         }
-
-        System.out.println(maxKey);
+        System.out.println(ans);
     }
 //}
 
@@ -63,19 +59,16 @@ public class B61 {
     public void Case1() {
 
         String input = """
-                5 4
-                1 2
-                2 3
-                3 4
-                3 5
+                3
+                1 2 1
                 
                 """;
 
         String expected = """
-                3
+                1
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        A61.main(null);
+        ABC409.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
@@ -83,46 +76,16 @@ public class B61 {
     public void Case2() {
 
         String input = """
-                15 30
-                6 9
-                9 10
-                2 9
-                9 12
-                2 14
-                1 4
-                4 6
-                1 3
-                4 14
-                1 6
-                9 11
-                2 6
-                3 9
-                5 9
-                4 9
-                11 15
-                1 13
-                4 13
-                8 9
-                9 13
-                5 15
-                3 5
-                8 10
-                2 4
-                9 14
-                1 9
-                2 8
-                6 13
-                7 9
-                9 15
+                7
+                1 6 2 10 2 3 2
                 
                 """;
 
         String expected = """
-                9
-                
+                3
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        B61.main(null);
+        ABC409.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
@@ -137,7 +100,7 @@ public class B61 {
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        B61.main(null);
+        ABC409.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
@@ -152,7 +115,7 @@ public class B61 {
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        B61.main(null);
+        ABC409.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 }

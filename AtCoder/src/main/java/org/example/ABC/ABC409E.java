@@ -1,4 +1,4 @@
-package org.example.tessokubook;
+package org.example.ABC;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class B61 {
+public class ABC409E {
 
     private final StandardInputSnatcher in = new StandardInputSnatcher();
     private final StandardOutputSnatcher out = new StandardOutputSnatcher();
@@ -33,29 +33,54 @@ public class B61 {
 //import java.util.*;
 //public class Main {
 
+    static class Edge {
+        int to, cost;
+
+        Edge(int to, int cost) {
+            this.to = to;
+            this.cost = cost;
+        }
+    }
+
+    static List<Edge>[] tree;
+    static int[] x;
+    static long totalCost = 0;
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-
-        final int n = sc.nextInt();
-        final int m = sc.nextInt();
-
-        Map<Integer, Integer> map = new HashMap<>();
-        for (int i = 0; i < m; i++) {
-            int a = sc.nextInt();
-            int b = sc.nextInt();
-            map.put(a, map.getOrDefault(a, 0) + 1);
-            map.put(b, map.getOrDefault(b, 0) + 1);
-        }
-        int max = Integer.MIN_VALUE;
-        int maxKey = Integer.MIN_VALUE;
-        for (var entry : map.entrySet()) {
-            if (max < entry.getValue()) {
-                max = entry.getValue();
-                maxKey = entry.getKey();
-            }
+        int N = sc.nextInt();
+        x = new int[N];
+        for (int i = 0; i < N; i++) {
+            x[i] = sc.nextInt();
         }
 
-        System.out.println(maxKey);
+        tree = new ArrayList[N];
+        for (int i = 0; i < N; i++) tree[i] = new ArrayList<>();
+
+        for (int i = 0; i < N - 1; i++) {
+            int u = sc.nextInt() - 1;
+            int v = sc.nextInt() - 1;
+            int w = sc.nextInt();
+            tree[u].add(new Edge(v, w));
+            tree[v].add(new Edge(u, w));
+        }
+
+        dfs(0, -1);
+        System.out.println(totalCost);
+    }
+
+    // DFS: 自分の部分木にある電子の総和を返す
+    static int dfs(int current, int parent) {
+        int sum = x[current];
+
+        for (Edge edge : tree[current]) {
+            if (edge.to == parent) continue;
+            int childSum = dfs(edge.to, current);
+            totalCost += (long) Math.abs(childSum) * edge.cost;
+            sum += childSum;
+        }
+
+        return sum;
     }
 //}
 
@@ -63,19 +88,19 @@ public class B61 {
     public void Case1() {
 
         String input = """
-                5 4
-                1 2
-                2 3
-                3 4
-                3 5
+                4
+                -3 2 2 -1
+                1 2 2
+                1 3 1
+                1 4 3
                 
                 """;
 
         String expected = """
-                3
+                9
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        A61.main(null);
+        ABC409E.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
@@ -83,61 +108,38 @@ public class B61 {
     public void Case2() {
 
         String input = """
-                15 30
-                6 9
-                9 10
-                2 9
-                9 12
-                2 14
-                1 4
-                4 6
-                1 3
-                4 14
-                1 6
-                9 11
-                2 6
-                3 9
-                5 9
-                4 9
-                11 15
-                1 13
-                4 13
-                8 9
-                9 13
-                5 15
-                3 5
-                8 10
-                2 4
-                9 14
-                1 9
-                2 8
-                6 13
-                7 9
-                9 15
+                2
+                0 0
+                1 2 1
                 
                 """;
 
         String expected = """
-                9
-                
+                0
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        B61.main(null);
+        ABC409E.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //@Test
+    @Test
     public void Case3() {
 
         String input = """
+                5
+                -2 -8 10 -2 2
+                3 5 1
+                1 3 5
+                2 5 0
+                3 4 6
                 
                 """;
 
         String expected = """
-                
+                28
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        B61.main(null);
+        ABC409E.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
@@ -152,7 +154,7 @@ public class B61 {
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        B61.main(null);
+        ABC409E.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 }

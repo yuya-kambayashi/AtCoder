@@ -1,4 +1,4 @@
-package org.example.tessokubook;
+package org.example.ABC;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class B61 {
+public class ABC409C {
 
     private final StandardInputSnatcher in = new StandardInputSnatcher();
     private final StandardOutputSnatcher out = new StandardOutputSnatcher();
@@ -37,25 +37,45 @@ public class B61 {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
-        final int m = sc.nextInt();
-
-        Map<Integer, Integer> map = new HashMap<>();
-        for (int i = 0; i < m; i++) {
-            int a = sc.nextInt();
-            int b = sc.nextInt();
-            map.put(a, map.getOrDefault(a, 0) + 1);
-            map.put(b, map.getOrDefault(b, 0) + 1);
+        final int l = sc.nextInt();
+        if (l % 3 != 0) {
+            System.out.println(0);
+            return;
         }
-        int max = Integer.MIN_VALUE;
-        int maxKey = Integer.MIN_VALUE;
-        for (var entry : map.entrySet()) {
-            if (max < entry.getValue()) {
-                max = entry.getValue();
-                maxKey = entry.getKey();
+
+        int[] aa = new int[n];
+        aa[0] = 0;
+        for (int i = 1; i < n; i++) {
+            int t = sc.nextInt();
+            int next = aa[i - 1] + t;
+            next %= l;
+            aa[i] = next;
+        }
+        Arrays.sort(aa);
+        TreeMap<Integer, Integer> map = new TreeMap<>();
+        for (var a : aa) {
+            map.put(a, map.getOrDefault(a, 0) + 1);
+        }
+
+        int len = l / 3;
+
+        long ans = 0;
+        Set<Integer> used = new HashSet<>();
+        for (var a : map.keySet()) {
+            if (used.contains(a)) {
+                continue;
+            }
+            int b = (a + len) % l;
+            int c = (b + len) % l;
+            if (map.containsKey(b) && map.containsKey(c)) {
+                ans += (long) map.get(a) * map.get(b) * map.get(c);
+                used.add(a);
+                used.add(b);
+                used.add(c);
             }
         }
 
-        System.out.println(maxKey);
+        System.out.println(ans);
     }
 //}
 
@@ -63,19 +83,16 @@ public class B61 {
     public void Case1() {
 
         String input = """
-                5 4
-                1 2
-                2 3
-                3 4
-                3 5
+                5 6
+                4 3 1 2
                 
                 """;
 
         String expected = """
-                3
+                2
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        A61.main(null);
+        ABC409C.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
@@ -83,61 +100,33 @@ public class B61 {
     public void Case2() {
 
         String input = """
-                15 30
-                6 9
-                9 10
-                2 9
-                9 12
-                2 14
-                1 4
-                4 6
-                1 3
-                4 14
-                1 6
-                9 11
-                2 6
-                3 9
-                5 9
-                4 9
-                11 15
-                1 13
-                4 13
-                8 9
-                9 13
-                5 15
-                3 5
-                8 10
-                2 4
-                9 14
-                1 9
-                2 8
-                6 13
-                7 9
-                9 15
+                4 4
+                1 1 1
                 
                 """;
 
         String expected = """
-                9
-                
+                0
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        B61.main(null);
+        ABC409C.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //@Test
+    @Test
     public void Case3() {
 
         String input = """
+                10 12
+                4 4 5 7 1 7 0 8 5
                 
                 """;
 
         String expected = """
-                
+                13
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        B61.main(null);
+        ABC409C.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
@@ -152,7 +141,7 @@ public class B61 {
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        B61.main(null);
+        ABC409C.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 }

@@ -1,4 +1,4 @@
-package org.example.tessokubook;
+package org.example.ABC;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class B61 {
+public class ABC409D {
 
     private final StandardInputSnatcher in = new StandardInputSnatcher();
     private final StandardOutputSnatcher out = new StandardOutputSnatcher();
@@ -35,27 +35,26 @@ public class B61 {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        int T = sc.nextInt();
+        while (T-- > 0) {
+            int n = sc.nextInt();
+            String s = sc.next();
 
-        final int n = sc.nextInt();
-        final int m = sc.nextInt();
+            String best = s; // 操作しない場合も候補
 
-        Map<Integer, Integer> map = new HashMap<>();
-        for (int i = 0; i < m; i++) {
-            int a = sc.nextInt();
-            int b = sc.nextInt();
-            map.put(a, map.getOrDefault(a, 0) + 1);
-            map.put(b, map.getOrDefault(b, 0) + 1);
-        }
-        int max = Integer.MIN_VALUE;
-        int maxKey = Integer.MIN_VALUE;
-        for (var entry : map.entrySet()) {
-            if (max < entry.getValue()) {
-                max = entry.getValue();
-                maxKey = entry.getKey();
+            for (int i = 1; i < n; i++) {
+                char c = s.charAt(i);
+                String without = s.substring(0, i) + s.substring(i + 1);
+                for (int j = 0; j <= i; j++) {
+                    String candidate = without.substring(0, j) + c + without.substring(j);
+                    if (candidate.compareTo(best) < 0) {
+                        best = candidate;
+                    }
+                }
             }
-        }
 
-        System.out.println(maxKey);
+            System.out.println(best);
+        }
     }
 //}
 
@@ -63,66 +62,39 @@ public class B61 {
     public void Case1() {
 
         String input = """
-                5 4
-                1 2
-                2 3
-                3 4
-                3 5
+                3
+                7
+                atcoder
+                1
+                x
+                5
+                snuke
                 
                 """;
 
         String expected = """
-                3
+                acodert
+                x
+                nsuke
+                
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        A61.main(null);
+        ABC409D.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    @Test
+    //@Test
     public void Case2() {
 
         String input = """
-                15 30
-                6 9
-                9 10
-                2 9
-                9 12
-                2 14
-                1 4
-                4 6
-                1 3
-                4 14
-                1 6
-                9 11
-                2 6
-                3 9
-                5 9
-                4 9
-                11 15
-                1 13
-                4 13
-                8 9
-                9 13
-                5 15
-                3 5
-                8 10
-                2 4
-                9 14
-                1 9
-                2 8
-                6 13
-                7 9
-                9 15
                 
                 """;
 
         String expected = """
-                9
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        B61.main(null);
+        ABC409D.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
@@ -137,7 +109,7 @@ public class B61 {
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        B61.main(null);
+        ABC409D.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
@@ -152,7 +124,7 @@ public class B61 {
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        B61.main(null);
+        ABC409D.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 }
