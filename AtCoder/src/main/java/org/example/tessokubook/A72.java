@@ -9,6 +9,7 @@ import org.example.template.StandardInputSnatcher;
 import org.example.template.StandardOutputSnatcher;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -32,24 +33,49 @@ public class A72 {
 //import java.util.*;
 //public class Main {
 
+    // https://atcoder.jp/contests/tessoku-book/submissions/49412005
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
+        final int h = sc.nextInt();
+        final int w = sc.nextInt();
+        final int k = sc.nextInt();
+        int[] white = new int[h];
+        int sum = 0;
+        for (int i = 0; i < h; i++) {
+            String s = sc.next();
+            for (int j = 0; j < w; j++) {
+                if (s.charAt(j) == '.') {
+                    white[i]++;
+                } else {
+                    sum++;
+                }
+            }
+        }
+        Arrays.sort(white);
+        for (int i = h - 1; i > h - 1 - k; i--) {
+            sum += white[i];
+        }
 
-        System.out.println(n);
+        System.out.println(sum);
     }
 //}
 
-    //@Test
+    @Test
     public void Case1() {
 
         String input = """
+                4 10 3
+                ##...#.##.
+                .#....#...
+                ##.####..#
+                #..######.
                 
                 """;
 
         String expected = """
-                
+                37
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
         A72.main(null);
