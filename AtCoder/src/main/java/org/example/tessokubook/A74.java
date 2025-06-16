@@ -9,6 +9,7 @@ import org.example.template.StandardInputSnatcher;
 import org.example.template.StandardOutputSnatcher;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -36,20 +37,48 @@ public class A74 {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        int[] xx = new int[n + 1];
+        int[] yy = new int[n + 1];
+        int[][] ppp = new int[n + 1][n + 1];
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+                ppp[i][j] = sc.nextInt();
+                if (ppp[i][j] != 0) {
+                    xx[i] = ppp[i][j];
+                    yy[j] = ppp[i][j];
+                }
+            }
+        }
+        int x = 0, y = 0;
+        for (int i = 1; i <= n; i++) {
+            for (int j = i + 1; j <= n; j++) {
+                if (xx[i] > xx[j]) {
+                    x++;
+                }
+                if (yy[i] > yy[j]) {
+                    y++;
+                }
+            }
+        }
 
-        System.out.println(n);
+        System.out.println(x + y);
     }
 //}
 
-    //@Test
+    @Test
     public void Case1() {
 
         String input = """
+                4
+                0 0 2 0
+                3 0 0 0
+                0 0 0 4
+                0 1 0 0
                 
                 """;
 
         String expected = """
-                
+                5
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
         A74.main(null);
