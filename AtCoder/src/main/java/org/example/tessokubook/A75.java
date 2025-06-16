@@ -41,6 +41,7 @@ public class A75 {
         for (int i = 0; i < n; i++) {
             td[i][0] = sc.nextInt();
             td[i][1] = sc.nextInt();
+            
         }
         Arrays.sort(td, (td1, td2) -> td1[1] - td2[1]);
 
