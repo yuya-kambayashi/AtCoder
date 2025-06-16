@@ -30,74 +30,60 @@ public class ABC410D {
         System.setOut(null);
     }
 
-    //public class Main {
-    static class Edge {
-        int to, weight;
+//public class Main {
 
-        Edge(int to, int weight) {
-            this.to = to;
-            this.weight = weight;
-        }
-    }
+    // https://atcoder.jp/contests/abc410/submissions/66783805
 
-    static List<Edge>[] graph;
-    static int[] xorTo;
-    static boolean[] visited;
-    static List<Integer> basis = new ArrayList<>();
+    static StringBuilder sb = new StringBuilder();
+    static List<long[]>[] ggg;
+    static Map<long[], Set<Long>> visited;
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt();
-        int M = sc.nextInt();
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+        ggg = new ArrayList[n];
+        visited = new HashMap<>();
 
-        graph = new ArrayList[N + 1];
-        for (int i = 0; i <= N; i++) graph[i] = new ArrayList<>();
-
-        for (int i = 0; i < M; i++) {
-            int a = sc.nextInt(), b = sc.nextInt(), w = sc.nextInt();
-            graph[a].add(new Edge(b, w));
-            graph[b].add(new Edge(a, w));
+        for (int i = 0; i < n; i++) {
+            ggg[i] = new ArrayList<>();
         }
 
-        xorTo = new int[N + 1];
-        visited = new boolean[N + 1];
-
-        dfs(1, 0);
-
-        if (!visited[N]) {
+        for (int i = 0; i < m; i++) {
+            int a = sc.nextInt() - 1;
+            int b = sc.nextInt() - 1;
+            long w = sc.nextLong();
+            long[] e = new long[]{b, w};
+            ggg[a].add(e);
+            visited.put(e, new HashSet<>());
+        }
+        long ans = solve(0, 0, Long.MAX_VALUE, n - 1);
+        if (ans == Long.MAX_VALUE) {
             System.out.println(-1);
-            return;
+        } else {
+            System.out.println(ans);
         }
-
-        int answer = xorTo[N];
-        for (int b : basis) {
-            answer = Math.min(answer, answer ^ b);
-        }
-
-        System.out.println(answer);
     }
 
-    static void dfs(int node, int xorVal) {
-        visited[node] = true;
-        xorTo[node] = xorVal;
+    static long solve(int now, long xor, long min, int goal) {
+        for (long[] e : ggg[now]) {
+            int next = (int) e[0];
+            long w = e[1];
+            long next_xor = xor ^ w;
 
-        for (Edge e : graph[node]) {
-            if (!visited[e.to]) {
-                dfs(e.to, xorVal ^ e.weight);
-            } else {
-                int cycle = xorVal ^ xorTo[e.to] ^ e.weight;
-                if (cycle != 0) addToBasis(cycle);
+            if (!visited.get(e).contains(next_xor)) {
+                visited.get(e).add(next_xor);
+                min = Math.min(min, solve(next, next_xor, min, goal));
             }
         }
+        if (now == goal) {
+            return Math.min(min, xor);
+        } else {
+            return min;
+        }
     }
 
-    static void addToBasis(int x) {
-        for (int b : basis) {
-            x = Math.min(x, x ^ b);
-        }
-        if (x != 0) basis.add(x);
-    }
-    //}
+//}
 
     @Test
     public void Case1() {

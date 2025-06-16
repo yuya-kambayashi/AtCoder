@@ -29,59 +29,44 @@ public class ABC410E {
         System.setIn(null);
         System.setOut(null);
     }
-//import java.math.*;
+    //import java.math.*;
 //import java.util.*;
 //public class Main {
 
-    static int N;
-    static int[] A, B;
-    static Map<String, Integer> memo = new HashMap<>();
-
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        N = sc.nextInt();
-        int H = sc.nextInt();
-        int M = sc.nextInt();
-
-        A = new int[N];
-        B = new int[N];
-
-        for (int i = 0; i < N; i++) {
-            A[i] = sc.nextInt();
-            B[i] = sc.nextInt();
+        int n = sc.nextInt();
+        int h = sc.nextInt();
+        int m = sc.nextInt();
+        int[] aa = new int[n + 1];
+        int[] bb = new int[n + 1];
+        for (int i = 1; i <= n; i++) {
+            aa[i] = sc.nextInt();
+            bb[i] = sc.nextInt();
         }
-
-        int result = dfs(0, H, M);
-        System.out.println(result);
-    }
-
-    static int dfs(int i, int h, int m) {
-        if (i == N) return 0;
-
-        String key = i + "_" + h + "_" + m;
-        if (memo.containsKey(key)) {
-            return memo.get(key);
+        int[][] dp = new int[n + 1][m + 1];
+        for (int i = 0; i <= n; i++) {
+            Arrays.fill(dp[i], -1);
         }
+        dp[0][m] = h;
 
-        int res = 0;
-
-        // 選ばない（ここで終わる）
-        res = Math.max(res, 0);
-
-        // 魔力で倒す
-        if (m >= B[i]) {
-            res = Math.max(res, 1 + dfs(i + 1, h, m - B[i]));
+        int ans = 0;
+        for (int i = 1; i <= n; i++) {
+            for (int j = 0; j <= m; j++) {
+                dp[i][j] = Math.max(dp[i][j], dp[i - 1][j] - aa[i]);
+                if (j + bb[i] <= m) {
+                    dp[i][j] = Math.max(dp[i][j], dp[i - 1][j + bb[i]]);
+                }
+                if (dp[i][j] >= 0) {
+                    ans = i;
+                }
+            }
         }
+        System.out.println(ans);
 
-        // 体力で倒す
-        if (h >= A[i]) {
-            res = Math.max(res, 1 + dfs(i + 1, h - A[i], m));
-        }
-
-        memo.put(key, res);
-        return res;
     }
 //}
+
 
     @Test
     public void Case1() {
