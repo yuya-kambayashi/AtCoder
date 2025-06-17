@@ -38,24 +38,23 @@ public class A07 {
 
         final int d = sc.nextInt();
         final int n = sc.nextInt();
-        int[] in = new int[d];
-        int[] out = new int[d];
-        for (int i = 0; i < n; i++) {
+        int[] in = new int[d + 1];
+        int[] out = new int[d + 1];
+        for (int i = 1; i <= n; i++) {
             int l = sc.nextInt();
             int r = sc.nextInt();
-            in[l - 1]++;
-            out[r - 1]++;
+            in[l]++;
+            out[r]++;
         }
-        long[] ins = new long[d + 1];
-        long[] outs = new long[d + 1];
-        ins[0] = 0;
-        outs[0] = 0;
+        int[] ins = new int[d + 1];
+        int[] outs = new int[d + 1];
         for (int i = 1; i <= d; i++) {
-            ins[i] = in[i - 1] + ins[i - 1];
-            outs[i] = out[i - 1] + outs[i - 1];
+            ins[i] = ins[i - 1] + in[i];
+            outs[i] = outs[i - 1] + out[i];
+        }
 
+        for (int i = 1; i <= d; i++) {
             System.out.println(ins[i] - outs[i - 1]);
-
         }
     }
 //}

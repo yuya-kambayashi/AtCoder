@@ -39,19 +39,19 @@ public class A06 {
         final int n = sc.nextInt();
         final int q = sc.nextInt();
         int[] aa = new int[n];
-        long[] bb = new long[n + 1];
         for (int i = 0; i < n; i++) {
             aa[i] = sc.nextInt();
         }
+        long[] bb = new long[n + 1];
         bb[0] = 0;
         for (int i = 1; i <= n; i++) {
-            bb[i] = aa[i - 1] + bb[i - 1];
+            bb[i] = bb[i - 1] + aa[i - 1];
         }
         for (int i = 0; i < q; i++) {
-            int left = sc.nextInt();
-            int right = sc.nextInt();
+            int l = sc.nextInt();
+            int r = sc.nextInt();
 
-            System.out.println(bb[right] - bb[left - 1]);
+            System.out.println(bb[r] - bb[l - 1]);
         }
     }
 //}
