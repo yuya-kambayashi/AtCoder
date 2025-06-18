@@ -38,23 +38,21 @@ public class A07 {
 
         final int d = sc.nextInt();
         final int n = sc.nextInt();
-        int[] in = new int[d + 1];
-        int[] out = new int[d + 1];
-        for (int i = 1; i <= n; i++) {
+        int[] imos = new int[d + 1];
+        for (int i = 0; i < n; i++) {
             int l = sc.nextInt();
             int r = sc.nextInt();
-            in[l]++;
-            out[r]++;
+            imos[l]++;
+            if (r + 1 <= d) {
+                imos[r + 1]--;
+            }
         }
-        int[] ins = new int[d + 1];
-        int[] outs = new int[d + 1];
         for (int i = 1; i <= d; i++) {
-            ins[i] = ins[i - 1] + in[i];
-            outs[i] = outs[i - 1] + out[i];
+            imos[i] += imos[i - 1];
         }
 
         for (int i = 1; i <= d; i++) {
-            System.out.println(ins[i] - outs[i - 1]);
+            System.out.println(imos[i]);
         }
     }
 //}
