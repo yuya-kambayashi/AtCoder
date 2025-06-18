@@ -36,47 +36,44 @@ public class A09 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        // 入力
-        int H = sc.nextInt();
-        int W = sc.nextInt();
-        int N = sc.nextInt();
-        int[] A = new int[N + 1];
-        int[] B = new int[N + 1];
-        int[] C = new int[N + 1];
-        int[] D = new int[N + 1];
-        for (int i = 1; i <= N; i++) {
-            A[i] = sc.nextInt();
-            B[i] = sc.nextInt();
-            C[i] = sc.nextInt();
-            D[i] = sc.nextInt();
+        int h = sc.nextInt();
+        int w = sc.nextInt();
+        int n = sc.nextInt();
+
+        int[] aa = new int[n + 1];
+        int[] bb = new int[n + 1];
+        int[] cc = new int[n + 1];
+        int[] dd = new int[n + 1];
+
+        for (int i = 1; i <= n; i++) {
+            aa[i] = sc.nextInt();
+            bb[i] = sc.nextInt();
+            cc[i] = sc.nextInt();
+            dd[i] = sc.nextInt();
         }
 
-        // 各日について加算
-        int[][] X = new int[H + 2][W + 2];
-        int[][] Z = new int[H + 2][W + 2];
-        for (int t = 1; t <= N; t++) {
-            X[A[t]][B[t]] += 1;
-            X[A[t]][D[t] + 1] -= 1;
-            X[C[t] + 1][B[t]] -= 1;
-            X[C[t] + 1][D[t] + 1] += 1;
+        int[][] xxx = new int[h + 2][w + 2];
+        int[][] zzz = new int[h + 2][w + 2];
+        for (int i = 1; i <= n; i++) {
+            xxx[aa[i]][bb[i]]++;
+            xxx[aa[i]][dd[i] + 1]--;
+            xxx[cc[i] + 1][bb[i]]--;
+            xxx[cc[i] + 1][dd[i] + 1]++;
         }
 
-        // 二次元累積和を求める
-        for (int i = 0; i <= H; i++) {
-            for (int j = 0; j <= W; j++) Z[i][j] = 0;
+        for (int i = 1; i <= h; i++) {
+            for (int j = 1; j <= w; j++) {
+                zzz[i][j] = zzz[i][j - 1] + xxx[i][j];
+            }
         }
-        for (int i = 1; i <= H; i++) {
-            for (int j = 1; j <= W; j++) Z[i][j] = Z[i][j - 1] + X[i][j];
+        for (int j = 1; j <= w; j++) {
+            for (int i = 1; i <= h; i++) {
+                zzz[i][j] += zzz[i - 1][j];
+            }
         }
-        for (int j = 1; j <= W; j++) {
-            for (int i = 1; i <= H; i++) Z[i][j] = Z[i - 1][j] + Z[i][j];
-        }
-
-        // 出力
-        for (int i = 1; i <= H; i++) {
-            for (int j = 1; j <= W; j++) {
-                if (j >= 2) System.out.print(" ");
-                System.out.print(Z[i][j]);
+        for (int i = 1; i <= h; i++) {
+            for (int j = 1; j <= w; j++) {
+                System.out.print(zzz[i][j] + " ");
             }
             System.out.println();
         }

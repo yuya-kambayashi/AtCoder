@@ -38,46 +38,35 @@ public class A08 {
 
         final int h = sc.nextInt();
         final int w = sc.nextInt();
-        int[][] xxx = new int[h + 2][w + 2];
-        int[][] zzz = new int[h + 2][w + 2];
-        for (int i = 1; i <= h; i++) {
-            for (int j = 1; j <= w; j++) {
+        int[][] xxx = new int[h][w];
+        for (int i = 0; i < h; i++) {
+            for (int j = 0; j < w; j++) {
                 xxx[i][j] = sc.nextInt();
             }
         }
-        int q = sc.nextInt();
-        int[] aa = new int[q + 1];
-        int[] bb = new int[q + 1];
-        int[] cc = new int[q + 1];
-        int[] dd = new int[q + 1];
-        for (int i = 1; i <= q; i++) {
-            aa[i] = sc.nextInt();
-            bb[i] = sc.nextInt();
-            cc[i] = sc.nextInt();
-            dd[i] = sc.nextInt();
+
+        long[][] xxx2 = new long[h][w + 1];
+        for (int i = 0; i < h; i++) {
+            xxx2[i][0] = 0;
+            for (int j = 1; j <= w; j++) {
+                xxx2[i][j] = xxx2[i][j - 1] + xxx[i][j - 1];
+            }
         }
 
-        for (int i = 0; i <= h; i++) {
-            for (int j = 0; j <= w; j++) {
-                zzz[i][j] = 0;
+        int q = sc.nextInt();
+        for (int i = 0; i < q; i++) {
+
+            int a = sc.nextInt();
+            int b = sc.nextInt();
+            int c = sc.nextInt();
+            int d = sc.nextInt();
+
+            long ans = 0;
+            for (int row = a - 1; row < c; row++) {
+                ans += xxx2[row][d] - xxx2[row][b - 1];
             }
-        }
-        for (int i = 1; i <= h; i++) {
-            for (int j = 1; j <= w; j++) {
-                zzz[i][j] = zzz[i][j - 1] + xxx[i][j];
-            }
-        }
-        for (int j = 1; j <= w; j++) {
-            for (int i = 1; i <= h; i++) {
-                zzz[i][j] = zzz[i - 1][j] + zzz[i][j];
-            }
-        }
-        for (int i = 1; i <= q; i++) {
-            int a = aa[i];
-            int b = bb[i];
-            int c = cc[i];
-            int d = dd[i];
-            System.out.println(zzz[c][d] + zzz[a - 1][b - 1] - zzz[a - 1][d] - zzz[c][b - 1]);
+
+            System.out.println(ans);
         }
     }
 //}
@@ -108,11 +97,18 @@ public class A08 {
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //@Test
+    @Test
     public void Case2() {
 
         String input = """
-                
+                4 4
+                1 1 1 1
+                1 1 1 1
+                1 1 1 1
+                1 1 1 1
+                2
+                1 1 1 1
+                2 2 2 2
                 """;
 
         String expected = """
