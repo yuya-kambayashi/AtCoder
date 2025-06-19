@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchException;
 
 import org.example.template.StandardInputSnatcher;
 import org.example.template.StandardOutputSnatcher;
@@ -43,30 +44,32 @@ public class A12 {
 
         n = sc.nextInt();
         k = sc.nextInt();
-        aa = new long[n + 1];
-        for (int i = 1; i <= n; i++) {
+        aa = new long[n];
+        for (int i = 0; i < n; i++) {
             aa[i] = sc.nextInt();
         }
         Arrays.sort(aa);
 
-        long left = 1, right = 1000000000;
+        long left = 0, right = 1000000000;
         while (left < right) {
             long mid = (left + right) / 2;
+
             boolean found = check(mid);
 
             if (found) {
+                // 条件を満たすので下側を探す
                 right = mid;
             } else {
+                // 条件を満たさないので上側を探す
                 left = mid + 1;
             }
         }
-
         System.out.println(left);
     }
 
     static boolean check(long x) {
         long sum = 0;
-        for (int i = 1; i <= n; i++) {
+        for (int i = 0; i < n; i++) {
             sum += x / aa[i];
         }
         return sum >= k;

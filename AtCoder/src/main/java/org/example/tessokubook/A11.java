@@ -44,9 +44,9 @@ public class A11 {
         }
         Arrays.sort(aa);
 
-        int r = Arrays.binarySearch(aa, x);
-        System.out.println(r + 1);
+        int ret = Arrays.binarySearch(aa, x);
 
+        System.out.println(ret + 1);
     }
 //}
 
