@@ -52,7 +52,6 @@ public class A13 {
             }
             ans += right - left;
         }
-        
         System.out.println(ans);
     }
 //}
