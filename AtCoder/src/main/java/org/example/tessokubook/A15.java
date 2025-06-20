@@ -44,10 +44,9 @@ public class A15 {
 
         int[] bb = Arrays.stream(aa).distinct().sorted().toArray();
         for (int i = 0; i < n; i++) {
-            int a = aa[i];
-            int ret = Arrays.binarySearch(bb, a) + 1;
-            System.out.print(ret + " ");
+            System.out.print(Arrays.binarySearch(bb, aa[i]) + 1 + " ");
         }
+
     }
 //}
 
