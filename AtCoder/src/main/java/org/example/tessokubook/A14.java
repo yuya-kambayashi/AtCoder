@@ -42,7 +42,6 @@ public class A14 {
         int[] bb = new int[n];
         int[] cc = new int[n];
         int[] dd = new int[n];
-        Set<Integer> setd = new HashSet<>();
         for (int i = 0; i < n; i++) {
             aa[i] = sc.nextInt();
         }
@@ -54,24 +53,25 @@ public class A14 {
         }
         for (int i = 0; i < n; i++) {
             dd[i] = sc.nextInt();
-            setd.add(dd[i]);
         }
         Arrays.sort(aa);
         Arrays.sort(bb);
         Arrays.sort(cc);
         Arrays.sort(dd);
+
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                for (int p = 0; p < n; p++) {
-                    int t = k - aa[i] - bb[j] - cc[p];
-                    if (setd.contains(t)) {
+                for (int t = 0; t < n; t++) {
+
+                    int dt = k - aa[i] - bb[j] - cc[t];
+
+                    if (Arrays.binarySearch(dd, dt) >= 0) {
                         System.out.println("Yes");
                         return;
                     }
                 }
             }
         }
-
         System.out.println("No");
     }
 //}
