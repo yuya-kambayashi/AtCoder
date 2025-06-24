@@ -39,46 +39,51 @@ public class ABC411D {
         final int n = sc.nextInt();
         final int q = sc.nextInt();
 
-        Map<Integer, StringBuilder> map = new HashMap<>();
-        StringBuilder sb = new StringBuilder();
+        List<String> ss = new ArrayList<>();
+        for (int i = 0; i <= q; i++) {
+            ss.add("");
+        }
+
+        int[] p = new int[q];
+        Arrays.fill(p, -1);
+
+        int[] p2 = new int[n];
+        Arrays.fill(p2, -1);
+        int s = -1;
 
         for (int i = 0; i < q; i++) {
             int t = sc.nextInt();
-            int p = sc.nextInt();
+            int num = sc.nextInt() - 1;
+
             if (t == 1) {
-                if (map.containsKey(p)) {
-                    StringBuilder b = map.get(p);
-                    b.setLength(0);
-                    b.append(sb);
-                    map.put(p, b);
-                } else {
-                    StringBuilder b = new StringBuilder();
-                    b.append(sb);
-                    map.put(p, b);
-                }
+                p2[num] = s;
 
             } else if (t == 2) {
-                String s = sc.next();
+                String st = sc.next();
+                ss.set(i, st);
 
-                if (map.containsKey(p)) {
-                    map.put(p, map.get(p).append(s));
-                } else {
-                    StringBuilder sb1 = new StringBuilder();
-                    sb1.append(s);
-                    map.put(p, sb1);
-                }
-            } else if (t == 3) {
+                int tmp = p2[num];
+                p[i] = tmp;
+                p2[num] = i;
 
-                var sb1 = map.get(p);
-                if (sb1 != null) {
-                    sb.setLength(0);
-                    sb.append(sb1);
-                }
+            } else {
+                s = p2[num];
             }
         }
 
-
-        System.out.println(sb.toString());
+        if (s == -1) {
+            System.out.println("");
+        } else {
+            int par = s;
+            StringBuilder sb = new StringBuilder();
+            while (par != -1) {
+                StringBuilder sb2 = new StringBuilder();
+                sb2.append(ss.get(par));
+                sb.append(sb2.reverse());
+                par = p[par];
+            }
+            System.out.println(sb.reverse());
+        }
     }
 //}
 
