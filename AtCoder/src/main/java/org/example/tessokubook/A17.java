@@ -47,19 +47,20 @@ public class A17 {
         for (int i = 3; i <= n; i++) {
             bb[i] = sc.nextInt();
         }
+
         int[] dp = new int[n + 1];
         dp[2] = aa[2];
         for (int i = 3; i <= n; i++) {
             dp[i] = Math.min(dp[i - 1] + aa[i], dp[i - 2] + bb[i]);
         }
         List<Integer> ans = new ArrayList<>();
-        while (true) {
+        while (n >= 1) {
             ans.add(n);
-            if (n == 1) {
-                break;
+            if (dp[n - 1] + aa[n] == dp[n]) {
+                n = n - 1;
+            } else {
+                n = n - 2;
             }
-
-            n = (dp[n - 1] + aa[n] == dp[n]) ? n - 1 : n - 2;
         }
         Collections.sort(ans);
 
