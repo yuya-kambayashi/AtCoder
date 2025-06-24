@@ -32,7 +32,6 @@ public class A18 {
 //import java.math.*;
 //import java.util.*;
 //public class Main {
-    // https://atcoder.jp/contests/tessoku-book/submissions/60373267
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -45,22 +44,30 @@ public class A18 {
         }
         Arrays.sort(aa);
 
-        boolean[] dp = new boolean[s + 1];
-        dp[0] = true;
+        boolean[] bb = new boolean[10001];
+        bb[0] = true;
+
         for (int i = 0; i < n; i++) {
-            for (int j = s; j >= aa[i]; j--) {
-                if (dp[j - aa[i]]) {
-                    dp[j] = true;
+            int a = aa[i];
+
+            boolean[] next = Arrays.copyOf(bb, 10001);
+
+            for (int j = 0; j < 10001; j++) {
+
+                if (bb[j] && j + a < 10001) {
+                    next[j + a] = true;
                 }
             }
+            bb = next;
         }
-
 
         String ret = "No";
-        if (dp[s]) {
+        if (bb[s]) {
             ret = "Yes";
         }
+
         System.out.println(ret);
+
     }
 //}
 
