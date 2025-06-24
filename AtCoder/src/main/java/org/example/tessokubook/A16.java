@@ -47,12 +47,12 @@ public class A16 {
         for (int i = 3; i <= n; i++) {
             bb[i] = sc.nextInt();
         }
+
         int[] dp = new int[n + 1];
         dp[2] = aa[2];
         for (int i = 3; i <= n; i++) {
             dp[i] = Math.min(dp[i - 1] + aa[i], dp[i - 2] + bb[i]);
         }
-
         System.out.println(dp[n]);
     }
 //}
