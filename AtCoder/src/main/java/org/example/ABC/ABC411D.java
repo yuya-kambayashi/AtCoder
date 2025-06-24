@@ -37,8 +37,48 @@ public class ABC411D {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
+        final int q = sc.nextInt();
 
-        System.out.println(n);
+        Map<Integer, StringBuilder> map = new HashMap<>();
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < q; i++) {
+            int t = sc.nextInt();
+            int p = sc.nextInt();
+            if (t == 1) {
+                if (map.containsKey(p)) {
+                    StringBuilder b = map.get(p);
+                    b.setLength(0);
+                    b.append(sb);
+                    map.put(p, b);
+                } else {
+                    StringBuilder b = new StringBuilder();
+                    b.append(sb);
+                    map.put(p, b);
+                }
+
+            } else if (t == 2) {
+                String s = sc.next();
+
+                if (map.containsKey(p)) {
+                    map.put(p, map.get(p).append(s));
+                } else {
+                    StringBuilder sb1 = new StringBuilder();
+                    sb1.append(s);
+                    map.put(p, sb1);
+                }
+            } else if (t == 3) {
+
+                var sb1 = map.get(p);
+                if (sb1 != null) {
+                    sb.setLength(0);
+                    sb.append(sb1);
+                }
+            }
+        }
+
+
+        System.out.println(sb.toString());
     }
 //}
 
