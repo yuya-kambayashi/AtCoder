@@ -33,6 +33,9 @@ public class ABC411D {
 //import java.util.*;
 //public class Main {
 
+    record Node(Node prev, int sid) {
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
@@ -40,50 +43,36 @@ public class ABC411D {
         final int q = sc.nextInt();
 
         List<String> ss = new ArrayList<>();
-        for (int i = 0; i <= q; i++) {
-            ss.add("");
-        }
-
-        int[] p = new int[q];
-        Arrays.fill(p, -1);
-
-        int[] p2 = new int[n];
-        Arrays.fill(p2, -1);
-        int s = -1;
+        Node[] state = new Node[n + 1];
 
         for (int i = 0; i < q; i++) {
             int t = sc.nextInt();
-            int num = sc.nextInt() - 1;
-
+            int p = sc.nextInt();
             if (t == 1) {
-                p2[num] = s;
+                state[p] = state[0];
 
             } else if (t == 2) {
-                String st = sc.next();
-                ss.set(i, st);
-
-                int tmp = p2[num];
-                p[i] = tmp;
-                p2[num] = i;
+                String s = sc.next();
+                ss.add(s);
+                state[p] = new Node(state[p], ss.size() - 1);
 
             } else {
-                s = p2[num];
+                state[0] = state[p];
             }
         }
 
-        if (s == -1) {
-            System.out.println("");
-        } else {
-            int par = s;
-            StringBuilder sb = new StringBuilder();
-            while (par != -1) {
-                StringBuilder sb2 = new StringBuilder();
-                sb2.append(ss.get(par));
-                sb.append(sb2.reverse());
-                par = p[par];
-            }
-            System.out.println(sb.reverse());
+        Deque<Integer> stack = new ArrayDeque<>();
+        Node cur = state[0];
+        while (cur != null) {
+            stack.push(cur.sid);
+            cur = cur.prev;
         }
+        StringBuilder sb = new StringBuilder();
+        while (!stack.isEmpty()) {
+            sb.append(ss.get(stack.pop()));
+        }
+        System.out.println(sb.toString());
+
     }
 //}
 
