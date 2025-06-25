@@ -45,11 +45,12 @@ public class A20 {
                 if (s.charAt(i) == t.charAt(j)) {
                     dp[i + 1][j + 1] = Math.max(dp[i][j + 1], dp[i][j] + 1);
                 }
-                dp[i + 1][j + 1] = Math.max(Math.max(dp[i + 1][j + 1], dp[i + 1][j]), dp[i][j + 1]);
+                dp[i + 1][j + 1] = Math.max(Math.max(dp[i + 1][j + 1], dp[i][j + 1]), dp[i + 1][j]);
             }
         }
 
         System.out.println(dp[s.length()][t.length()]);
+
     }
 //}
 

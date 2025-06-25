@@ -45,6 +45,7 @@ public class A19 {
             int vi = sc.nextInt();
 
             for (int j = 0; j <= w; j++) {
+
                 if (j < wi) {
                     dp[i][j] = dp[i - 1][j];
                 } else {
@@ -52,8 +53,8 @@ public class A19 {
                 }
             }
         }
-
         System.out.println(dp[n][w]);
+
     }
 //}
 
