@@ -46,14 +46,14 @@ public class A21 {
             aa[i] = sc.nextInt();
         }
         int[][] dp = new int[n + 2][n + 2];
+
         for (int l = 1; l <= n; l++) {
             for (int r = n; r >= l; r--) {
-                // 左をのぞく
                 int left = dp[l - 1][r];
                 if (l <= pp[l - 1] && pp[l - 1] <= r) {
                     left += aa[l - 1];
                 }
-                // 右をのぞく
+
                 int right = dp[l][r + 1];
                 if (l <= pp[r + 1] && pp[r + 1] <= r) {
                     right += aa[r + 1];
@@ -65,7 +65,6 @@ public class A21 {
         for (int i = 1; i <= n; i++) {
             ans = Math.max(ans, dp[i][i]);
         }
-
 
         System.out.println(ans);
     }
