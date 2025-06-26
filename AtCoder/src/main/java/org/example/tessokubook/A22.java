@@ -45,15 +45,20 @@ public class A22 {
         for (int i = 1; i < n; i++) {
             bb[i] = sc.nextInt();
         }
+
         int[] dp = new int[n + 1];
         Arrays.fill(dp, Integer.MIN_VALUE);
         dp[1] = 0;
 
         for (int i = 1; i <= n - 1; i++) {
-            dp[aa[i]] = Math.max(dp[aa[i]], dp[i] + 100);
-            dp[bb[i]] = Math.max(dp[bb[i]], dp[i] + 150);
-        }
 
+            int a = aa[i];
+            int b = bb[i];
+
+            dp[a] = Math.max(dp[a], dp[i] + 100);
+            dp[b] = Math.max(dp[b], dp[i] + 150);
+
+        }
 
         System.out.println(dp[n]);
     }
