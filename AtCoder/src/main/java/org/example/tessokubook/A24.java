@@ -43,6 +43,7 @@ public class A24 {
         for (int i = 1; i <= n; i++) {
             aa[i] = sc.nextInt();
         }
+
         List<Integer> tt = new ArrayList<>();
         tt.add(aa[1]);
         for (int i = 2; i <= n; i++) {
