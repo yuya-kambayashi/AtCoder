@@ -55,14 +55,13 @@ public class ABC412D {
                 for (int j = 0; j < n; j++) {
                     ttt = Arrays.copyOf(ggg, n);
                 }
-                if (i > 0){
-                    ggg[i]
+                if (i > 0) {
                 }
             }
         }
 
 
-        System.out.println(ans);
+        //  System.out.println(ans);
     }
 
     static boolean chack(boolean[][] ggg) {

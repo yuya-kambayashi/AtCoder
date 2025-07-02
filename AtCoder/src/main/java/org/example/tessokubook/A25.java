@@ -47,23 +47,29 @@ public class A25 {
         }
 
         long[][] dp = new long[h][w];
+        dp[0][0] = 1;
         for (int row = 0; row < h; row++) {
             for (int col = 0; col < w; col++) {
-                if (row == 0 && col == 0) {
-                    dp[row][col] = 1;
-                } else {
-                    if (row > 0 && grid[row - 1][col] == '.') {
-                        dp[row][col] += dp[row - 1][col];
+
+                if (grid[row][col] == '#') {
+                    continue;
+                }
+
+                if (row + 1 < h) {
+                    if (grid[row + 1][col] == '.') {
+                        dp[row + 1][col] += dp[row][col];
                     }
-                    if (col > 0 && grid[row][col - 1] == '.') {
-                        dp[row][col] += dp[row][col - 1];
+                }
+                if (col + 1 < w) {
+                    if (grid[row][col + 1] == '.') {
+                        dp[row][col + 1] += dp[row][col];
                     }
                 }
             }
         }
 
-
         System.out.println(dp[h - 1][w - 1]);
+
     }
 //}
 
