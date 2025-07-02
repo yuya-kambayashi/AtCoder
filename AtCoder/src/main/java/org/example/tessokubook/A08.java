@@ -45,17 +45,16 @@ public class A08 {
             }
         }
 
-        long[][] xxx2 = new long[h][w + 1];
+        long[][] dp = new long[h][w + 1];
         for (int i = 0; i < h; i++) {
-            xxx2[i][0] = 0;
+            dp[i][0] = 0;
             for (int j = 1; j <= w; j++) {
-                xxx2[i][j] = xxx2[i][j - 1] + xxx[i][j - 1];
+                dp[i][j] = dp[i][j - 1] + xxx[i][j - 1];
             }
         }
 
         int q = sc.nextInt();
         for (int i = 0; i < q; i++) {
-
             int a = sc.nextInt();
             int b = sc.nextInt();
             int c = sc.nextInt();
@@ -63,9 +62,8 @@ public class A08 {
 
             long ans = 0;
             for (int row = a - 1; row < c; row++) {
-                ans += xxx2[row][d] - xxx2[row][b - 1];
+                ans += dp[row][d] - dp[row][b - 1];
             }
-
             System.out.println(ans);
         }
     }
