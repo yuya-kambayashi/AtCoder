@@ -48,7 +48,7 @@ public class A08 {
         long[][] dp = new long[h][w + 1];
         for (int i = 0; i < h; i++) {
             dp[i][0] = 0;
-            for (int j = 1; j <= w; j++) {
+            for (int j = 1; j < w + 1; j++) {
                 dp[i][j] = dp[i][j - 1] + xxx[i][j - 1];
             }
         }
@@ -66,6 +66,7 @@ public class A08 {
             }
             System.out.println(ans);
         }
+
     }
 //}
 
