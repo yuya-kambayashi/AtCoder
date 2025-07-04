@@ -40,40 +40,35 @@ public class A09 {
         int w = sc.nextInt();
         int n = sc.nextInt();
 
-        int[] aa = new int[n + 1];
-        int[] bb = new int[n + 1];
-        int[] cc = new int[n + 1];
-        int[] dd = new int[n + 1];
+        int[][] dp = new int[h + 2][w + 2];
 
-        for (int i = 1; i <= n; i++) {
-            aa[i] = sc.nextInt();
-            bb[i] = sc.nextInt();
-            cc[i] = sc.nextInt();
-            dd[i] = sc.nextInt();
+        for (int i = 0; i < n; i++) {
+            int a = sc.nextInt();
+            int b = sc.nextInt();
+            int c = sc.nextInt();
+            int d = sc.nextInt();
+
+            dp[a][b]++;
+            dp[c + 1][b]--;
+            dp[a][d + 1]--;
+            dp[c + 1][d + 1]++;
+
         }
 
-        int[][] xxx = new int[h + 2][w + 2];
-        int[][] zzz = new int[h + 2][w + 2];
-        for (int i = 1; i <= n; i++) {
-            xxx[aa[i]][bb[i]]++;
-            xxx[aa[i]][dd[i] + 1]--;
-            xxx[cc[i] + 1][bb[i]]--;
-            xxx[cc[i] + 1][dd[i] + 1]++;
-        }
-
-        for (int i = 1; i <= h; i++) {
+        for (int i = 0; i <= h; i++) {
             for (int j = 1; j <= w; j++) {
-                zzz[i][j] = zzz[i][j - 1] + xxx[i][j];
+                dp[i][j] += dp[i][j - 1];
             }
         }
-        for (int j = 1; j <= w; j++) {
+        for (int j = 0; j <= w; j++) {
             for (int i = 1; i <= h; i++) {
-                zzz[i][j] += zzz[i - 1][j];
+                dp[i][j] += dp[i - 1][j];
             }
         }
+
         for (int i = 1; i <= h; i++) {
             for (int j = 1; j <= w; j++) {
-                System.out.print(zzz[i][j] + " ");
+                System.out.print(dp[i][j] + " ");
             }
             System.out.println();
         }
