@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.from;
 
 import org.example.template.StandardInputSnatcher;
 import org.example.template.StandardOutputSnatcher;
@@ -37,25 +38,31 @@ public class A10 {
         Scanner sc = new Scanner(System.in);
 
         final int n = sc.nextInt();
-        int[][] aa = new int[3][n + 2];
-        for (int i = 1; i <= n; i++) {
-            aa[0][i] = sc.nextInt();
+        int[] aa = new int[n];
+        for (int i = 0; i < n; i++) {
+            aa[i] = sc.nextInt();
         }
-        for (int i = 1; i <= n; i++) {
-            aa[1][i] = Math.max(aa[1][i - 1], aa[0][i]);
+
+        int[] fromLeft = new int[n];
+        int[] fromRight = new int[n];
+
+        fromLeft[0] = aa[0];
+        for (int i = 1; i < n; i++) {
+            fromLeft[i] = Math.max(fromLeft[i - 1], aa[i]);
         }
-        for (int i = n; i >= 1; i--) {
-            aa[2][i] = Math.max(aa[2][i + 1], aa[0][i]);
+        fromRight[n - 1] = aa[n - 1];
+        for (int i = n - 2; i >= 0; i--) {
+            fromRight[i] = Math.max(fromRight[i + 1], aa[i]);
         }
 
         int d = sc.nextInt();
-        for (int i = 0; i < d; i++) {
-            int ans = 0;
-            int l = sc.nextInt();
-            int r = sc.nextInt();
-            System.out.println(Math.max(aa[1][l - 1], aa[2][r + 1]));
-        }
 
+        for (int i = 0; i < d; i++) {
+            int left = sc.nextInt() - 1;
+            int right = sc.nextInt() - 1;
+            int t = Math.max(fromLeft[left - 1], fromRight[right + 1]);
+            System.out.println(t);
+        }
     }
 //}
 
