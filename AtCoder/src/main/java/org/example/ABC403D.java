@@ -60,7 +60,7 @@ public class ABC403D {
                     int cntX = count.get(x);
                     if (count.containsKey(x + d)) {
                         int cntXD = count.get(x + d);
-                        int min = Math.min(cntX, cntXD);
+                        \int min = Math.min(cntX, cntXD);
                         // x+D側から min 個削除
                         count.put(x + d, cntXD - min);
                         removed += min;
