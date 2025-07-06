@@ -34,45 +34,33 @@ public class A12 {
 //import java.util.*;
 //public class Main {
 
-    static int n;
-    static long k;
-    static long[] aa;
-
+    // https://atcoder.jp/contests/tessoku-book/submissions/39310124
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        n = sc.nextInt();
-        k = sc.nextInt();
-        aa = new long[n];
+        int n = sc.nextInt();
+        int k = sc.nextInt();
+        int[] aa = new int[n];
         for (int i = 0; i < n; i++) {
             aa[i] = sc.nextInt();
         }
-        Arrays.sort(aa);
 
-        long left = 0, right = 1000000000;
+        long left = 1;
+        long right = 1000000000;
         while (left < right) {
+            long sum = 0;
             long mid = (left + right) / 2;
-
-            boolean found = check(mid);
-
-            if (found) {
-                // 条件を満たすので下側を探す
+            for (int i = 0; i < n; i++) {
+                sum += mid / (long) aa[i];
+            }
+            if (sum >= k) {
                 right = mid;
             } else {
-                // 条件を満たさないので上側を探す
                 left = mid + 1;
             }
         }
         System.out.println(left);
-    }
-
-    static boolean check(long x) {
-        long sum = 0;
-        for (int i = 0; i < n; i++) {
-            sum += x / aa[i];
-        }
-        return sum >= k;
     }
 //}
 
