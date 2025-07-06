@@ -1,4 +1,4 @@
-package org.example;
+package org.example.ABC;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ABC387ATest {
+public class ABC389A {
 
     private final StandardInputSnatcher in = new StandardInputSnatcher();
     private final StandardOutputSnatcher out = new StandardOutputSnatcher();
@@ -37,9 +37,10 @@ public class ABC387ATest {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
-
-        System.out.println(n);
+        final String s = sc.next();
+        char c1 = s.charAt(0);
+        char c2 = s.charAt(2);
+        System.out.println((c1 - '0') * (c2 - '0'));
     }
 //}
 
@@ -47,59 +48,60 @@ public class ABC387ATest {
     public void Case1() {
 
         String input = """
-                1
+                3x8
+                
                 """;
 
         String expected = """
-                1
+                24
                 """;
-        Stream.of(input.split("\\n")).map(s -> s.trim()).forEach(s -> in.inputln(s));
-        ABC387ATest.main(null);
-        Stream.of(expected.split("\\n")).map(s -> s.trim()).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
+        Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
+        ABC389A.main(null);
+        Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    @Test
+    //@Test
     public void Case2() {
 
         String input = """
-                1
+                
                 """;
 
         String expected = """
-                1
+                
                 """;
-        Stream.of(input.split("\\n")).map(s -> s.trim()).forEach(s -> in.inputln(s));
-        ABC387ATest.main(null);
-        Stream.of(expected.split("\\n")).map(s -> s.trim()).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
+        Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
+        ABC389A.main(null);
+        Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    @Test
+    //@Test
     public void Case3() {
 
         String input = """
-                1
+                
                 """;
 
         String expected = """
-                1
+                
                 """;
-        Stream.of(input.split("\\n")).map(s -> s.trim()).forEach(s -> in.inputln(s));
-        ABC387ATest.main(null);
-        Stream.of(expected.split("\\n")).map(s -> s.trim()).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
+        Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
+        ABC389A.main(null);
+        Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    @Test
+    //@Test
     public void Case4() {
 
         String input = """
-                1
+                
                 """;
 
         String expected = """
-                1
+                
                 """;
-        Stream.of(input.split("\\n")).map(s -> s.trim()).forEach(s -> in.inputln(s));
-        ABC387ATest.main(null);
-        Stream.of(expected.split("\\n")).map(s -> s.trim()).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
+        Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
+        ABC389A.main(null);
+        Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 }
