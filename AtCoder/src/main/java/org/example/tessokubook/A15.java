@@ -38,15 +38,23 @@ public class A15 {
 
         final int n = sc.nextInt();
         int[] aa = new int[n];
+        TreeSet<Integer> set = new TreeSet<>();
         for (int i = 0; i < n; i++) {
             aa[i] = sc.nextInt();
+            set.add(aa[i]);
         }
 
-        int[] bb = Arrays.stream(aa).distinct().sorted().toArray();
+        int index = 1;
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for (var a : set) {
+            map.put(a, index);
+            index++;
+        }
+
         for (int i = 0; i < n; i++) {
-            System.out.print(Arrays.binarySearch(bb, aa[i]) + 1 + " ");
+            System.out.print(map.get(aa[i]) + " ");
         }
-
     }
 //}
 
