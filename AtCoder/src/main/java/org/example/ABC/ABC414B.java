@@ -43,13 +43,19 @@ public class ABC414B {
             String c = sc.next();
             long l = sc.nextLong();
 
+            if (l > 100) {
+                sb.setLength(0);
+                sb.append("Too Long");
+                break;
+            }
+            if (sb.length() + l > 100) {
+                sb.setLength(0);
+                sb.append("Too Long");
+                break;
+            }
+
             for (int j = 0; j < l; j++) {
                 sb.append(c);
-                if (sb.length() > 100) {
-                    sb.setLength(0);
-                    sb.append("Too Long");
-                    break;
-                }
             }
         }
 
