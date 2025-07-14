@@ -1,4 +1,4 @@
-package org.example.tessokubook;
+package org.example.ABC;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -9,11 +9,11 @@ import org.example.template.StandardInputSnatcher;
 import org.example.template.StandardOutputSnatcher;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class A08 {
+public class ABC414B {
 
     private final StandardInputSnatcher in = new StandardInputSnatcher();
     private final StandardOutputSnatcher out = new StandardOutputSnatcher();
@@ -36,15 +36,24 @@ public class A08 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int h = sc.nextInt();
-        final int w = sc.nextInt();
-        int[][] xxx = new int[h][w];
-        for (int i = 0; i < h; i++) {
-            for (int j = 0; j < w; j++) {
-                xxx[i][j] = sc.nextInt();
+        final int n = sc.nextInt();
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < n; i++) {
+            String c = sc.next();
+            long l = sc.nextLong();
+
+            for (int j = 0; j < l; j++) {
+                sb.append(c);
+                if (sb.length() > 100) {
+                    sb.setLength(0);
+                    sb.append("Too Long");
+                    break;
+                }
             }
         }
 
+        System.out.println(sb.toString());
     }
 //}
 
@@ -52,25 +61,24 @@ public class A08 {
     public void Case1() {
 
         String input = """
-                5 5
-                2 0 0 5 1
-                1 0 3 0 0
-                0 8 5 0 2
-                4 1 0 0 6
-                0 9 2 7 0
-                2
-                2 2 4 5
-                1 1 5 5
+                8
+                m 1
+                i 1
+                s 2
+                i 1
+                s 2
+                i 1
+                p 2
+                i 1
                 
                 """;
 
         String expected = """
-                25
-                56
+                mississippi
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        A08.main(null);
+        ABC414B.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
@@ -78,59 +86,64 @@ public class A08 {
     public void Case2() {
 
         String input = """
-                4 4
-                1 1 1 1
-                1 1 1 1
-                1 1 1 1
-                1 1 1 1
-                5
-                1 1 1 1
-                2 2 2 2
-                1 1 2 2
-                1 1 3 3
-                1 1 4 4
+                7
+                a 1000000000000000000
+                t 1000000000000000000
+                c 1000000000000000000
+                o 1000000000000000000
+                d 1000000000000000000
+                e 1000000000000000000
+                r 1000000000000000000
+                
                 """;
 
         String expected = """
-                1
-                1
-                4
-                9
-                16
+                Too Long
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        A08.main(null);
+        ABC414B.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //@Test
+    @Test
     public void Case3() {
 
         String input = """
+                1
+                a 100
                 
                 """;
 
         String expected = """
+                aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        A08.main(null);
+        ABC414B.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //@Test
+    @Test
     public void Case4() {
 
         String input = """
+                6
+                g 4
+                j 1
+                m 4
+                e 4
+                d 3
+                i 4
                 
                 """;
 
         String expected = """
+                ggggjmmmmeeeedddiiii
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        A08.main(null);
+        ABC414B.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 }
