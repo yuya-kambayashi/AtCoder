@@ -39,30 +39,46 @@ public class ABC414C {
 
         final long n = sc.nextLong();
         long ans = 0;
-        for (int i = 1; i < 1000000; i++) {
-            String s1 = Integer.toString(i);
-            String s1Rev = new StringBuilder(s1).reverse().toString();
-            String n1 = s1 + s1Rev;
 
-            Long n10 = Long.parseLong(n1);
-            String na = Long.toString(n10, a);
-            if (n10 <= n && isPalindrome(na)) {
+
+        // 奇数
+        long i = 1;
+        while (true) {
+            String left = Long.toString(i);
+            String right = new StringBuilder(left.substring(0, left.length() - 1)).reverse().toString();
+            long pal = Long.parseLong(left + right);
+            if (pal > n) {
+                break;
+            }
+            if (isPalindrome(Long.toString(pal, a))) {
+                ans += pal;
             }
 
+            i++;
         }
+
+        i = 1;
+        while (true) {
+            String left = Long.toString(i);
+            String right = new StringBuilder(left).reverse().toString();
+            long pal = Long.parseLong(left + right);
+            if (pal > n) {
+                break;
+            }
+            if (isPalindrome(Long.toString(pal, a))) {
+                ans += pal;
+            }
+
+            i++;
+        }
+
+        System.out.println(ans);
     }
 
     static boolean isPalindrome(String s) {
-        if (s.length() == 0) {
-            return false;
-        }
-        if (s.length() == 1) {
-            return true;
-        }
-        for (int i = 0; i < s.length() / 2; i++) {
-            if (s.charAt(i) != s.charAt(s.length() - 1 - i)) {
-                return false;
-            }
+        int i = 0, j = s.length() - 1;
+        while (i < j) {
+            if (s.charAt(i++) != s.charAt(j--)) return false;
         }
         return true;
     }
