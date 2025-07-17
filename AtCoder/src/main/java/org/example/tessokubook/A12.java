@@ -50,29 +50,23 @@ public class A12 {
         }
         Arrays.sort(aa);
 
-        long left = 0, right = 1000000000;
+        int left = 1, right = 1000000000;
         while (left < right) {
-            long mid = (left + right) / 2;
+            int mid = (left + right) / 2;
 
-            boolean found = check(mid);
+            long tsum = 0;
 
-            if (found) {
-                // 条件を満たすので下側を探す
+            for (int i = 0; i < n; i++) {
+                long a = aa[i];
+                tsum += mid / a;
+            }
+            if (tsum >= k) {
                 right = mid;
             } else {
-                // 条件を満たさないので上側を探す
                 left = mid + 1;
             }
         }
         System.out.println(left);
-    }
-
-    static boolean check(long x) {
-        long sum = 0;
-        for (int i = 0; i < n; i++) {
-            sum += x / aa[i];
-        }
-        return sum >= k;
     }
 //}
 
