@@ -34,33 +34,27 @@ public class A12 {
 //import java.util.*;
 //public class Main {
 
-    static int n;
-    static long k;
-    static long[] aa;
-
+    // https://atcoder.jp/contests/tessoku-book/submissions/39310124
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        n = sc.nextInt();
-        k = sc.nextInt();
-        aa = new long[n];
+        int n = sc.nextInt();
+        int k = sc.nextInt();
+        int[] aa = new int[n];
         for (int i = 0; i < n; i++) {
             aa[i] = sc.nextInt();
         }
-        Arrays.sort(aa);
 
-        int left = 1, right = 1000000000;
+        long left = 1;
+        long right = 1000000000;
         while (left < right) {
-            int mid = (left + right) / 2;
-
-            long tsum = 0;
-
+            long sum = 0;
+            long mid = (left + right) / 2;
             for (int i = 0; i < n; i++) {
-                long a = aa[i];
-                tsum += mid / a;
+                sum += mid / (long) aa[i];
             }
-            if (tsum >= k) {
+            if (sum >= k) {
                 right = mid;
             } else {
                 left = mid + 1;

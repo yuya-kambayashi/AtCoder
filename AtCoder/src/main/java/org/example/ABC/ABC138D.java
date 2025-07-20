@@ -33,86 +33,33 @@ public class ABC138D {
     //import java.math.*;
 //import java.util.*;
 //public class Main {
-    static List<List<Integer>> tree;
-    static int[] ins, outs, order;
-    static long[] imos;
-    static int idx = 0;
-
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         int n = sc.nextInt();
         int q = sc.nextInt();
 
-        tree = new ArrayList<>();
-        for (int i = 0; i <= n; i++) {
-            tree.add(new ArrayList<>());
-        }
+        Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < n - 1; i++) {
-            int a = sc.nextInt();
-            int b = sc.nextInt();
-            tree.get(a).add(b);
-            tree.get(b).add(a);
+            int a = sc.nextInt() - 1;
+            int b = sc.nextInt() - 1;
+            map.put(b, a);
         }
-
-        ins = new int[n + 1];
-        outs = new int[n + 1];
-        order = new int[n];
-        dfs(1);
-
-        imos = new long[n + 1];
+        int[] ans = new int[n];
         for (int i = 0; i < q; i++) {
-            int p = sc.nextInt();
-            long x = sc.nextLong();
-            imos[ins[p]] += x;
-            if (outs[p] < n) {
-                imos[outs[p]] -= x;
-            }
+            int p = sc.nextInt() - 1;
+            int x = sc.nextInt();
+            ans[p] += x;
         }
-
         for (int i = 1; i < n; i++) {
-            imos[i] += imos[i - 1];
+            ans[i] += ans[map.get(i)];
         }
 
-        long[] ret = new long[n + 1];
         for (int i = 0; i < n; i++) {
-            int node = order[i];
-            ret[node] = imos[i];
+            System.out.print(ans[i] + " ");
         }
-        for (int i = 1; i <= n; i++) {
-            System.out.print(ret[i] + " ");
-        }
-    }
+        System.out.println();
 
-    static void dfs(int root) {
-        boolean[] visited = new boolean[tree.size()];
-        Stack<int[]> stack = new Stack<>();
-        stack.push(new int[]{root, -1});
-
-        while (!stack.isEmpty()) {
-            int[] cur = stack.pop();
-            int node = cur[0];
-            int parent = cur[1];
-
-            if (visited[node]) {
-                // 戻りがけ
-                outs[node] = idx;
-            } else {
-                visited[node] = true;
-                // 行きがけ
-                ins[node] = idx;
-                order[idx++] = node;
-                stack.push(new int[]{node, parent});
-
-                List<Integer> children = tree.get(node);
-                for (int i = children.size() - 1; i >= 0; i--) {
-                    int next = children.get(i);
-                    if (next != parent) {
-                        stack.push(new int[]{next, node});
-                    }
-                }
-            }
-        }
     }
 //}
 
