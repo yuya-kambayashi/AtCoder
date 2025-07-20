@@ -33,60 +33,43 @@ public class ABC415C {
     //import java.math.*;
 //import java.util.*;
 //public class Main {
+
+    //https://atcoder.jp/contests/abc415/submissions/67768635
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
-        for (int i = 0; i < n; i++) {
-            int t = sc.nextInt();
+        int t = sc.nextInt();
+        for (int i = 0; i < t; i++) {
+            int n = sc.nextInt();
             String s = sc.next();
-            int len = (int) Math.pow(2, t);
-
-            List<List<Integer>> oks = new ArrayList<>();
-            for (int j = 0; j <= t; j++) {
-                oks.add(new ArrayList<>());
-            }
-            for (int j = 1; j <= t; j++) {
-                for (int k = 1; k <= t; k++) {
-                    if (j == k) {
-                        continue;
-                    }
-                    oks.get(j).add(k);
-                }
-            }
-
-            for (int j = 0; j < len - 1; j++) {
-                if (s.charAt(j) == '1') {
-                    String b = Integer.toBinaryString(j + 1);
-
-                    List<Integer> ng = new ArrayList<>();
-                    for (int k = 0; k < b.length(); k++) {
-                        if (b.charAt(k) == '1') {
-                            ng.add(k + 1);
-                        }
-                    }
-                    for (int k = 0; k < ng.size(); k++) {
-
-                        var ok = oks.get(ng.get(k));
-                        for (int p = 0; p < ng.size(); p++) {
-                            if (k == p) {
-                                continue;
-                            }
-                            ok.remove(ng.get(p));
-                        }
-                    }
-                }
-            }
-            String ret = "No";
-            for (int j = 1; j <= t; j++) {
-                if (oks.get(j).size() > 0) {
-                    ret = "Yes";
-                    break;
-                }
-            }
-            System.out.println(ret);
+            System.out.println(solve(n, s));
         }
+    }
+
+    static String solve(int n, String s) {
+        Set<Integer> set = new HashSet<>();
+        Queue<Integer> que = new LinkedList<>();
+        que.add(0);
+
+        while (!que.isEmpty()) {
+            int num = que.poll();
+            if (num == (1 << n) - 1) {
+                return "Yes";
+            }
+            for (int pos = 0; pos < n; pos++) {
+                int bit = (num >> pos) & 1;
+                if (bit == 1) {
+                    continue;
+                }
+                int newnum = (1 << pos) | num;
+                if (!set.contains(newnum) && s.charAt(newnum - 1) == '0') {
+                    set.add(newnum);
+                    que.add(newnum);
+                }
+            }
+        }
+        return "No";
     }
 //}
 
