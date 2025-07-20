@@ -33,77 +33,45 @@ public class ABC415D {
 //import java.util.*;
 //public class Main {
 
-    static class State {
-        long bottle, empty;
-        long seal;
+    // https://atcoder.jp/contests/abc415/submissions/67789647
+    public static class Pair {
+        long a, b;
 
-        State(long bottle, long empty, long seal) {
-            this.bottle = bottle;
-            this.empty = empty;
-            this.seal = seal;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(bottle, empty, seal);
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (!(obj instanceof State)) return false;
-            State o = (State) obj;
-            return bottle == o.bottle && empty == o.empty && seal == o.seal;
+        public Pair(long a, long b) {
+            this.a = a;
+            this.b = b;
         }
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        long N = sc.nextLong();
-        int M = sc.nextInt();
-        long[] A = new long[M];
-        long[] B = new long[M];
-
-        for (int i = 0; i < M; i++) {
-            A[i] = sc.nextLong();
-            B[i] = sc.nextLong();
+        long n = sc.nextLong();
+        int m = sc.nextInt();
+        List<Pair> pairs = new ArrayList<>();
+        for (int i = 0; i < m; i++) {
+            pairs.add(new Pair(sc.nextLong(), sc.nextLong()));
         }
-        Queue<State> queue = new ArrayDeque<>();
-        Set<State> visited = new HashSet<>();
-
-        long initBottle = N;
-        queue.add(new State(initBottle, 0, 0));
-        visited.add(new State(initBottle, 0, 0));
-
-        long maxSeal = 0;
-
-        while (!queue.isEmpty()) {
-            State cur = queue.poll();
-            maxSeal = Math.max(maxSeal, cur.seal);
-
-            // 飲む操作
-            for (int i = 1; i <= cur.bottle; i++) {
-                State next = new State(cur.bottle - i, cur.empty + i, cur.seal);
-                if (!visited.contains(next)) {
-                    visited.add(next);
-                    queue.add(next);
-                }
+        Collections.sort(pairs, new Comparator<Pair>() {
+            @Override
+            public int compare(Pair o1, Pair o2) {
+                return Long.compare(o1.a - o1.b, o2.a - o2.b);
             }
+        });
 
-            // クーポンで交換
-            for (int i = 0; i < A.length; i++) {
-                var a = A[i];
-                if (cur.empty >= a) {
-                    State next = new State(cur.bottle + B[i], cur.empty - a, cur.seal + 1);
-                    if (!visited.contains(next)) {
-                        visited.add(next);
-                        queue.add(next);
-                    }
-                }
+        long empty = n;
+        long count = 0;
+        for (Pair pair : pairs) {
+            if (empty < pair.a) {
+                continue;
             }
+            long d = pair.a - pair.b;
+            long times = (empty - pair.a) / d + 1;
+            count += times;
+            empty -= times * d;
         }
-
-        System.out.println(maxSeal);
+        System.out.println(count);
     }
+
 //}
 
     @Test
