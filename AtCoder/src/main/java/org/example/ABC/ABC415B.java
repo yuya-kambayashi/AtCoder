@@ -1,4 +1,4 @@
-package org.example.tessokubook;
+package org.example.ABC;
 
 import java.util.*;
 import java.util.stream.Stream;
@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class A13 {
+public class ABC415B {
 
     private final StandardInputSnatcher in = new StandardInputSnatcher();
     private final StandardOutputSnatcher out = new StandardOutputSnatcher();
@@ -29,40 +29,57 @@ public class A13 {
         System.setIn(null);
         System.setOut(null);
     }
+//import java.math.*;
+//import java.util.*;
+//public class Main {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
-        Set<Integer> set = new HashSet<>();
-        for (int i = 0; i < n; i++) {
-            set.add(sc.nextInt());
+        String s = sc.next();
+        int cnt = 0;
+        int before = -1;
+        int ans = 0;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == '#') {
+                cnt++;
+                if (before == -1) {
+                    before = i + 1;
+                }
+                if (cnt == 2) {
+                    String t = String.valueOf(before) + ',' + String.valueOf(i + 1);
+                    System.out.println(t);
+                    before = -1;
+                    cnt = 0;
+                    ans++;
+                    if (ans == s.length() / 2) {
+                        break;
+                    }
+                }
+            }
         }
-        int x = sc.nextInt();
-        String s = "Yes";
-        if (!set.contains(x)) {
-            s = "No";
-        }
-
-        System.out.println(s);
     }
-
+//}
 
     @Test
     public void Case1() {
 
         String input = """
-                7 10
-                11 12 16 22 27 28 31
+                .#.##..##.#.###....#
                 
                 """;
 
         String expected = """
-                11
+                2,4
+                5,8
+                9,11
+                13,14
+                15,20
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        A13.main(null);
+        ABC415B.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
@@ -77,7 +94,7 @@ public class A13 {
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        A13.main(null);
+        ABC415B.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
@@ -92,7 +109,7 @@ public class A13 {
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        A13.main(null);
+        ABC415B.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
@@ -107,7 +124,7 @@ public class A13 {
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        A13.main(null);
+        ABC415B.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 }
