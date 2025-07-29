@@ -9,6 +9,7 @@ import org.example.template.StandardInputSnatcher;
 import org.example.template.StandardOutputSnatcher;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -41,14 +42,27 @@ public class ABC416D {
     }
 //}
 
-    //@Test
+    @Test
     public void Case1() {
 
         String input = """
+                3
+                3 6
+                3 1 4
+                2 0 1
+                1 1000000000
+                999999999
+                999999999
+                10 201
+                144 150 176 154 110 187 38 136 111 46
+                96 109 73 63 85 1 156 7 13 171
                 
                 """;
 
         String expected = """
+                5
+                999999998
+                619
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
