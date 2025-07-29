@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.from;
 
 import org.example.template.StandardInputSnatcher;
 import org.example.template.StandardOutputSnatcher;
@@ -36,7 +37,40 @@ public class ABC416D {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        final int n = sc.nextInt();
+        final int t = sc.nextInt();
+        for (int p = 0; p < t; p++) {
+            int n = sc.nextInt();
+            int m = sc.nextInt();
+            int[] aa = new int[n];
+            int[] bb = new int[n];
+
+            long sum = 0;
+            for (int i = 0; i < n; i++) {
+                aa[i] = sc.nextInt();
+                sum += aa[i];
+            }
+            for (int i = 0; i < n; i++) {
+                bb[i] = sc.nextInt();
+                sum += bb[i];
+            }
+            Arrays.sort(aa);
+            Arrays.sort(bb);
+
+            int j = 0;
+            int cnt = 0;
+            for (int i = n - 1; i >= 0; i--) {
+                int val = aa[i];
+                while (j < n && val + bb[j] < m) {
+                    j++;
+                }
+                if (j < n) {
+                    cnt++;
+                    j++;
+                }
+                System.out.println(sum - cnt * m);
+            }
+
+        }
 
         System.out.println(n);
     }
