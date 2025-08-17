@@ -4,7 +4,6 @@ import java.util.*;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.from;
 
 import org.example.template.StandardInputSnatcher;
 import org.example.template.StandardOutputSnatcher;
@@ -14,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class ABC416D {
+public class ABC419D {
 
     private final StandardInputSnatcher in = new StandardInputSnatcher();
     private final StandardOutputSnatcher out = new StandardOutputSnatcher();
@@ -36,41 +35,34 @@ public class ABC416D {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+        String s = sc.next();
+        String t = sc.next();
 
-        final int t = sc.nextInt();
-        for (int p = 0; p < t; p++) {
-            int n = sc.nextInt();
-            int m = sc.nextInt();
-            int[] aa = new int[n];
-            int[] bb = new int[n];
+        int[] imos = new int[n + 2];
+        for (int i = 0; i < m; i++) {
+            int l = sc.nextInt();
+            int r = sc.nextInt();
 
-            long sum = 0;
-            for (int i = 0; i < n; i++) {
-                aa[i] = sc.nextInt();
-                sum += aa[i];
-            }
-            for (int i = 0; i < n; i++) {
-                bb[i] = sc.nextInt();
-                sum += bb[i];
-            }
-            Arrays.sort(aa);
-            Arrays.sort(bb);
-
-            int j = 0;
-            int cnt = 0;
-            for (int i = n - 1; i >= 0; i--) {
-                int val = aa[i];
-                while (j < n && val + bb[j] < m) {
-                    j++;
-                }
-                if (j < n) {
-                    cnt++;
-                    j++;
-                }
-                System.out.println(sum - cnt * m);
-            }
-
+            imos[l]++;
+            imos[r + 1]--;
         }
+        for (int i = 1; i < n + 2; i++) {
+            imos[i] += imos[i - 1];
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 1; i < n + 1; i++) {
+            if (imos[i] % 2 == 0) {
+                sb.append(s.charAt(i - 1));
+            } else {
+                sb.append(t.charAt(i - 1));
+            }
+        }
+
+
+        System.out.println(sb);
     }
 //}
 
@@ -78,42 +70,45 @@ public class ABC416D {
     public void Case1() {
 
         String input = """
-                3
-                3 6
-                3 1 4
-                2 0 1
-                1 1000000000
-                999999999
-                999999999
-                10 201
-                144 150 176 154 110 187 38 136 111 46
-                96 109 73 63 85 1 156 7 13 171
+                5 3
+                apple
+                lemon
+                2 4
+                1 5
+                5 5
                 
                 """;
 
         String expected = """
-                5
-                999999998
-                619
+                lpple
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        ABC416D.main(null);
+        ABC419D.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
-    //@Test
+    @Test
     public void Case2() {
 
         String input = """
+                10 5
+                lemwrbogje
+                omsjbfggme
+                5 8
+                4 8
+                1 3
+                6 6
+                1 4
                 
                 """;
 
         String expected = """
+                lemwrfogje
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        ABC416D.main(null);
+        ABC419D.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
@@ -128,7 +123,7 @@ public class ABC416D {
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        ABC416D.main(null);
+        ABC419D.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 
@@ -143,7 +138,7 @@ public class ABC416D {
                 
                 """;
         Stream.of(input.split("\\n")).map(String::trim).forEach(in::inputln);
-        ABC416D.main(null);
+        ABC419D.main(null);
         Stream.of(expected.split("\\n")).map(String::trim).forEach(s -> assertThat(out.readLine().trim()).isEqualTo(s));
     }
 }
